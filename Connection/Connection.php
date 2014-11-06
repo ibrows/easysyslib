@@ -20,10 +20,7 @@ class Connection implements ConnectionInterface
      * @see https://devdocs.easysys.ch / EndPoint https://beta.easysys.ch/api2.php | https://dev.easysys.ch/api2.php
      */
     protected $serviceUri = 'https://office.easysys.ch/api2.php';
-
-    /**
-     * @param string $serviceUri
-     */
+    
     public function __construct()
     {
         
