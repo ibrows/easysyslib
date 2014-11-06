@@ -8,8 +8,10 @@
 
 namespace Ibrows\EasySysLibrary\Connection;
 
+use Psr\Log\LoggerInterface;
 use Saxulum\HttpClient\HttpClientInterface;
 use Saxulum\HttpClient\Request;
+use Saxulum\HttpClient\Response;
 
 /**
  * Interface ConnectionInterface
@@ -24,11 +26,25 @@ interface ConnectionInterface
      * @param string $method
      * @param int $limit
      * @param int $offset
-     * @param null $order_by
-     * @param bool $getRawData
+     * @param null $orderBy
      * @return array
      */
-    public function call($resource, $urlParams = array(), $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $order_by = null, $getRawData = false);
+    public function call($resource, $urlParams = array(), $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $orderBy = null);
+
+    /**
+     * @return Response
+     */
+    public function getLastResponse();
+
+    /**
+     * @return Request
+     */
+    public function getLastRequest();
+
+    /**
+     * @param HttpClientInterface $httpClient
+     */
+    public function setHttpClient(HttpClientInterface $httpClient);
 
     /**
      * @param string $serviceUri
@@ -54,4 +70,9 @@ interface ConnectionInterface
      * @param int $userId
      */
     public function setUserId($userId);
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger);
 }
