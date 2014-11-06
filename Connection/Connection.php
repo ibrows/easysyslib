@@ -303,7 +303,7 @@ class Connection implements ConnectionInterface
     protected function getBaseUrl()
     {
         // https://office.easysys.ch/api2.php/%company_id%/%user_id%/%public_key%
-        return sprintf('$s/%s/%s/%s', $this->serviceUri, $this->companyName, $this->userId, $this->apiKey);
+        return sprintf('%s/%s/%s/%s', $this->serviceUri, $this->companyName, $this->userId, $this->apiKey);
     }
 
     /**
