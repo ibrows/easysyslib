@@ -8,6 +8,8 @@
 
 namespace Ibrows\EasySysBundle\Connection;
 
+use Saxulum\HttpClient\HttpClientInterface;
+use Saxulum\HttpClient\Request;
 
 /**
  * Interface ConnectionInterface
@@ -15,16 +17,41 @@ namespace Ibrows\EasySysBundle\Connection;
  */
 interface ConnectionInterface
 {
+    /**
+     * @param string $resource
+     * @param array $urlParams
+     * @param array $postParams
+     * @param string $method
+     * @param int $limit
+     * @param int $offset
+     * @param null $order_by
+     * @param bool $getRawData
+     * @return array
+     */
+    public function call($resource, $urlParams = array(), $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $order_by = null, $getRawData = false);
 
-    public function call($resource, $urlParams = array(), $postParams = array(), $verb = "GET", $limit = 0, $offset = 0, $order_by = null, $getRawData = false);
+    /**
+     * @param string $serviceUri
+     */
+    public function setServiceUri($serviceUri);
 
-    public function setServiceUri();
+    /**
+     * @param string $companyName
+     */
+    public function setCompanyName($companyName);
 
-    public function setCompanyName();
+    /**
+     * @param string $apiKey
+     */
+    public function setApiKey($apiKey);
 
-    public function setApiKey();
+    /**
+     * @param string $signatureKey
+     */
+    public function setSignatureKey($signatureKey);
 
-    public function setSignatureKey();
-
-    public function setUserId();
+    /**
+     * @param int $userId
+     */
+    public function setUserId($userId);
 }
