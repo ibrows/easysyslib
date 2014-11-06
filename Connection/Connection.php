@@ -128,7 +128,13 @@ class Connection implements ConnectionInterface
         }
 
         $statusCode = $response->getStatusCode();
-        if ($statusCode >= 300 || $statusCode < 200) {
+
+        /**
+         * StatusCode 304 = The resource has not been changed
+         * @todo Maybe switch to statusCode >= 400 || statusCode < 200
+         * @see https://docs.easysys.ch/#http-codes
+         */
+        if (($statusCode >= 300 || $statusCode < 200) && $statusCode !== 304) {
             $logger->alert('StatusCode ' . $statusCode . ' received!', $loggerContext);
             throw new StatusCodeException('StatusCode ' . $statusCode . '  recevied - Expected StatusCode 2xx');
         }
@@ -307,14 +313,13 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * @param string $resource
+     * @param array $urlParams
      * @return string
      */
     protected function getRequestUrl($resource, array $urlParams = array())
     {
         $url = $this->getBaseUrl() . '/' . $resource;
-        if ($urlParams) {
-            $url .= '?' . http_build_query($urlParams);
-        }
-        return $url;
+        return $urlParams ? $url . '?' . http_build_query($urlParams, null, '&') : $url;
     }
 }
