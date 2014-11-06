@@ -30,6 +30,7 @@
         "psr-4": {"Ibrows\\EasySysLibrary\\": ""}
     },
     "suggest": {
-        "ibrows/easysys-bundle": "Integrated the api into a symfony2 bundle"
+        "ibrows/easysys-bundle": "Integrated the api into a symfony2 bundle",
+        "saxulum/saxulum-http-client-adapter": "Chose an already existing http-client-adapter if you like"
     }
 }
