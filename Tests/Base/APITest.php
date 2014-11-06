@@ -53,6 +53,10 @@ class APITest extends \PHPUnit_Framework_TestCase
     {
         $api = $this->getContactApi();
 
+        $this->assertMethod($api,'createFromObject');
+        $contact = $api->createFromObject(new Contact());
+        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+
         $this->assertMethod($api,'createFromArray');
         $contact = $api->createFromArray(array('name' => 'gugus'));
         $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
@@ -61,9 +65,7 @@ class APITest extends \PHPUnit_Framework_TestCase
         $contact = $api->create('myname');
         $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
 
-        $this->assertMethod($api,'createFromObject');
-        $contact = $api->createFromObject(new Contact());
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+
     }
 
     public function testContactUpdate()

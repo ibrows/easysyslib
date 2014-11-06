@@ -1,6 +1,7 @@
 <?php
 namespace Ibrows\EasySysBundle\API;
 use Ibrows\EasySysBundle\Connection\ConnectionInterface;
+use Ibrows\EasySysBundle\Converter\ContactConverter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Console\Output\NullOutput;
@@ -131,6 +132,12 @@ class AbstractType
             $vars['user_id'] = $this->connection->getUserId();
         }
         return $this->connection->call($type, array(), $vars, "POST");
+    }
+
+    public function createFromObject($object){
+        $converter = new ContactConverter();
+        $converter->setObject($object);
+        return $this->create($converter->getDataEasySys());
     }
 
     public function save()
