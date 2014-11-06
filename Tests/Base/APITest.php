@@ -52,7 +52,6 @@ class APITest extends \PHPUnit_Framework_TestCase
     public function testContactCreate()
     {
         $api = $this->getContactApi();
-return;
         $this->assertMethod($api,'createFromObject');
         $contact = $api->createFromObject($this->getContactModel());
         $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);

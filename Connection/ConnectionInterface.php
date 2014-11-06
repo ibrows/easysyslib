@@ -8,7 +8,6 @@
 
 namespace Ibrows\EasySysLibrary\Connection;
 
-use Saxulum\HttpClient\HttpClientInterface;
 use Saxulum\HttpClient\Request;
 
 /**
@@ -19,13 +18,13 @@ interface ConnectionInterface
 {
     /**
      * @param string $resource
-     * @param array $urlParams
-     * @param array $postParams
+     * @param array  $urlParams
+     * @param array  $postParams
      * @param string $method
-     * @param int $limit
-     * @param int $offset
-     * @param null $order_by
-     * @param bool $getRawData
+     * @param int    $limit
+     * @param int    $offset
+     * @param null   $order_by
+     * @param bool   $getRawData
      * @return array
      */
     public function call($resource, $urlParams = array(), $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $order_by = null, $getRawData = false);
@@ -54,4 +53,9 @@ interface ConnectionInterface
      * @param int $userId
      */
     public function setUserId($userId);
+
+    /**
+     * @return int
+     */
+    public function getUserId();
 }
