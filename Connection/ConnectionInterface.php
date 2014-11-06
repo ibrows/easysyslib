@@ -6,14 +6,14 @@
  * Time: 11:38
  */
 
-namespace Ibrows\EasySysBundle\Connection;
+namespace Ibrows\EasySysLibrary\Connection;
 
 use Saxulum\HttpClient\HttpClientInterface;
 use Saxulum\HttpClient\Request;
 
 /**
  * Interface ConnectionInterface
- * @package Ibrows\EasySysBundle\Connection
+ * @package Ibrows\EasySysLibrary\Connection
  */
 interface ConnectionInterface
 {

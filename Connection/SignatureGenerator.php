@@ -2,14 +2,14 @@
 
 /**
  * Created by PhpStorm.
- * Project: easysysbundle
+ * Project: EasySysLibrary
  * 
  * User: mikemeier
  * Date: 06.11.14
  * Time: 14:07
  */
 
-namespace Ibrows\EasySysBundle\Connection;
+namespace Ibrows\EasySysLibrary\Connection;
 
 class SignatureGenerator
 {

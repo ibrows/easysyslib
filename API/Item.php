@@ -6,9 +6,9 @@
  * Time: 13:31
  */
 
-namespace Ibrows\EasySysBundle\API;
+namespace Ibrows\EasySysLibrary\API;
 
-use Ibrows\EasySysBundle\Connection\Connection;
+use Ibrows\EasySysLibrary\Connection\Connection;
 
 class Item extends AbstractType {
 

@@ -1,6 +1,6 @@
 <?php
-namespace Ibrows\EasySysBundle\API;
-use Ibrows\EasySysBundle\Connection\Connection;
+namespace Ibrows\EasySysLibrary\API;
+use Ibrows\EasySysLibrary\Connection\Connection;
 /**
  * @author marcsteiner
  *

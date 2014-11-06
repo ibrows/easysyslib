@@ -1,8 +1,8 @@
 <?php
 
-namespace Ibrows\EasySysBundle\Tests\Base;
+namespace Ibrows\EasySysLibrary\Tests\Base;
 
-use Ibrows\EasySysBundle\API\Contact;
+use Ibrows\EasySysLibrary\API\Contact;
 
 class APITest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +28,7 @@ class APITest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(method_exists($api, 'show'), 'method show dont exists');
         $contact = $api->show(1);
         $this->assertTrue(is_object($contact));
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
     }
 
     public function testContactSearch()
@@ -55,15 +55,15 @@ class APITest extends \PHPUnit_Framework_TestCase
 
         $this->assertMethod($api,'createFromObject');
         $contact = $api->createFromObject(new Contact());
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
 
         $this->assertMethod($api,'createFromArray');
         $contact = $api->createFromArray(array('name' => 'gugus'));
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
 
         $this->assertMethod($api,'create');
         $contact = $api->create('myname');
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
 
 
     }
@@ -74,15 +74,15 @@ class APITest extends \PHPUnit_Framework_TestCase
 
         $this->assertMethod($api,'updateFromArray');
         $contact = $api->updateFromArray(array('name' => 'gugus'));
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
 
         $this->assertMethod($api,'update');
         $contact = $api->update('myname');
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
 
         $$this->assertMethod($api,'updateFromObject');
         $contact = $api->updateFromObject(new Contact());
-        $this->assertInstanceOf('Ibrows\EasySysBundle\Model\Contact', $contact);
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
 
     }
 
@@ -111,7 +111,7 @@ class APITest extends \PHPUnit_Framework_TestCase
 
     protected function mockConnection()
     {
-        return $this->getMock('Ibrows\EasySysBundle\Connection\ConnectionInterface');
+        return $this->getMock('Ibrows\EasySysLibrary\Connection\ConnectionInterface');
     }
 
 }

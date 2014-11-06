@@ -5,7 +5,7 @@
  * Date: 06.11.14
  * Time: 15:52
  */
-namespace Ibrows\EasySysBundle\Model;
+namespace Ibrows\EasySysLibrary\Model;
 
 class Contact {
 

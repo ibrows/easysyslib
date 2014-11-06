@@ -1,5 +1,5 @@
 <?php
-namespace Ibrows\EasySysBundle\Connection;
+namespace Ibrows\EasySysLibrary\Connection;
 
 class ConnectionException extends \Exception
 {

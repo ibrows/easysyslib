@@ -5,9 +5,9 @@
  * Date: 06.11.14
  * Time: 15:52
  */
-namespace Ibrows\EasySysBundle\Converter;
+namespace Ibrows\EasySysLibrary\Converter;
 
-use Ibrows\EasySysBundle\Model\Contact;
+use Ibrows\EasySysLibrary\Model\Contact;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ContactConverter
@@ -15,7 +15,7 @@ class ContactConverter
 
     protected $dataEasySys = array();
 
-    protected $modelClass = 'Ibrows\EasySysBundle\Model\Contact';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Contact';
     protected $mapping = array(
         'name_1' => 'firstName',
         'name_2' => 'firstName',

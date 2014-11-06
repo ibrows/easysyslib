@@ -6,10 +6,10 @@
  * Time: 11:38
  */
 
-namespace Ibrows\EasySysBundle\API;
+namespace Ibrows\EasySysLibrary\API;
 
 
-use Ibrows\EasySysBundle\Connection\ConnectionInterface;
+use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 
 interface APIInterface extends ConnectionInterface
 {

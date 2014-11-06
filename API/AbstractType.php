@@ -1,14 +1,14 @@
 <?php
-namespace Ibrows\EasySysBundle\API;
-use Ibrows\EasySysBundle\Connection\ConnectionInterface;
-use Ibrows\EasySysBundle\Converter\ContactConverter;
+namespace Ibrows\EasySysLibrary\API;
+use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
+use Ibrows\EasySysLibrary\Converter\ContactConverter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Console\Output\NullOutput;
 
-use Ibrows\EasySysBundle\Connection\Connection;
+use Ibrows\EasySysLibrary\Connection\Connection;
 
-use Ibrows\EasySysBundle\Connection\ConnectionException;
+use Ibrows\EasySysLibrary\Connection\ConnectionException;
 
 /**
  * @author marcsteiner
