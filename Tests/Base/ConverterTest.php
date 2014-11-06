@@ -53,6 +53,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
             array(array('firstName' => 'me')),
             array(array('firstName' => 'me', 'shizzle' => 'whizzle')),
             array(array()),
+            array(array('firstName' => 'äüöü¨?!^^`sdf`%&Ç*"')),
         );
     }
 
