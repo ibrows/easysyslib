@@ -18,7 +18,7 @@ class ContactConverter
     protected $modelClass = 'Ibrows\EasySysLibrary\Model\Contact';
     protected $mapping = array(
         'name_1' => 'firstName',
-        'name_2' => 'firstName',
+        'name_2' => 'lastName',
     );
 
     public function setArray($data)
@@ -35,6 +35,9 @@ class ContactConverter
     {
         $accessor = PropertyAccess::createPropertyAccessor();
         foreach ($this->mapping as $mappingEasySys => $mappingLib) {
+            if(is_array($objectOrArray)){
+                $mappingLib = "[$mappingLib]";
+            }
             $this->dataEasySys[$mappingEasySys] = $accessor->getValue($objectOrArray, $mappingLib);
         }
     }
