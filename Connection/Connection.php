@@ -319,7 +319,7 @@ class Connection implements ConnectionInterface
      */
     protected function getRequestUrl($resource, array $urlParams = array())
     {
-        $url = $this->getBaseUrl() . '/' . $resource;
+        $url = $this->getBaseUrl() . '/'. ltrim($resource, '/');
         return $urlParams ? $url . '?' . http_build_query($urlParams, null, '&') : $url;
     }
 }
