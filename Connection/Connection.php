@@ -215,6 +215,16 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+
+
+    /**
      * @param Response $response
      * @param array $loggerContext
      * @throws ContentException
