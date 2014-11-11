@@ -50,11 +50,22 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         return $credentials;
     }
 
+
+
     public function testList()
     {
         $api =$this->getApi();
         $all = $api->search(array(),null,3);
         $this->assertCount(3,$all);
+    }
+
+    public function testShow(){
+        $api =$this->getApi();
+        $all = $api->search(array(),null,1);
+        $one = array_pop($all);
+        $result = $api->show($one['id']);
+        $this->assertEquals($one['name_1'],$result['name_1']);
+        $this->assertEquals($one['name_2'],$result['name_2']);
     }
 
     protected function getApi(){
