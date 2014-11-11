@@ -4,7 +4,6 @@ namespace Ibrows\EasySysLibrary\Tests\Functional;
 
 use Buzz\Browser;
 use Buzz\Client\Curl;
-use Ibrows\EasySysLibrary\API\Contact;
 use Ibrows\EasySysLibrary\Connection\Connection;
 use Saxulum\HttpClient\Buzz\HttpClient;
 use Saxulum\HttpClient\HttpClientInterface;
@@ -17,7 +16,7 @@ use Saxulum\HttpClient\HttpClientInterface;
  * Date: 06.11.14
  * Time: 19:46
  */
-class ApiTest extends \PHPUnit_Framework_TestCase
+class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
@@ -50,15 +49,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         return $credentials;
     }
 
-    public function testList()
+    public function testListContacts()
     {
-        $api =$this->getApi();
-        $all = $api->search(array(),null,3);
-        $this->assertCount(3,$all);
-    }
-
-    protected function getApi(){
-        return new Contact($this->getConnection());
+        $connection = $this->getConnection();
+        $this->assertInternalType('array', $connection->call('/contact'));
     }
 
     protected function getConnection()

@@ -69,6 +69,14 @@ class AbstractType implements APIInterface
     }
 
     /**
+     * @return ConnectionInterface
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
+    /**
      * @return ConverterInterface
      */
     public function getConverter()
@@ -196,11 +204,13 @@ class AbstractType implements APIInterface
     public function search(array $criteria = array(), $type = null, $limit = 0, $offset = 0, $orderBy = null)
     {
         $append = '';
+        $method = 'GET';
         if (sizeof($criteria) > 0) {
             $append = '/search';
+            $criteria = $this->convertSimpleCriteria($criteria);
+            $method = 'POST';
         }
-        $criteria = $this->convertSimpleCriteria($criteria);
-        return $this->connection->call($this->getResource($type) . $append, array(), $criteria, "POST", $limit, $offset, $orderBy);
+        return $this->connection->call($this->getResource($type) . $append, array(), $criteria, $method, $limit, $offset, $orderBy);
     }
 
 

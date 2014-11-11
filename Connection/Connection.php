@@ -276,6 +276,9 @@ class Connection implements ConnectionInterface
      */
     protected function getRequest($resource, array $urlParams = array(), array $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $orderBy = null)
     {
+        $urlParams['limit']=$limit;
+        $urlParams['offset']=$offset;
+        $urlParams['orderBy']=$orderBy;
         $url = $this->getRequestUrl($resource, $urlParams);
         $content = $this->getRequestContent($postParams);
         $headers = $this->getRequestHeaders($method, $url, $content);
