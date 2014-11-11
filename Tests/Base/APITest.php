@@ -12,83 +12,120 @@ class APITest extends \PHPUnit_Framework_TestCase
     {
 
         $api = $this->getContactApi();
-        $this->assertTrue(method_exists($api, 'call'));
-        $this->assertTrue(method_exists($api, 'show'));
-        $this->assertTrue(method_exists($api, 'search'));
-        $this->assertTrue(method_exists($api, 'create'));
-        $this->assertTrue(method_exists($api, 'update'));
-        $this->assertTrue(method_exists($api, 'delete'));
+        $this->assertMethod($api, 'call');
+        $this->assertMethod($api, 'show');
+        $this->assertMethod($api, 'search');
+        $this->assertMethod($api, 'create');
+        $this->assertMethod($api, 'update');
+        $this->assertMethod($api, 'delete');
 
+
+
+    }
+    public function testConvertCriteria()
+    {
+
+        $api = $this->getContactApi();
+        $result = $api->convertSimpleCriteria(array());
+        $this->assertEquals(array(),$result);
+
+        $result = $api->convertSimpleCriteria(array(array('field'=>'name', 'value'=>'d')));
+        $this->assertEquals(array(array('field'=>'name', 'value'=>'d')),$result);
+
+        $result = $api->convertSimpleCriteria(array('name'=> 'd'));
+        $this->assertEquals(array(array('field'=>'name', 'value'=>'d','criteria' => '=')),$result);
+
+        $result = $api->convertSimpleCriteria(array('name'=> 'd'),'like');
+        $this->assertEquals(array(array('field'=>'name', 'value'=>'d','criteria' => 'like')),$result);
+
+        $result = $api->convertSimpleCriteria(array('name'=> 'd', 'firstName'=>'b'));
+        $this->assertEquals(array(array('field'=>'name', 'value'=>'d','criteria' => '='),array('field'=>'firstName', 'value'=>'b','criteria' => '=')),$result);
 
     }
 
     public function testContactShow()
     {
         $api = $this->getContactApi();
-        $this->assertTrue(method_exists($api, 'show'), 'method show dont exists');
-        $contact = $api->show(1);
+        $this->assertMethod($api, 'show');
+        $contact = $api->showArray(1);
+        $this->assertTrue(is_array($contact));
+        $contact = $api->showObject(1);
         $this->assertTrue(is_object($contact));
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
+        $this->assertContact($contact);
     }
 
     public function testContactSearch()
     {
         $api = $this->getContactApi();
-        $this->assertMethod($api,'search');
+        $this->assertMethod($api, 'search');
+        $mock = $this->mockConnection();
+        $mock->expects($this->exactly(3))
+            ->method('call')
+            ->will($this->returnValue(array(array())));
+        $api->setConnection($mock);
+
         $contacts = $api->search(array('name' => 'gugus'));
-        if (is_object($contacts)) {
-            $this->assertInstanceOf('\Iterator', $contacts);
-        } else {
-            $this->assertTrue(is_array($contacts));
-        }
+        $this->assertTrue(is_array($contacts));
+        $contacts = $api->searchObjects(array('name' => 'gugus'));
         $contact = current($contacts);
-        $this->assertInstanceOf('\Iterator', $contact);
+        $this->assertContact($contact);
+        $contacts = $api->searchArrays(array('name' => 'gugus'));
+        $contact = current($contacts);
+        $this->assertTrue(is_array($contact));
     }
 
-    protected function assertMethod($object, $method){
-        $this->assertTrue(method_exists($object, $method), "method $method don't exists");
-    }
 
     public function testContactCreate()
     {
         $api = $this->getContactApi();
-        $this->assertMethod($api,'createFromObject');
+        $this->assertMethod($api, 'createFromObject');
         $contact = $api->createFromObject($this->getContactModel());
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
+        $this->assertContact($contact);
 
-        $this->assertMethod($api,'createFromArray');
+        $this->assertMethod($api, 'createFromArray');
         $contact = $api->createFromArray(array('name' => 'gugus'));
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
-
-        $this->assertMethod($api,'create');
-        $contact = $api->create('myname');
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
-
+        $this->assertTrue(is_array($contact));
 
     }
 
     public function testContactUpdate()
     {
         $api = $this->getContactApi();
+        $mock = $this->mockConnection();
+        $mock->expects($this->exactly(3))
+            ->method('call')
+            ->will($this->returnValue(array('name_1'=>'gugüs',)));
+        $api->setConnection($mock);
 
-        $this->assertMethod($api,'updateFromArray');
-        $contact = $api->updateFromArray(array('name' => 'gugus'));
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
+        $this->assertMethod($api, 'update');
+        $contact = $api->update(1,array('name_1'=>'gugüs'));
+        $this->assertTrue(is_array($contact));
+        $this->assertEquals(array('name_1'=>'gugüs'),$contact);
 
-        $this->assertMethod($api,'update');
-        $contact = $api->update('myname');
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
+        $this->assertMethod($api, 'updateFromArray');
+        $contact = $api->updateFromArray(1,array('firstName' => 'gugüs'));
+        $this->assertTrue(is_array($contact));
+        $this->assertEquals(array('firstName'=>'gugüs'),$contact);
 
-        $$this->assertMethod($api,'updateFromObject');
-        $contact = $api->updateFromObject(new Contact());
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $contact);
+        $model = new \Ibrows\EasySysLibrary\Model\Contact('gugüs', null, null, null, null, null, null, null);
+        $this->assertMethod($api, 'updateFromObject');
+        $contact = $api->updateFromObject(1,$model);
+        $this->assertContact( $contact);
+        $this->assertEquals($model,$contact);
 
     }
 
     public function testContactDelete()
     {
         $api = $this->getContactApi();
-        $this->assertMethod($api,'delete');
+        $this->assertMethod($api, 'delete');
+        $mock = $this->mockConnection();
+        $mock->expects($this->exactly(1))
+            ->method('call')
+            ->will($this->returnValue(array('success'=>true)));
+        $api->setConnection($mock);
+
+
         $return = $api->delete(1);
         $this->assertTrue($return);
 
@@ -102,9 +139,10 @@ class APITest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
     }
+
     protected function getContactModel()
     {
-        return new \Ibrows\EasySysLibrary\Model\Contact('first','last',null,null,null,null,null,null);
+        return new \Ibrows\EasySysLibrary\Model\Contact('first', 'last', null, null, null, null, null, null);
     }
 
     protected function getContactApi()
@@ -114,7 +152,19 @@ class APITest extends \PHPUnit_Framework_TestCase
 
     protected function mockConnection()
     {
-        return $this->getMock('Ibrows\EasySysLibrary\Connection\ConnectionInterface');
+
+        $mock = $this->getMock('Ibrows\EasySysLibrary\Connection\ConnectionInterface');
+        return $mock;
+    }
+
+    protected function assertMethod($object, $method)
+    {
+        $this->assertTrue(method_exists($object, $method), "method $method don't exists");
+    }
+
+    protected function assertContact($object)
+    {
+        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $object);
     }
 
 }

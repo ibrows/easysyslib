@@ -6,7 +6,7 @@
  * Time: 13:31
  */
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\ApiOld;
 
 use Ibrows\EasySysLibrary\Connection\Connection;
 

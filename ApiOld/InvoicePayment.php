@@ -1,20 +1,20 @@
 <?php
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\ApiOld;
 
 use Ibrows\EasySysLibrary\Connection\Connection;
 /**
  * @author cyrillgsell
  *
- * Mahnung
+ * Zahlung
  */
 
-class InvoiceReminder extends AbstractType
+class InvoicePayment extends AbstractType
 {
 
     public function __construct(Connection $connection)
     {
         parent::__construct($connection);
-        $this->type = 'kb_reminder';
+        $this->type = 'payment';
         $this->parentType = 'kb_invoice';
     }
 

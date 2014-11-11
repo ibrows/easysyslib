@@ -13,7 +13,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  * Class AbstractConverter
  * @package Ibrows\EasySysLibrary\Converter
  */
-abstract class AbstractConverter
+abstract class AbstractConverter implements ConverterInterface
 {
 
     /**
@@ -143,8 +143,38 @@ abstract class AbstractConverter
      */
     public function setDataEasySys($dataEasySys)
     {
+        if($dataEasySys == null){
+            $dataEasySys = array();
+        }
         $this->dataEasySys = $dataEasySys;
     }
 
+    /**
+     * @return array
+     */
+    public function convertEasySysToArray(array $result = null){
+        $this->setDataEasySys($result);
+        return $this->getArray();
+    }
+    /**
+     * @return object
+     */
+    public function convertEasySysToObject($result){
+        $this->setDataEasySys($result);
+        return $this->getObject();
+    }
 
+    /**
+     * @param $mixed
+     * @return array
+     */
+    public function convertToEasySys($mixed){
+        if(is_array($mixed)){
+            $this->setArray($mixed);
+        }else{
+            $this->setObject($mixed);
+        }
+        return $this->getDataEasySys();
+
+    }
 }

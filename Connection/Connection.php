@@ -14,6 +14,7 @@ namespace Ibrows\EasySysLibrary\Connection;
 use Ibrows\EasySysLibrary\Connection\Exception\ConnectionException;
 use Ibrows\EasySysLibrary\Connection\Exception\ContentException;
 use Ibrows\EasySysLibrary\Connection\Exception\ContentTypeException;
+use Ibrows\EasySysLibrary\Connection\Exception\Status404Exception;
 use Ibrows\EasySysLibrary\Connection\Exception\StatusCodeException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -136,6 +137,9 @@ class Connection implements ConnectionInterface
          */
         if (($statusCode >= 300 || $statusCode < 200) && $statusCode !== 304) {
             $logger->alert('StatusCode ' . $statusCode . ' received!', $loggerContext);
+            if($statusCode == 404){
+                throw new Status404Exception();
+            }
             throw new StatusCodeException('StatusCode ' . $statusCode . '  recevied - Expected StatusCode 2xx');
         }
 

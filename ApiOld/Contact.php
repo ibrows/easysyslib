@@ -1,8 +1,7 @@
 <?php
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\ApiOld;
 use Ibrows\EasySysLibrary\Connection\Connection;
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
 /**
  * @author marcsteiner
@@ -27,7 +26,6 @@ class Contact extends AbstractType
     {
         parent::__construct($connection);
         $this->type = 'contact';
-        $this->converter = new ContactConverter();
     }
 
     public function searchForExistingPerson($mail, $firstname = null, $name = null, $zip = null, $city = null)
@@ -170,16 +168,14 @@ class Contact extends AbstractType
 
     public function save()
     {
-        return call_user_func_array(array('addContact', $this), func_get_args());
+        return call_user_method_array('addContact', $this, func_get_args());
     }
 
-    public function create(array $data, $type = null, $includeUserId = true)
+    public function create($vars, $type = null, $userid=true)
     {
         $vars['owner_id'] = $this->connection->getUserId();
-        return parent::create($data, $type,$includeUserId);
+        return parent::create($vars, $type,$userid);
     }
-
-
     /**
      * @return int
      */
@@ -194,6 +190,7 @@ class Contact extends AbstractType
     public function setTypeIdPrivate($typeIdPrivate)
     {
         $this->typeIdPrivate = $typeIdPrivate;
+        return $this;
     }
 
     /**
@@ -210,6 +207,7 @@ class Contact extends AbstractType
     public function setTypeIdCompany($typeIdCompany)
     {
         $this->typeIdCompany = $typeIdCompany;
+        return $this;
     }
 
     /**
@@ -232,6 +230,7 @@ class Contact extends AbstractType
                     $groupId
             );
         }
+        return $this;
     }
 
     /**
