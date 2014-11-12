@@ -94,19 +94,35 @@ abstract class AbstractConverter implements ConverterInterface
         }
     }
 
+    protected function getPropertyAccessor(){
+        return PropertyAccess::createPropertyAccessor();
+    }
+
     /**
      * @param $objectOrArray
      * @return mixed
      */
     protected function get($objectOrArray)
     {
-        $accessor = PropertyAccess::createPropertyAccessor();
+        $additionalData = array();
+        $accessor = $this->getPropertyAccessor();
         foreach ($this->dataEasySys as $key => $value) {
+            if(!array_key_exists($key,$this->getMapping())){
+                $additionalData[$key] = $value;
+                continue;
+            }
             $mappingLib = $this->getMapping()[$key];
             if (is_array($objectOrArray)) {
                 $mappingLib = "[$mappingLib]";
             }
             $accessor->setValue($objectOrArray, $mappingLib, $value);
+        }
+        if(count($additionalData)>0){
+            if (is_array($objectOrArray)) {
+                $accessor->setValue($objectOrArray, '[additionalData]', $additionalData);
+            }else{
+                $accessor->setValue($objectOrArray, 'additionalData', $additionalData);
+            }
         }
         return $objectOrArray;
     }

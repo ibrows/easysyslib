@@ -17,6 +17,10 @@ class Contact {
      * @var string
      */
     protected $lastName;
+    /**
+     * @var array
+     */
+    protected $additionalData;
 
     public function __construct($firstName, $lastName, $mail, $phone_fixed, $address, $postcode, $city, $contact_type_id)
     {
@@ -56,6 +60,20 @@ class Contact {
         $this->lastName = $lastName;
     }
 
+    /**
+     * @return array
+     */
+    public function getAdditionalData()
+    {
+        return $this->additionalData;
+    }
 
+    /**
+     * @param array $additionalData
+     */
+    public function setAdditionalData($additionalData)
+    {
+        $this->additionalData = $additionalData;
+    }
 
 }
