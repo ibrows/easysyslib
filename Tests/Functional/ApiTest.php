@@ -81,12 +81,13 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     public function testShowMapping(){
         $api =$this->getApi();
         $data = $this->getValidData();
-        $result = $api->show($data['id']);
+        $resultReal = $api->show($data['id']);
         $this->assertTrue(is_array($result));
 
-        $result = $api->showArray($data['id']);
-        $this->assertEquals($data['name_1'],$result['firstName']);
-        $this->assertEquals($data['name_2'],$result['lastName']);
+        $resultMapped = $api->showArray($data['id']);
+
+        $this->assertCount(count($resultReal),$resultMapped);
+
     }
 
     protected function getApi(){
