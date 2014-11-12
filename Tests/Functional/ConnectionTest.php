@@ -30,7 +30,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array|null
      */
-    protected function getCredentials()
+    protected  static function getCredentials()
     {
         $file = __DIR__ . '/credentials.ini';
 
@@ -55,12 +55,14 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $connection->call('/contact'));
     }
 
-    protected function getConnection()
+    public static function getConnection()
     {
-        $credentials = $this->getCredentials();
-
+        $credentials = self::getCredentials();
+        if($credentials == null){
+            return null;
+        }
         return new Connection(
-            $this->getHttpClient(),
+            self::getHttpClient(),
             $credentials['company_name'],
             $credentials['api_key'],
             $credentials['signature_key'],
@@ -71,7 +73,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @return HttpClientInterface
      */
-    protected function getHttpClient()
+    protected  static  function getHttpClient()
     {
         $client = new Curl();
         $client->setVerifyPeer(false);
