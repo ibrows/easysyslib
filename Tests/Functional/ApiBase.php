@@ -7,6 +7,10 @@ use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
 abstract class ApiBase extends \PHPUnit_Framework_TestCase
 {
+    protected static $listData;
+
+    protected static $createData;
+
     protected function setUp()
     {
         if (!$this->getConnection()) {
@@ -16,7 +20,6 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected static $listData;
 
     public function testList()
     {
@@ -40,6 +43,14 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $all);
         $this->assertArrayHasKey('firstName', $all[0]);
 
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCreateId()
+    {
+        return static::$createData['id'];
     }
 
     /**
@@ -175,6 +186,34 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data['name_1'], $result['name_1']);
         $this->assertEquals($data['name_2'], $result['name_2']);
         $this->assertEquals($data['mail'], $result['mail']);
+    }
+
+
+    public function testCreate()
+    {
+        $api = $this->getApi();
+        $result = $api->create(array('name_1' => 'testabc'));
+        $this->assertTrue(is_array($result));
+        $this->assertEquals('testabc', $result['name_1']);
+        static::$createData = $result;
+    }
+
+    public function testUpdate()
+    {
+        $api = $this->getApi();
+        $result = $api->update($this->getCreateId(), array('name_1' => 'testupdateabc', 'mail' => 'testupdate@abc.ch',));
+        $this->assertTrue(is_array($result));
+        $this->assertEquals('testupdateabc', $result['name_1']);
+        $this->assertEquals('testupdate@abc.ch', $result['mail']);
+        static::$createData = $result;
+    }
+
+    public function testDelete()
+    {
+        $api = $this->getApi();
+        $result = $api->delete($this->getCreateId());
+        $this->assertTrue($result);
+        static::$createData = null;
     }
 
     protected function getConverter()

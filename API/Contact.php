@@ -1,6 +1,6 @@
 <?php
 namespace Ibrows\EasySysLibrary\API;
-use Ibrows\EasySysLibrary\Connection\Connection;
+
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
@@ -14,7 +14,7 @@ class Contact extends AbstractType
     protected $typeIdPrivate = 2;
     protected $typeIdCompany = 1;
     protected $groupId = array(
-            151
+        151
     );
     protected $countryId = 1;
     protected $description = 'Kontaktperson';
@@ -59,7 +59,6 @@ class Contact extends AbstractType
         return $this->searchArrays($arr);
 
     }
-
 
 
     public function createCompany($name, $address, $postcode, $city)
@@ -125,7 +124,7 @@ class Contact extends AbstractType
             $person = $this->searchForExistingPerson($mail, $firstname, $name, $zip, $city);
         }
         if (sizeof($person) > 0 && isset($person[0]['id'])) {
-            $this->output->writeln("found person <comment>$mail</comment>  <info>". $person[0]['id']."</info>");
+            $this->output->writeln("found person <comment>$mail</comment>  <info>" . $person[0]['id'] . "</info>");
             $person = $person[0];
 
         } else {
@@ -176,15 +175,22 @@ class Contact extends AbstractType
         }
     }
 
-    public function save()
-    {
-        return call_user_func_array(array('addContact', $this), func_get_args());
-    }
-
+    /**
+     * @param array $data
+     * @param null  $type
+     * @param bool  $includeUserId
+     * @return array
+     */
     public function create(array $data, $type = null, $includeUserId = true)
     {
-        $vars['owner_id'] = $this->connection->getUserId();
-        return parent::create($data, $type,$includeUserId);
+        if (!array_key_exists('owner_id', $data)) {
+            $data['owner_id'] = $this->connection->getUserId();
+        }
+        if (!array_key_exists('contact_type_id', $data)) {
+            $data['contact_type_id'] = $this->getTypeIdPrivate();
+        }
+
+        return parent::create($data, $type, $includeUserId);
     }
 
 // <editor-fold desc="Simple Getter Setter" defaultstate="collapsed" >
@@ -283,7 +289,6 @@ class Contact extends AbstractType
     {
         $this->typeIdPrivate = $typeIdPrivate;
     }
-
 
 
 // </editor-fold>

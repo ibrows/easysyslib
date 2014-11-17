@@ -136,11 +136,12 @@ class Connection implements ConnectionInterface
          * @see https://docs.easysys.ch/#http-codes
          */
         if (($statusCode >= 300 || $statusCode < 200) && $statusCode !== 304) {
+            $content = json_decode($response->getContent());
             $logger->alert('StatusCode ' . $statusCode . ' received!', $loggerContext);
             if($statusCode == 404){
-                throw new Status404Exception();
+                throw Status404Exception::createFromContent($content);
             }
-            throw new StatusCodeException('StatusCode ' . $statusCode . '  recevied - Expected StatusCode 2xx');
+            throw StatusCodeException::createFromContent($content);
         }
 
         return $this->transformResponse($response, $loggerContext);
