@@ -103,11 +103,11 @@ class APITest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('name_1'=>'gugüs'),$contact);
 
         $this->assertMethod($api, 'updateFromArray');
-        $contact = $api->updateFromArray(1,array('firstName' => 'gugüs'));
+        $contact = $api->updateFromArray(1,array('name' => 'gugüs'));
         $this->assertTrue(is_array($contact));
-        $this->assertEquals(array('firstName'=>'gugüs'),$contact);
+        $this->assertEquals(array('name'=>'gugüs'),$contact);
 
-        $model = new \Ibrows\EasySysLibrary\Model\Contact('gugüs', null, null, null, null, null, null, null);
+        $model = new \Ibrows\EasySysLibrary\Model\Contact(null,'gugüs',null,null);
         $this->assertMethod($api, 'updateFromObject');
         $contact = $api->updateFromObject(1,$model);
         $this->assertContact( $contact);
@@ -142,7 +142,9 @@ class APITest extends \PHPUnit_Framework_TestCase
 
     protected function getContactModel()
     {
-        return new \Ibrows\EasySysLibrary\Model\Contact('first', 'last', null, null, null, null, null, null);
+        $model =  new \Ibrows\EasySysLibrary\Model\Contact(null, 'last', null, null);
+        $model->setFirstName('first');
+        return $model;
     }
 
     protected function getContactApi()

@@ -16,11 +16,11 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $converter = new ContactConverter();
         $converter->setArray($input);
         $return = $converter->getDataEasySys();
-        $this->assertArrayHasKey('name_1', $return);
+        $this->assertArrayHasKey('name_2', $return);
         if (array_key_exists('firstName', $input)) {
-            $this->assertEquals($input['firstName'], $return['name_1']);
+            $this->assertEquals($input['firstName'], $return['name_2']);
         }else{
-            $this->assertNull( $return['name_1']);
+            $this->assertNull( $return['name_2']);
         }
 
         $converter->setDataEasySys($return);
@@ -35,12 +35,17 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
 
     }
+    protected function getContactModel()
+    {
+        $model =  new \Ibrows\EasySysLibrary\Model\Contact(null, 'last', null, null);
+        $model->setFirstName('first');
+        return $model;
+    }
 
     public function testContactConverterObject()
     {
         $converter = new ContactConverter();
-        $model = new \Ibrows\EasySysLibrary\Model\Contact('first', 'last', null, null, null, null, null, null);
-        $converter->setObject($model);
+        $converter->setObject($this->getContactModel());
         $this->assertArrayHasKey('name_1', $converter->getDataEasySys());
 
 

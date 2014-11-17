@@ -32,25 +32,14 @@ class Contact extends AbstractType
 
     public function searchForExistingPerson($mail, $firstname = null, $name = null, $zip = null, $city = null)
     {
-        $simplecrits = array(
-                'name_1' => $name,
-                'name_2' => $firstname,
-                'mail' => $mail,
-                'postcode' => $zip,
-                'city' => $city,
-        );
-
-        return $this->find($simplecrits);
+        $arr = compact(array_keys(get_defined_vars()));
+        return $this->searchArrays($arr);
     }
 
-    public function searchForExistingCompany($plz, $city, $company)
+    public function searchForExistingCompany($plz, $city, $name)
     {
-        $simplecrits = array(
-                'name_1' => $company,
-                'postcode' => $plz,
-                'city' => $city
-        );
-        return $this->find($simplecrits);
+        $arr = compact(array_keys(get_defined_vars()));
+        return $this->searchArrays($arr);
 
     }
 

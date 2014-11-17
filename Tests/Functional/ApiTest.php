@@ -68,13 +68,13 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
         $result = $api->showArray($data['id']);
         $this->assertTrue(is_array($result));
-        $this->assertEquals($data['name_1'],$result['firstName']);
-        $this->assertEquals($data['name_2'],$result['lastName']);
+        $this->assertEquals($data['name_1'],$result['name']);
+        $this->assertEquals($data['name_2'],$result['firstName']);
 
         $result = $api->showObject($data['id']);
         $this->assertTrue(is_object($result));
-        $this->assertEquals($data['name_1'],$result->getFirstName());
-        $this->assertEquals($data['name_2'],$result->getLastName());
+        $this->assertEquals($data['name_1'],$result->getLastName());
+        $this->assertEquals($data['name_2'],$result->getFirstName());
 
     }
 
@@ -82,11 +82,17 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $api =$this->getApi();
         $data = $this->getValidData();
         $resultReal = $api->show($data['id']);
-        $this->assertTrue(is_array($result));
+        $this->assertTrue(is_array($resultReal));
 
         $resultMapped = $api->showArray($data['id']);
-
-        $this->assertCount(count($resultReal),$resultMapped);
+        if(array_key_exists('addiationalData',$resultMapped)){
+            echo "unmapped EasySys values \n";
+            foreach ($resultMapped['additionalData'] as $key => $value) {
+                $type = gettype($value);
+                echo "'$key' => '$key', // $type \n";
+            }
+        }
+        $this->assertCount(count($resultReal),$resultMapped, "not all EasySys values are mapped");
 
     }
 
