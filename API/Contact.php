@@ -101,7 +101,7 @@ class Contact extends AbstractType
 
     protected function addContactWithCompany($name, $firstname, $mail, $zip, $city, $address, $phone, $company, $identify_precision = self::IDENTIFY_PRECISION_MINIMUM)
     {
-        $this->output->writeln("try to add company <comment>$company</comment>");
+        $this->logger->info("try to add company <comment>$company</comment>");
         $contactcompany = array();
         if ($identify_precision == self::IDENTIFY_PRECISION_MINIMUM) {
             $contactcompany = $this->searchForExistingCompany(null, null, $company);
@@ -109,14 +109,14 @@ class Contact extends AbstractType
             $contactcompany = $this->searchForExistingCompany($zip, $city, $company);
         }
         if (sizeof($contactcompany) > 0 && isset($contactcompany[0]['id'])) {
-            $this->output->writeln("found company <comment>$zip, $city, $company</comment>");
+            $this->logger->info("found company <comment>$zip, $city, $company</comment>");
             $contactcompany = $contactcompany[0];
         } else {
-            $this->output->writeln("create new company <comment>$zip, $city, $company</comment>");
+            $this->logger->info("create new company <comment>$zip, $city, $company</comment>");
             $contactcompany = $this->createCompany($company, $address, $zip, $city);
         }
         $companyid = $contactcompany['id'];
-        $this->output->writeln("try to add person <comment>$mail</comment>");
+        $this->logger->info("try to add person <comment>$mail</comment>");
         $person = array();
         if ($identify_precision == self::IDENTIFY_PRECISION_MINIMUM) {
             $person = $this->searchForExistingPerson($mail);
@@ -124,56 +124,71 @@ class Contact extends AbstractType
             $person = $this->searchForExistingPerson($mail, $firstname, $name, $zip, $city);
         }
         if (sizeof($person) > 0 && isset($person[0]['id'])) {
-            $this->output->writeln("found person <comment>$mail</comment>  <info>" . $person[0]['id'] . "</info>");
+            $this->logger->info("found person <comment>$mail</comment>  <info>" . $person[0]['id'] . "</info>");
             $person = $person[0];
 
         } else {
-            $this->output->writeln("create new person <comment>$mail, $name, $firstname</comment>");
+            $this->logger->info("create new person <comment>$mail, $name, $firstname</comment>");
             $person = $this->createPerson($name, $firstname, $mail, $phone, $address, $zip, $city);
         }
         $personid = $person['id'];
         //Check if there is already a relation between the two contacts
         $relation = $this->searchForRelation($companyid, $personid);
         if (!count($relation)) {
-            $this->output->writeln("save new relation <comment>$companyid, $personid</comment>");
+            $this->logger->info("save new relation <comment>$companyid, $personid</comment>");
             $this->createContactRelation($companyid, $personid);
         } else {
-            $this->output->writeln("relation allerady exists<comment>$companyid, $personid</comment>");
+            $this->logger->info("relation allerady exists<comment>$companyid, $personid</comment>");
         }
         $person['company'] = $companyid;
         return $person;
     }
 
-    protected function addContactWithoutCompany($name, $firstname, $mail, $zip, $city, $address, $phone, $identify_precision = self::IDENTIFY_PRECISION_MINIMUM)
+    protected function addContactWithoutCompany($name, $firstName, $mail, $postcode, $city, $address, $phone, $identify_precision = self::IDENTIFY_PRECISION_MINIMUM)
     {
-        $this->output->writeln("try to add person <comment>$name, $firstname</comment>");
+        $this->logger->info("try to add person <comment>$name, $firstname</comment>");
         $person = array();
         if ($identify_precision == self::IDENTIFY_PRECISION_MINIMUM) {
             $person = $this->searchForExistingPerson($mail);
         } elseif ($identify_precision == self::IDENTIFY_PRECISION_ALL) {
-            $person = $this->searchForExistingPerson($mail, $firstname, $name, $zip, $city);
+            $person = $this->searchForExistingPerson($mail, $firstName, $name, $postcode, $city);
         }
         if (sizeof($person) > 0 && isset($person[0]['id'])) {
-            $this->output->writeln("found person <comment>$name, $firstname</comment>");
+            $this->logger->info("found person <comment>$name, $firstName</comment>");
             $person = $person[0];
 
         } else {
-            $this->output->writeln("create new person <comment>$name, $firstname</comment>");
-            $person = $this->createPerson($name, $firstname, $mail, $phone, $address, $zip, $city);
+            $this->logger->info("create new person <comment>$name, $firstName</comment>");
+            $person = $this->createPerson($name, $firstName, $mail, $phone, $address, $postcode, $city);
         }
         return $person;
     }
 
-    public function addContact($name, $firstname, $mail, $zip, $city, $address, $phone = null, $company = null, $identify_precision = self::IDENTIFY_PRECISION_MINIMUM)
+    public function addContact($name, $firstName, $mail, $postcode, $city, $address, $phone = null, $company = null, $identifyPrecision = self::IDENTIFY_PRECISION_MINIMUM)
     {
-        $this->output->writeln("try to add contact <comment>$name</comment>");
+        $this->logger->info("try to add contact <comment>$name</comment>");
         $id = null;
         if ($company != null) {
-            return $this->addContactWithCompany($name, $firstname, $mail, $zip, $city, $address, $phone, $company, $identify_precision);
+            return $this->addContactWithCompany($name, $firstName, $mail, $postcode, $city, $address, $phone, $company, $identifyPrecision);
         } else {
-            return $this->addContactWithoutCompany($name, $firstname, $mail, $zip, $city, $address, $phone, $identify_precision);
+            return $this->addContactWithoutCompany($name, $firstName, $mail, $postcode, $city, $address, $phone, $identifyPrecision);
         }
     }
+
+    /**
+     * @param int   $id
+     * @param array $data
+     * @param null  $type
+     * @return array
+     */
+    public function update($id, array $data, $type = null)
+    {
+        unset($data['is_lead']);
+        unset($data['profile_image']);
+        unset($data['updated_at']);
+        return parent::update($id, $data, $type);
+    }
+
 
     /**
      * @param array $data
@@ -183,6 +198,10 @@ class Contact extends AbstractType
      */
     public function create(array $data, $type = null, $includeUserId = true)
     {
+        unset($data['title_id']);
+        unset($data['is_lead']);
+        unset($data['profile_image']);
+        unset($data['updated_at']);
         if (!array_key_exists('owner_id', $data)) {
             $data['owner_id'] = $this->connection->getUserId();
         }

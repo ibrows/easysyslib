@@ -17,6 +17,11 @@ abstract class AbstractConverter implements ConverterInterface
 {
 
     /**
+     * @var bool
+     */
+    protected $setNull = false;
+
+    /**
      * @var array
      */
     protected $dataEasySys = array();
@@ -90,7 +95,10 @@ abstract class AbstractConverter implements ConverterInterface
             if (is_array($objectOrArray)) {
                 $mappingLib = "[$mappingLib]";
             }
-            $this->dataEasySys[$mappingEasySys] = $accessor->getValue($objectOrArray, $mappingLib);
+            $value = $accessor->getValue($objectOrArray, $mappingLib);
+            if ($this->setNull || $value !== null) {
+                $this->dataEasySys[$mappingEasySys] = $value;
+            }
         }
     }
 
@@ -220,4 +228,22 @@ abstract class AbstractConverter implements ConverterInterface
         }
         return $this->mapping[$keyEasySys];
     }
+
+    /**
+     * @return boolean
+     */
+    public function isSetNull()
+    {
+        return $this->setNull;
+    }
+
+    /**
+     * @param boolean $setNull
+     */
+    public function setSetNull($setNull)
+    {
+        $this->setNull = $setNull;
+    }
+
+
 }

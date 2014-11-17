@@ -18,6 +18,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     public function testContactConverter(array $input)
     {
         $converter = new ContactConverter();
+        $converter->setSetNull(true);
         $converter->setArray($input);
         $return = $converter->getDataEasySys();
         $this->assertArrayHasKey('name_2', $return);

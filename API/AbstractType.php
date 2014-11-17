@@ -283,7 +283,8 @@ class AbstractType implements APIInterface
      */
     public function createFromArray(array $data, $type = null, $includeUserId = true)
     {
-        $result = $this->create($this->converter->convertToEasySys($data), $type, $includeUserId);
+        $data = $this->converter->convertToEasySys($data);
+        $result = $this->create($data, $type, $includeUserId);
         return $this->converter->convertEasySysToArray($result);
     }
 

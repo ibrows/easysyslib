@@ -9,8 +9,6 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
 {
     protected static $listData;
 
-    protected static $createData;
-
     protected function setUp()
     {
         if (!$this->getConnection()) {
@@ -43,14 +41,6 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $all);
         $this->assertArrayHasKey('firstName', $all[0]);
 
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCreateId()
-    {
-        return static::$createData['id'];
     }
 
     /**
@@ -195,26 +185,70 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
         $result = $api->create(array('name_1' => 'testabc'));
         $this->assertTrue(is_array($result));
         $this->assertEquals('testabc', $result['name_1']);
-        static::$createData = $result;
+        $this->update($result);
     }
 
-    public function testUpdate()
+    public function update($data)
     {
         $api = $this->getApi();
-        $result = $api->update($this->getCreateId(), array('name_1' => 'testupdateabc', 'mail' => 'testupdate@abc.ch',));
+        $result = $api->update($data['id'], array('name_1' => 'testupdateabc', 'mail' => 'testupdate@abc.ch',));
         $this->assertTrue(is_array($result));
         $this->assertEquals('testupdateabc', $result['name_1']);
         $this->assertEquals('testupdate@abc.ch', $result['mail']);
-        static::$createData = $result;
+        $this->delete($data['id']);
     }
 
-    public function testDelete()
+    public function delete($id)
     {
         $api = $this->getApi();
-        $result = $api->delete($this->getCreateId());
+        $result = $api->delete($id);
         $this->assertTrue($result);
-        static::$createData = null;
     }
+
+    public function testCreateArray()
+    {
+        $api = $this->getApi();
+        $result = $api->createFromArray(array('name' => 'testabc'));
+        $this->assertTrue(is_array($result));
+        $this->assertEquals('testabc', $result['name']);
+        $this->updateArray($result);
+    }
+
+    public function updateArray($data)
+    {
+        $api = $this->getApi();
+        $result = $api->updateFromArray($data['id'], array('name' => 'testupdateabc', 'mail' => 'testupdate@abc.ch',));
+        $this->assertTrue(is_array($result));
+        $this->assertEquals('testupdateabc', $result['name']);
+        $this->assertEquals('testupdate@abc.ch', $result['mail']);
+        $this->delete($data['id']);
+    }
+
+
+    public function testCreateObject()
+    {
+        $api = $this->getApi();
+        $object = new \Ibrows\EasySysLibrary\Model\Contact($api->getTypeIdPrivate(),'testabc',$api->getConnection()->getUserId(),$api->getConnection()->getUserId());
+        $result = $api->createFromObject($object);
+        $this->assertModel($object);
+        $this->assertEquals('testabc', $result->getName());
+        $this->updateObject($result);
+    }
+
+    public function updateObject($object)
+    {
+        $api = $this->getApi();
+        $object->setName('testupdateabc');
+        $object->setMail('testupdate@abc.ch');
+        $result = $api->updateFromObject($object->getId(),$object);
+        $this->assertModel($object);
+        $this->assertEquals($object->getName(), $result->getName());
+        $this->assertEquals($object->getMail(), $result->getMail());
+        $this->assertGreaterThan($object->getUpdatedAt(), $result->getUpdatedAt());
+        $this->delete($result->getId());
+    }
+
+
 
     protected function getConverter()
     {
@@ -235,4 +269,5 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $object);
     }
+
 }
