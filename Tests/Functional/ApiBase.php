@@ -112,7 +112,7 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
     {
         $api = $this->getApi();
         $data = $this->getValidData();
-        $result = $api->search(array('name_1' => $data['name_1'],'mail'=>$data['mail'] ));
+        $result = $api->search(array('name_1' => $data['name_1'], 'mail' => $data['mail']));
         $this->assertTrue(is_array($result));
         $result = array_shift($result);
         $this->assertTrue(is_array($result));
@@ -125,7 +125,7 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
     {
         $api = $this->getApi();
         $data = $this->getValidArray();
-        $result = $api->searchArrays(array('name' => $data['name'],'mail'=>$data['mail'] ));
+        $result = $api->searchArrays(array('name' => $data['name'], 'mail' => $data['mail']));
         $this->assertTrue(is_array($result));
         $result = array_shift($result);
         $this->assertTrue(is_array($result));
@@ -138,11 +138,43 @@ abstract class ApiBase extends \PHPUnit_Framework_TestCase
     {
         $api = $this->getApi();
         $data = $this->getValidObject();
-        $result = $api->searchObjects(array('name' => $data->getName(),'mail'=>$data->getMail() ));
+        $result = $api->searchObjects(array('name' => $data->getName(), 'mail' => $data->getMail()));
         $this->assertTrue(is_array($result));
         $result = array_shift($result);
         $this->assertModel($result);
         $this->assertEquals($data, $result);
+    }
+
+    public function testSearchCriteria()
+    {
+        $api = $this->getApi();
+        $data = $this->getValidData();
+        $criteria = $api->convertSimpleCriteria(array('name_1' => $data['name_1'], 'mail' => $data['mail']), 'like');
+        $result = $api->search($criteria);
+        $this->assertTrue(is_array($result));
+        $result = array_shift($result);
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($data['name_1'], $result['name_1']);
+        $this->assertEquals($data['name_2'], $result['name_2']);
+        $this->assertEquals($data['mail'], $result['mail']);
+    }
+
+    public function testSearchExtended()
+    {
+        $api = $this->getApi();
+        $data = $this->getValidData();
+        $result = $api->search(
+            array(
+                array('field' => 'name_1', 'value' => $data['name_1'], 'criteria' => 'equal'),
+                array('field' => 'mail', 'value' => $data['mail'], 'criteria' => 'like'),
+            )
+        );
+        $this->assertTrue(is_array($result));
+        $result = array_shift($result);
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($data['name_1'], $result['name_1']);
+        $this->assertEquals($data['name_2'], $result['name_2']);
+        $this->assertEquals($data['mail'], $result['mail']);
     }
 
     protected function getConverter()
