@@ -59,4 +59,16 @@ interface ConverterInterface
      * @return array
      */
     public function convertToEasySys($mixed);
+
+    /**
+     * @param  string $key
+     * @return string|false
+     */
+    public function keyConvertToEasySys($key);
+
+    /**
+     * @param $keyEasySys
+     * @return string|null
+     */
+    public function keyConvert($keyEasySys);
 }

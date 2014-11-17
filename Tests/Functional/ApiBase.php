@@ -6,18 +6,11 @@ use Buzz\Browser;
 use Buzz\Client\Curl;
 use Ibrows\EasySysLibrary\API\Contact;
 use Ibrows\EasySysLibrary\Connection\Connection;
+use Ibrows\EasySysLibrary\Converter\ContactConverter;
 use Saxulum\HttpClient\Buzz\HttpClient;
 use Saxulum\HttpClient\HttpClientInterface;
 
-/**
- * Created by PhpStorm.
- * Project: easysysbundle
- *
- * User: mikemeier
- * Date: 06.11.14
- * Time: 19:46
- */
-class ApiTest extends \PHPUnit_Framework_TestCase
+abstract class ApiBase extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
@@ -35,7 +28,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $api =$this->getApi();
         $all = $api->search(array(),null,3);
         $this->assertCount(3,$all);
-        self::$listData = $all;
+        static::$listData = $all;
     }
     public function testListArray()
     {
@@ -52,8 +45,27 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @return array
+     */
     protected function getValidData(){
-        return self::$listData[0];
+        return static::$listData[0];
+    }
+
+    /**
+     * @return \Ibrows\EasySysLibrary\Model\Contact
+     */
+    protected function getValidObject(){
+        $converter = new ContactConverter();
+        return $converter->convertEasySysToObject(static::$listData[0]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getValidArray(){
+        $converter = new ContactConverter();
+        return $converter->convertEasySysToArray(static::$listData[0]);
     }
 
 
@@ -95,6 +107,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(count($resultReal),$resultMapped, "not all EasySys values are mapped");
 
     }
+
 
     protected function getApi(){
         return new Contact($this->getConnection());

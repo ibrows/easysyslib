@@ -33,13 +33,13 @@ class APITest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(array('field'=>'name', 'value'=>'d')),$result);
 
         $result = $api->convertSimpleCriteria(array('name'=> 'd'));
-        $this->assertEquals(array(array('field'=>'name', 'value'=>'d','criteria' => '=')),$result);
+        $this->assertEquals(array(array('field'=>'name_1', 'value'=>'d','criteria' => '=')),$result);
 
         $result = $api->convertSimpleCriteria(array('name'=> 'd'),'like');
-        $this->assertEquals(array(array('field'=>'name', 'value'=>'d','criteria' => 'like')),$result);
+        $this->assertEquals(array(array('field'=>'name_1', 'value'=>'d','criteria' => 'like')),$result);
 
         $result = $api->convertSimpleCriteria(array('name'=> 'd', 'firstName'=>'b'));
-        $this->assertEquals(array(array('field'=>'name', 'value'=>'d','criteria' => '='),array('field'=>'firstName', 'value'=>'b','criteria' => '=')),$result);
+        $this->assertEquals(array(array('field'=>'name_1', 'value'=>'d','criteria' => '='),array('field'=>'name_2', 'value'=>'b','criteria' => '=')),$result);
 
     }
 

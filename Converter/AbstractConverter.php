@@ -94,7 +94,8 @@ abstract class AbstractConverter implements ConverterInterface
         }
     }
 
-    protected function getPropertyAccessor(){
+    protected function getPropertyAccessor()
+    {
         return PropertyAccess::createPropertyAccessor();
     }
 
@@ -107,7 +108,7 @@ abstract class AbstractConverter implements ConverterInterface
         $additionalData = array();
         $accessor = $this->getPropertyAccessor();
         foreach ($this->dataEasySys as $key => $value) {
-            if(!array_key_exists($key,$this->getMapping())){
+            if (!array_key_exists($key, $this->getMapping())) {
                 $additionalData[$key] = $value;
                 continue;
             }
@@ -117,10 +118,10 @@ abstract class AbstractConverter implements ConverterInterface
             }
             $accessor->setValue($objectOrArray, $mappingLib, $value);
         }
-        if(count($additionalData)>0){
+        if (count($additionalData) > 0) {
             if (is_array($objectOrArray)) {
                 $accessor->setValue($objectOrArray, '[additionalData]', $additionalData);
-            }else{
+            } else {
                 $accessor->setValue($objectOrArray, 'additionalData', $additionalData);
             }
         }
@@ -159,7 +160,7 @@ abstract class AbstractConverter implements ConverterInterface
      */
     public function setDataEasySys($dataEasySys)
     {
-        if($dataEasySys == null){
+        if ($dataEasySys == null) {
             $dataEasySys = array();
         }
         $this->dataEasySys = $dataEasySys;
@@ -168,14 +169,17 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @return array
      */
-    public function convertEasySysToArray(array $result = null){
+    public function convertEasySysToArray(array $result = null)
+    {
         $this->setDataEasySys($result);
         return $this->getArray();
     }
+
     /**
      * @return object
      */
-    public function convertEasySysToObject($result){
+    public function convertEasySysToObject($result)
+    {
         $this->setDataEasySys($result);
         return $this->getObject();
     }
@@ -184,13 +188,36 @@ abstract class AbstractConverter implements ConverterInterface
      * @param $mixed
      * @return array
      */
-    public function convertToEasySys($mixed){
-        if(is_array($mixed)){
+    public function convertToEasySys($mixed)
+    {
+        if (is_array($mixed)) {
             $this->setArray($mixed);
-        }else{
+        } else {
             $this->setObject($mixed);
         }
         return $this->getDataEasySys();
 
+    }
+
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function keyConvertToEasySys($key)
+    {
+        return array_search($key, $this->mapping);
+    }
+
+    /**
+     * @param $keyEasySys
+     * @return null
+     */
+    public function keyConvert($keyEasySys)
+    {
+        if (!array_key_exists($keyEasySys, $this->mapping)) {
+            return null;
+        }
+        return $this->mapping[$keyEasySys];
     }
 }

@@ -4,6 +4,10 @@ namespace Ibrows\EasySysLibrary\Tests\Base;
 
 use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
+/**
+ * Class ConverterTest
+ * @package Ibrows\EasySysLibrary\Tests\Base
+ */
 class ConverterTest extends \PHPUnit_Framework_TestCase
 {
 

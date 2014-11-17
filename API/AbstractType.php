@@ -364,6 +364,11 @@ class AbstractType implements APIInterface
                     return $simpleCriteria;
                 }
             }
+
+            $newKey = $this->converter->keyConvertToEasySys($key);
+            if($newKey !== false){
+                $key = $newKey;
+            }
             $criteria[] = array(
                 'field'    => $key,
                 'value'    => $value,

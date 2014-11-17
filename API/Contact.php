@@ -23,6 +23,9 @@ class Contact extends AbstractType
     const IDENTIFY_PRECISION_MINIMUM = 1;
     const IDENTIFY_PRECISION_ALL = 31;
 
+    /**
+     * @param ConnectionInterface $connection
+     */
     public function __construct(ConnectionInterface $connection)
     {
         parent::__construct($connection);
@@ -30,18 +33,34 @@ class Contact extends AbstractType
         $this->converter = new ContactConverter();
     }
 
-    public function searchForExistingPerson($mail, $firstname = null, $name = null, $zip = null, $city = null)
+    /**
+     * @param string $mail
+     * @param string $firstname
+     * @param string $name
+     * @param string $zip
+     * @param string $city
+     * @return array
+     */
+    public function searchForExistingPerson($mail, $firstname = null, $name = null, $postcode = null, $city = null)
     {
         $arr = compact(array_keys(get_defined_vars()));
         return $this->searchArrays($arr);
     }
 
-    public function searchForExistingCompany($plz, $city, $name)
+    /**
+     * @param string $plz
+     * @param string $city
+     * @param string $name
+     * @return array
+     */
+    public function searchForExistingCompany($postcode, $city, $name)
     {
         $arr = compact(array_keys(get_defined_vars()));
         return $this->searchArrays($arr);
 
     }
+
+
 
     public function createCompany($name, $address, $postcode, $city)
     {
@@ -168,21 +187,69 @@ class Contact extends AbstractType
         return parent::create($data, $type,$includeUserId);
     }
 
+// <editor-fold desc="Simple Getter Setter" defaultstate="collapsed" >
+    /**
+     * @return array
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
+    }
+
+    /**
+     * @param array $groupId
+     */
+    public function setGroupId($groupId)
+    {
+        $this->groupId = $groupId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
     /**
      * @return int
      */
-    public function getTypeIdPrivate()
+    public function getCountryId()
     {
-        return $this->typeIdPrivate;
+        return $this->countryId;
     }
 
     /**
-     * @param int $typeIdPrivate
+     * @param int $countryId
      */
-    public function setTypeIdPrivate($typeIdPrivate)
+    public function setCountryId($countryId)
     {
-        $this->typeIdPrivate = $typeIdPrivate;
+        $this->countryId = $countryId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     /**
@@ -202,58 +269,22 @@ class Contact extends AbstractType
     }
 
     /**
-     * @return array
-     */
-    public function getGroupId()
-    {
-        return $this->groupId;
-    }
-
-    /**
-     * @param int $groupId
-     */
-    public function setGroupId($groupId)
-    {
-        if (is_array($groupId)) {
-            $this->groupId = $groupId;
-        } else {
-            $this->groupId = array(
-                    $groupId
-            );
-        }
-    }
-
-    /**
      * @return int
      */
-    public function getCountryId()
+    public function getTypeIdPrivate()
     {
-        return $this->countryId;
+        return $this->typeIdPrivate;
     }
 
     /**
-     * @param int $countryId
+     * @param int $typeIdPrivate
      */
-    public function setCountryId($countryId)
+    public function setTypeIdPrivate($typeIdPrivate)
     {
-        $this->countryId = $countryId;
-        return $this;
+        $this->typeIdPrivate = $typeIdPrivate;
     }
 
-    /**
-     * @return str
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
-    /**
-     * @param str $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
+
+// </editor-fold>
 }
