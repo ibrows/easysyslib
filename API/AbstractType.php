@@ -226,7 +226,7 @@ class AbstractType implements APIInterface
     public function searchObjects(array $criteria = array(), $type = null, $limit = 0, $offset = 0, $orderBy = null)
     {
         $result = $this->search($criteria, $type, $limit, $offset, $orderBy);
-        return array_map(array($this->converter, "convertEasySysToObject"),$result);
+        return array_map(array($this->converter, "convertEasySysToObject"), $result);
     }
 
     /**
@@ -241,7 +241,7 @@ class AbstractType implements APIInterface
     public function searchArrays(array $criteria = array(), $type = null, $limit = 0, $offset = 0, $orderBy = null)
     {
         $result = $this->search($criteria, $type, $limit, $offset, $orderBy);
-        return array_map(array($this->converter, "convertEasySysToArray"),$result);
+        return array_map(array($this->converter, "convertEasySysToArray"), $result);
     }
 
 
@@ -334,7 +334,7 @@ class AbstractType implements APIInterface
     public function delete($id)
     {
         try {
-            $return =  $this->connection->call($this->getResource() . '/' . $id, array(), array(), "DELETE");
+            $return = $this->connection->call($this->getResource() . '/' . $id, array(), array(), "DELETE");
             return (bool)$return['success'];
         } catch (Status404Exception $e) {
             return false;
@@ -367,7 +367,7 @@ class AbstractType implements APIInterface
             }
 
             $newKey = $this->converter->keyConvertToEasySys($key);
-            if($newKey !== false){
+            if ($newKey !== false) {
                 $key = $newKey;
             }
             $criteria[] = array(

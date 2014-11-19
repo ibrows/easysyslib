@@ -29,7 +29,7 @@ class StatusCodeException extends ConnectionException
             }
         }
 
-        return new self($message, $code);
+        return new static($message, $code);
     }
 
 
