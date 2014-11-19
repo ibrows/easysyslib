@@ -252,6 +252,11 @@ class Contact extends AbstractType
      */
     public function create(array $data, $type = null, $includeUserId = true)
     {
+        $data = $this->addDefaults($data);
+        return parent::create($data, $type, $includeUserId);
+    }
+
+    protected function addDefaults(array $data = array()){
         unset($data['title_id']);
         unset($data['is_lead']);
         unset($data['profile_image']);
@@ -268,7 +273,19 @@ class Contact extends AbstractType
         if (!array_key_exists('contact_group_ids', $data)) {
             $data['contact_group_ids'] = $this->getGroupId();
         }
-        return parent::create($data, $type, $includeUserId);
+        return $data;
+    }
+
+
+    /**
+     * @param $name
+     * @return object
+     */
+    public function getModelInstance($name){
+        $this->converter->setDataEasySys($this->addDefaults());
+        $contact = $this->converter->getObject();
+        $contact->setName($name);
+        return $contact;
     }
 
 // <editor-fold desc="Simple Getter Setter" defaultstate="collapsed" >
