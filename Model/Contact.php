@@ -9,31 +9,36 @@ namespace Ibrows\EasySysLibrary\Model;
 
 class Contact
 {
-
     /**
      * @var string (80)
      */
     protected $firstName;
+
     /**
      * @var string (80)
      */
     protected $name;
+
     /**
      * @var string (255)
      */
     protected $address;
+
     /**
      * @var \DateTime
      */
     protected $birthday;
+
     /**
      * @var \DateTime
      */
     protected $updatedAt;
+
     /**
      * @var string (50)
      */
     protected $city;
+
     /**
      * @var string Collection (Resource contact_branch)
      */
@@ -58,30 +63,37 @@ class Contact
      * @var string (50)
      */
     protected $mail;
+
     /**
      * @var string (50)
      */
     protected $mailSecond;
+
     /**
      * @var string (40)
      */
     protected $phoneFixed;
+
     /**
      * @var string (40)
      */
     protected $phoneMobile;
+
     /**
      * @var string (40)
      */
     protected $phoneFixedSecond;
+
     /**
      * @var string (30)
      */
     protected $postcode;
+
     /**
      * @var string
      */
     protected $remarks;
+
     /**
      * @var string
      */
@@ -96,50 +108,62 @@ class Contact
      * @var int
      */
     protected $titleId;
+
     /**
      * @var int Resource contact_type
      */
     protected $contactTypeId;
+
     /**
      * @var int Resource language
      */
     protected $languageId;
+
     /**
      * @var int Resource user
      */
     protected $ownerId;
+
     /**
      * @var int Resource user
      */
     protected $userId;
+
     /**
      * @var int
      */
     protected $nr;
+
     /**
      * @var int Resource salutation
      */
     protected $salutationId;
+
     /**
-     * @var int    Resource send_type
+     * @var int Resource send_type
      */
     protected $sendTypeId;
+
     /**
      * @var string (50)
      */
     protected $skypeName;
+
     /**
      * @var string (40)
      */
     protected $taxNr;
+
     /**
      * @var int
      */
     protected $tradeNumber;
+
     /**
      * @var boolean
      */
     protected $lead;
+
     /**
      * @var string
      */
@@ -150,6 +174,12 @@ class Contact
      */
     protected $additionalData;
 
+    /**
+     * @param int $contactTypeId
+     * @param string $name
+     * @param int $ownerId
+     * @param int $userId
+     */
     public function __construct($contactTypeId, $name, $ownerId, $userId)
     {
         $this->contactTypeId = $contactTypeId;
@@ -363,7 +393,7 @@ class Contact
     /**
      * @param int $id
      */
-    protected function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -690,31 +720,49 @@ class Contact
 
     // </editor-fold>
 
+    /**
+     * @param string $name
+     */
     public function setLastName($name)
     {
         $this->setName($name);
     }
 
+    /**
+     * @return string
+     */
     public function getLastName()
     {
         return $this->getName();
     }
 
+    /**
+     * @param string $name
+     */
     public function setCompanyName($name)
     {
         $this->setName($name);
     }
 
+    /**
+     * @return string
+     */
     public function getCompanyName()
     {
         return $this->getName();
     }
 
+    /**
+     * @param string $name
+     */
     public function setCompanyAdditional($name)
     {
         $this->setFirstName($name);
     }
 
+    /**
+     * @return string
+     */
     public function getCompanyAddition()
     {
         return $this->getFirstName();
