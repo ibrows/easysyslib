@@ -145,7 +145,6 @@ class Contact
      */
     protected $profileImage;
 
-
     /**
      * @var array
      */
@@ -160,7 +159,6 @@ class Contact
     }
 
     // <editor-fold desc="Simple Getter Setter" defaultstate="collapsed" >
-
 
     /**
      * @return string
@@ -365,7 +363,7 @@ class Contact
     /**
      * @param int $id
      */
-    public function setId($id)
+    protected function setId($id)
     {
         $this->id = $id;
     }
@@ -674,8 +672,6 @@ class Contact
         $this->profileImage = $profileImage;
     }
 
-
-
     /**
      * @return array
      */
@@ -694,22 +690,33 @@ class Contact
 
     // </editor-fold>
 
-    public function setLastName($name){
+    public function setLastName($name)
+    {
         $this->setName($name);
     }
-    public function getLastName(){
+
+    public function getLastName()
+    {
         return $this->getName();
     }
-    public function setCompanyName($name){
+
+    public function setCompanyName($name)
+    {
         $this->setName($name);
     }
-    public function getCompanyName(){
+
+    public function getCompanyName()
+    {
         return $this->getName();
     }
-    public function setCompanyAdditional($name){
+
+    public function setCompanyAdditional($name)
+    {
         $this->setFirstName($name);
     }
-    public function getCompanyAddition(){
+
+    public function getCompanyAddition()
+    {
         return $this->getFirstName();
     }
 }
