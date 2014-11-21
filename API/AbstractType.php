@@ -28,10 +28,12 @@ class AbstractType implements APIInterface
      * @var string
      */
     protected $type;
+
     /**
      * @var string
      */
     protected $parentType;
+
     /**
      * @var string
      */
@@ -49,7 +51,6 @@ class AbstractType implements APIInterface
     {
         $this->connection = $connection;
         $this->logger = new NullLogger();
-
     }
 
     /**
@@ -61,6 +62,14 @@ class AbstractType implements APIInterface
     }
 
     /**
+     * @return ConnectionInterface
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
+    /**
      * @param ConnectionInterface $connection
      */
     public function setConnection($connection)
@@ -69,11 +78,19 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @return ConnectionInterface
+     * @param string $resource
+     * @param array $urlParams
+     * @param array $postParams
+     * @param string $method
+     * @param int $limit
+     * @param int $offset
+     * @param null $orderBy
+     * @throws ConnectionException
+     * @return array
      */
-    public function getConnection()
+    public function call($resource = null, $urlParams = array(), $postParams = array(), $method = 'GET', $limit = 0, $offset = 0, $orderBy = null)
     {
-        return $this->connection;
+        return $this->connection->call($this->getResource($resource), $urlParams, $postParams, $method, $limit, $offset, $orderBy);
     }
 
     /**
@@ -87,7 +104,7 @@ class AbstractType implements APIInterface
     /**
      * @param ConverterInterface $converter
      */
-    public function setConverter($converter)
+    public function setConverter(ConverterInterface $converter)
     {
         $this->converter = $converter;
     }
@@ -101,7 +118,7 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param $parentType
+     * @param string $parentType
      */
     public function setParentType($parentType)
     {
@@ -117,7 +134,7 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param $parentId
+     * @param int $parentId
      */
     public function setParentId($parentId)
     {
@@ -125,39 +142,7 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param null $resource
-     * @return null|string
-     */
-    protected function getResource($resource = null)
-    {
-        if (!$resource) {
-            $resource = $this->type;
-        }
-        if ($this->parentType) {
-            $resource = "{$this->parentType}/{$this->parentId}/$resource";
-        }
-        return $resource;
-    }
-
-    /**
-     * @param string $resource
-     * @param array  $urlParams
-     * @param array  $postParams
-     * @param string $method
-     * @param int    $limit
-     * @param int    $offset
-     * @param null   $orderBy
-     * @throws ConnectionException
-     * @return array
-     */
-    public function call($resource = null, $urlParams = array(), $postParams = array(), $method = 'GET', $limit = 0, $offset = 0, $orderBy = null)
-    {
-        return $this->connection->call($this->getResource($resource), $urlParams, $postParams, $method, $limit, $offset, $orderBy);
-    }
-
-
-    /**
-     * @param $id
+     * @param int $id
      * @throws ConnectionException
      * @return array|null
      */
@@ -171,7 +156,7 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @throws ConnectionException
      * @return object
      */
@@ -191,13 +176,12 @@ class AbstractType implements APIInterface
         return $this->converter->convertEasySysToArray($this->show($id));
     }
 
-
     /**
-     * @param array  $criteria
+     * @param array $criteria
      * @param string $type resource
-     * @param int    $limit
-     * @param int    $offset
-     * @param null   $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @param null $orderBy
      * @throws ConnectionException
      * @return array
      */
@@ -213,13 +197,12 @@ class AbstractType implements APIInterface
         return $this->connection->call($this->getResource($type) . $append, array(), $criteria, $method, $limit, $offset, $orderBy);
     }
 
-
     /**
-     * @param array  $criteria
+     * @param array $criteria
      * @param string $type resource
-     * @param int    $limit
-     * @param int    $offset
-     * @param null   $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @param null $orderBy
      * @throws ConnectionException
      * @return array of objects
      */
@@ -230,11 +213,11 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param array  $criteria
+     * @param array $criteria
      * @param string $type resource
-     * @param int    $limit
-     * @param int    $offset
-     * @param null   $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @param null $orderBy
      * @throws ConnectionException
      * @return array
      */
@@ -244,11 +227,10 @@ class AbstractType implements APIInterface
         return array_map(array($this->converter, "convertEasySysToArray"), $result);
     }
 
-
     /**
      * @param array $data
-     * @param null  $type
-     * @param bool  $includeUserId
+     * @param null $type
+     * @param bool $includeUserId
      * @throws ConnectionException
      * @return array
      */
@@ -260,9 +242,8 @@ class AbstractType implements APIInterface
         return $this->connection->call($this->getResource($type), array(), $data, "POST");
     }
 
-
     /**
-     * @param      $object
+     * @param object $object
      * @param null $type
      * @param bool $includeUserId
      * @throws ConnectionException
@@ -276,8 +257,8 @@ class AbstractType implements APIInterface
 
     /**
      * @param array $data
-     * @param null  $type
-     * @param bool  $includeUserId
+     * @param null $type
+     * @param bool $includeUserId
      * @throws ConnectionException
      * @return array
      */
@@ -289,9 +270,9 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      * @param array $data
-     * @param null  $type
+     * @param null $type
      * @throws ConnectionException
      * @return array
      */
@@ -301,8 +282,8 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param int  $id
-     * @param      $object
+     * @param int $id
+     * @param object $object
      * @param null $type
      * @throws ConnectionException
      * @return object
@@ -314,9 +295,9 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      * @param array $data
-     * @param null  $type
+     * @param null $type
      * @throws ConnectionException
      * @return array
      */
@@ -327,7 +308,7 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @throws ConnectionException
      * @return boolean|null
      */
@@ -341,12 +322,11 @@ class AbstractType implements APIInterface
         }
     }
 
-
     /**
      * Converts simple criteria like:
      * [ 'name' => 'abc' ]
      * to full easySys criteria
-     * @param array  $simpleCriteria
+     * @param array $simpleCriteria
      * @param string $operator
      * @return array
      */
@@ -379,7 +359,6 @@ class AbstractType implements APIInterface
         return $criteria;
     }
 
-
     /**
      * @deprecated use search
      * @param      $simplecrits
@@ -392,7 +371,7 @@ class AbstractType implements APIInterface
     }
 
     /**
-     * @param $nr
+     * @param string $nr
      * @return array|null
      */
     public function findOneByNr($nr)
@@ -417,7 +396,6 @@ class AbstractType implements APIInterface
         return $this->show($id);
     }
 
-
     /**
      * @deprecated use create
      */
@@ -426,5 +404,19 @@ class AbstractType implements APIInterface
         $this->create(func_get_args());
     }
 
+    /**
+     * @param null $resource
+     * @return null|string
+     */
+    protected function getResource($resource = null)
+    {
+        if (!$resource) {
+            $resource = $this->type;
+        }
+        if ($this->parentType) {
+            $resource = "{$this->parentType}/{$this->parentId}/$resource";
+        }
+        return $resource;
+    }
 
 }
