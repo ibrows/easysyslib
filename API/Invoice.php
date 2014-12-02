@@ -11,7 +11,7 @@
 
 namespace Ibrows\EasySysLibrary\API;
 
-class Invoice extends AbstractApi
+class Invoice extends AbstractAPI
 {
     public function markAsInvoiced($id)
     {

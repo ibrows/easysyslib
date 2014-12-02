@@ -12,7 +12,7 @@ use Psr\Log\NullLogger;
  * @author marcsteiner
  *
  */
-class AbstractApi implements APIInterface
+class AbstractAPI implements APIInterface
 {
     /**
      * @var LoggerInterface

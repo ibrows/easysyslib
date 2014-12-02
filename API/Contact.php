@@ -8,7 +8,7 @@ use Ibrows\EasySysLibrary\Converter\ContactConverter;
  * @author marcsteiner
  *
  */
-class Contact extends AbstractApi
+class Contact extends AbstractAPI
 {
     const IDENTIFY_PRECISION_NONE = 0;
     const IDENTIFY_PRECISION_MINIMUM = 1;

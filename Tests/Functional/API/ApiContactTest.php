@@ -1,11 +1,12 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Functional;
+namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 
 use Ibrows\EasySysLibrary\API\APIInterface;
 use Ibrows\EasySysLibrary\API\Contact;
+use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
-class ApiContactTest extends ApiBase
+class ApiContactTest extends AbstractAPITest
 {
     protected static $listData = array();
 
@@ -287,5 +288,29 @@ class ApiContactTest extends ApiBase
     protected function assertModel($object)
     {
         $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $object);
+    }
+
+    /**
+     * @return \Ibrows\EasySysLibrary\Model\Contact
+     */
+    protected function getValidObject()
+    {
+        return $this->getConverter()->convertEasySysToObject($this->getValidData());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getValidArray()
+    {
+        return $this->getConverter()->convertEasySysToArray($this->getValidData());
+    }
+
+    /**
+     * @return ContactConverter
+     */
+    protected function getConverter()
+    {
+        return $converter = new ContactConverter();
     }
 }

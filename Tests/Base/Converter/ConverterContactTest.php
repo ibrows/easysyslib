@@ -1,19 +1,19 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Base;
+namespace Ibrows\EasySysLibrary\Tests\Base\Converter;
 
 use Ibrows\EasySysLibrary\Converter\ContactConverter;
+use Ibrows\EasySysLibrary\Model\Contact;
 
 /**
  * Class ConverterTest
  * @package Ibrows\EasySysLibrary\Tests\Base
  */
-class ConverterTest extends \PHPUnit_Framework_TestCase
+class ConverterContactTest extends \PHPUnit_Framework_TestCase
 {
-
-
     /**
      * @dataProvider provideContactArray
+     * @param array $input
      */
     public function testContactConverter(array $input)
     {
@@ -22,10 +22,11 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $converter->setArray($input);
         $return = $converter->getDataEasySys();
         $this->assertArrayHasKey('name_2', $return);
+
         if (array_key_exists('firstName', $input)) {
             $this->assertEquals($input['firstName'], $return['name_2']);
-        }else{
-            $this->assertNull( $return['name_2']);
+        } else {
+            $this->assertNull($return['name_2']);
         }
 
         $converter->setDataEasySys($return);
@@ -33,18 +34,9 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('firstName', $output);
         if (array_key_exists('firstName', $input)) {
             $this->assertEquals($input['firstName'], $output['firstName']);
-        }else{
-            $this->assertNull( $output['firstName']);
+        } else {
+            $this->assertNull($output['firstName']);
         }
-
-
-
-    }
-    protected function getContactModel()
-    {
-        $model =  new \Ibrows\EasySysLibrary\Model\Contact(null, 'last', null, null);
-        $model->setFirstName('first');
-        return $model;
     }
 
     public function testContactConverterObject()
@@ -52,11 +44,11 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $converter = new ContactConverter();
         $converter->setObject($this->getContactModel());
         $this->assertArrayHasKey('name_1', $converter->getDataEasySys());
-
-
     }
 
-
+    /**
+     * @return array
+     */
     public function provideContactArray()
     {
         return array(
@@ -65,6 +57,16 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
             array(array()),
             array(array('firstName' => 'äüöü¨?!^^`sdf`%&Ç*"')),
         );
+    }
+
+    /**
+     * @return Contact
+     */
+    protected function getContactModel()
+    {
+        $model = new Contact(null, 'last', null, null);
+        $model->setFirstName('first');
+        return $model;
     }
 
 }

@@ -5,6 +5,7 @@ namespace Ibrows\EasySysLibrary\Tests\Functional;
 use Buzz\Browser;
 use Buzz\Client\Curl;
 use Ibrows\EasySysLibrary\Connection\Connection;
+use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Saxulum\HttpClient\Buzz\HttpClient;
 use Saxulum\HttpClient\HttpClientInterface;
 
@@ -19,7 +20,7 @@ use Saxulum\HttpClient\HttpClientInterface;
 class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return Connection|null
+     * @return ConnectionInterface|null
      */
     public static function getConnection()
     {
