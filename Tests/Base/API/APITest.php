@@ -34,7 +34,7 @@ class APITest extends AbstractAPITest
     /**
      * @dataProvider proviceAPIs
      * @param AbstractAPI $api
-     * @param string $model
+     * @param string      $model
      */
     public function testShow(AbstractAPI $api, $model)
     {
@@ -51,13 +51,13 @@ class APITest extends AbstractAPITest
     /**
      * @dataProvider proviceAPIs
      * @param AbstractAPI $api
-     * @param string $model
-     * @param callable $getNewModel
+     * @param string      $model
+     * @param callable    $getNewModel
      */
-    public function testCreate(AbstractAPI $api, $model, $getNewModel)
+    public function testCreate(AbstractAPI $api, $model, $newObject)
     {
         $this->assertMethod($api, 'createFromObject');
-        $object = $api->createFromObject($getNewModel());
+        $object = $api->createFromObject($newObject);
         $this->assertInstanceOf($model, $object);
 
         $this->assertMethod($api, 'createFromArray');
@@ -68,12 +68,12 @@ class APITest extends AbstractAPITest
     /**
      * @dataProvider proviceAPIs
      * @param AbstractAPI $api
-     * @param string $model
-     * @param callable $getNewModel
-     * @param array $mockData
-     * @param array $data
+     * @param string      $model
+     * @param callable    $getNewModel
+     * @param array       $mockData
+     * @param array       $data
      */
-    public function testUpdate(AbstractAPI $api, $model, $getNewModel, array $mockData, array $data)
+    public function testUpdate(AbstractAPI $api, $model, $newObject, array $mockData, array $data)
     {
         $mock = $this->getMockConnection();
         $mock->expects($this->exactly(3))
@@ -93,10 +93,8 @@ class APITest extends AbstractAPITest
         $this->assertTrue(is_array($contact));
         $this->assertEquals($data, $contact);
 
-        $object = $getNewModel();
-
         $this->assertMethod($api, 'updateFromObject');
-        $update = $api->updateFromObject(1, $object);
+        $update = $api->updateFromObject(1, $newObject);
 
         $this->assertInstanceOf($model, $update);
         $this->assertEquals($model, $update);
@@ -106,7 +104,7 @@ class APITest extends AbstractAPITest
     /**
      * @dataProvider proviceAPIs
      * @param AbstractAPI $api
-     * @param string $model
+     * @param string      $model
      */
     public function testSearch(AbstractAPI $api, $model)
     {
@@ -173,41 +171,48 @@ class APITest extends AbstractAPITest
         $this->assertTrue($return);
     }
 
+    protected function provideContactApi($name = 'gugüs')
+    {
+        $arguments = array();
+        $arguments[] = new Contact($this->getMockConnection());
+        $arguments[] = 'Ibrows\EasySysLibrary\Model\Contact';
+        $model = new \Ibrows\EasySysLibrary\Model\Contact(null, 'first', null, null);
+        $model->setLastName('last');
+        $arguments[] = $model;
+        $arguments[] = array(
+            'name_1' => $name
+        );
+        $arguments[] = array(
+            'name_1' => $name
+        );
+        return $arguments;
+    }
+
     /**
      * @return array
      */
     public function provideAPIs()
     {
-        return array(
+        $arrAll = array();
+        $arrAll[] = $this->provideContactApi();
+        $arrAll[] = $this->provideContactApi('schwurbbel..%&/ç*');
+
+
+        return $arrAll;
+
+        /*array(
+            new Invoice($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\Invoice',
+            function () {
+                $invoice = new \Ibrows\EasySysLibrary\Model\Invoice();
+                return $invoice;
+            },
             array(
-                new Contact($this->getMockConnection()),
-                'Ibrows\EasySysLibrary\Model\Contact',
-                function () {
-                    $contact = new \Ibrows\EasySysLibrary\Model\Contact(null, 'first', null, null);
-                    $contact->setLastName('last');
-                    return $contact;
-                },
-                array(
-                    'name_1' => 'gugüs'
-                ),
-                array(
-                    'name' => 'gugüs'
-                )
+                'asd_1' => 'gugüs'
             ),
-            /*array(
-                new Invoice($this->getMockConnection()),
-                'Ibrows\EasySysLibrary\Model\Invoice',
-                function () {
-                    $invoice = new \Ibrows\EasySysLibrary\Model\Invoice();
-                    return $invoice;
-                },
-                array(
-                    'asd_1' => 'gugüs'
-                ),
-                array(
-                    'asd' => 'gugüs'
-                )
-            ),*/
-        );
+            array(
+                'asd' => 'gugüs'
+            )
+        ),*/
     }
 } 
