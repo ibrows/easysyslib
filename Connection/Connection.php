@@ -138,7 +138,7 @@ class Connection implements ConnectionInterface
         if (($statusCode >= 300 || $statusCode < 200) && $statusCode !== 304) {
             $content = json_decode($response->getContent());
             $logger->alert('StatusCode ' . $statusCode . ' received!', $loggerContext);
-            if($statusCode == 404){
+            if ($statusCode == 404) {
                 throw Status404Exception::createFromContent($content);
             }
             throw StatusCodeException::createFromContent($content);
@@ -204,32 +204,6 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @param int $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-
-
-    /**
      * @param Response $response
      * @param array $loggerContext
      * @throws ContentException
@@ -256,6 +230,14 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * @param int $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    /**
      * @return array
      */
     protected function getNewLoggerContext()
@@ -263,6 +245,14 @@ class Connection implements ConnectionInterface
         return array(
             'request' => uniqid()
         );
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger ?: new NullLogger();
     }
 
     /**
@@ -277,13 +267,21 @@ class Connection implements ConnectionInterface
      */
     protected function getRequest($resource, array $urlParams = array(), array $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $orderBy = null)
     {
-        $urlParams['limit']=$limit;
-        $urlParams['offset']=$offset;
-        $urlParams['orderBy']=$orderBy;
+        $urlParams['limit'] = $limit;
+        $urlParams['offset'] = $offset;
+        $urlParams['orderBy'] = $orderBy;
         $url = $this->getRequestUrl($resource, $urlParams);
         $content = $this->getRequestContent($postParams);
         $headers = $this->getRequestHeaders($method, $url, $content);
         return new Request('1.1', $method, $url, $headers, $content);
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     /**
@@ -337,7 +335,8 @@ class Connection implements ConnectionInterface
      */
     protected function getRequestUrl($resource, array $urlParams = array())
     {
-        $url = $this->getBaseUrl() . '/'. ltrim($resource, '/');
+        $url = $this->getBaseUrl() . '/' . ltrim($resource, '/');
         return $urlParams ? $url . '?' . http_build_query($urlParams, null, '&') : $url;
     }
+
 }

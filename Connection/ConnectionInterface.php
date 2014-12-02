@@ -21,12 +21,12 @@ interface ConnectionInterface
 {
     /**
      * @param string $resource
-     * @param array  $urlParams
-     * @param array  $postParams
+     * @param array $urlParams
+     * @param array $postParams
      * @param string $method
-     * @param int    $limit
-     * @param int    $offset
-     * @param null   $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @param null $orderBy
      * @return array
      */
     public function call($resource, $urlParams = array(), $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $orderBy = null);
@@ -76,8 +76,8 @@ interface ConnectionInterface
      */
     public function getUserId();
 
-    /*
+    /**
      * @param LoggerInterface $logger
      */
-    public function setLogger(LoggerInterface $logger);
+    public function setLogger(LoggerInterface $logger = null);
 }

@@ -12,7 +12,7 @@ use Psr\Log\NullLogger;
  * @author marcsteiner
  *
  */
-class AbstractType implements APIInterface
+class AbstractApi implements APIInterface
 {
     /**
      * @var LoggerInterface
@@ -56,9 +56,9 @@ class AbstractType implements APIInterface
     /**
      * @param LoggerInterface $logger
      */
-    public function setLogger($logger)
+    public function setLogger(LoggerInterface $logger = null)
     {
-        $this->logger = $logger;
+        $this->logger = $logger ?: new NullLogger();
     }
 
     /**
@@ -72,7 +72,7 @@ class AbstractType implements APIInterface
     /**
      * @param ConnectionInterface $connection
      */
-    public function setConnection($connection)
+    public function setConnection(ConnectionInterface $connection)
     {
         $this->connection = $connection;
     }
