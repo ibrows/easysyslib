@@ -176,7 +176,7 @@ class APITest extends AbstractAPITest
         $arguments[] = new Contact($this->getMockConnection());
         $arguments[] = 'Ibrows\EasySysLibrary\Model\Contact';
         $model = new \Ibrows\EasySysLibrary\Model\Contact(null, 'first', null, null);
-        $model->setLastName('last');
+        $model->setLastName($name);
         $arguments[] = $model;
         $arguments[] = array(
             'name_1' => $name
@@ -195,8 +195,7 @@ class APITest extends AbstractAPITest
         $arrAll = array();
         $arrAll[] = $this->provideContactApi();
         $arrAll[] = $this->provideContactApi('schwurbbel..%&/ç*');
-
-
+        
         return $arrAll;
 
         /*array(
