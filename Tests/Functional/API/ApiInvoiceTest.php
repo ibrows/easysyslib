@@ -9,7 +9,7 @@
  * Time: 11:40
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Functional;
+namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 
 use Ibrows\EasySysLibrary\API\APIInterface;
 use Ibrows\EasySysLibrary\API\Invoice;

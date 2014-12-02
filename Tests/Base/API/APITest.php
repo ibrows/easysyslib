@@ -18,7 +18,7 @@ use Ibrows\EasySysLibrary\API\Invoice;
 class APITest extends AbstractAPITest
 {
     /**
-     * @dataProvider proviceAPIs
+     * @dataProvider provideAPIs
      * @param AbstractAPI $api
      */
     public function testApiMethods(AbstractAPI $api)
@@ -32,7 +32,7 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider proviceAPIs
+     * @dataProvider provideAPIs
      * @param AbstractAPI $api
      * @param string      $model
      */
@@ -49,10 +49,10 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider proviceAPIs
+     * @dataProvider provideAPIs
      * @param AbstractAPI $api
-     * @param string      $model
-     * @param callable    $getNewModel
+     * @param string $model
+     * @param object $newObject
      */
     public function testCreate(AbstractAPI $api, $model, $newObject)
     {
@@ -61,17 +61,17 @@ class APITest extends AbstractAPITest
         $this->assertInstanceOf($model, $object);
 
         $this->assertMethod($api, 'createFromArray');
-        $object = $api->createFromArray(array('name' => 'gugus'));
-        $this->assertInstanceOf($model, $object);
+        $data = $api->createFromArray(array('name' => 'gugus'));
+        $this->assertTrue(is_array($data));
     }
 
     /**
-     * @dataProvider proviceAPIs
+     * @dataProvider provideAPIs
      * @param AbstractAPI $api
-     * @param string      $model
-     * @param callable    $getNewModel
-     * @param array       $mockData
-     * @param array       $data
+     * @param string $model
+     * @param object $newObject
+     * @param array $mockData
+     * @param array $data
      */
     public function testUpdate(AbstractAPI $api, $model, $newObject, array $mockData, array $data)
     {
@@ -97,14 +97,13 @@ class APITest extends AbstractAPITest
         $update = $api->updateFromObject(1, $newObject);
 
         $this->assertInstanceOf($model, $update);
-        $this->assertEquals($model, $update);
-
+        $this->assertEquals($newObject, $update);
     }
 
     /**
-     * @dataProvider proviceAPIs
+     * @dataProvider provideAPIs
      * @param AbstractAPI $api
-     * @param string      $model
+     * @param string $model
      */
     public function testSearch(AbstractAPI $api, $model)
     {
@@ -130,7 +129,7 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider proviceAPIs
+     * @dataProvider provideAPIs
      * @param AbstractAPI $api
      */
     public function testConvertCriteria(AbstractAPI $api)
@@ -153,7 +152,7 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider proviceAPIs
+     * @dataProvider provideAPIs
      * @param AbstractAPI $api
      */
     public function testDelete(AbstractAPI $api)
@@ -183,7 +182,7 @@ class APITest extends AbstractAPITest
             'name_1' => $name
         );
         $arguments[] = array(
-            'name_1' => $name
+            'name' => $name
         );
         return $arguments;
     }

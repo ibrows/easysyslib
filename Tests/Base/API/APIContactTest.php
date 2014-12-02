@@ -7,6 +7,11 @@ use Ibrows\EasySysLibrary\API\Contact;
 
 class APIContactTest extends AbstractConcreteAPITest
 {
+    public function testDescription()
+    {
+        $this->assertSame('Kontaktperson', $this->getAPI()->getDescription());
+    }
+
     /**
      * @return AbstractAPI|Contact
      */

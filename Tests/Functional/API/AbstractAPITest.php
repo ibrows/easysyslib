@@ -3,8 +3,7 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 
 use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Tests\Functional\ConnectionTest;
+use Ibrows\EasySysLibrary\Tests\Functional\AbstractAPITest as BaseAbstractAPITest;
 
 /**
  * Created by PhpStorm.
@@ -14,7 +13,7 @@ use Ibrows\EasySysLibrary\Tests\Functional\ConnectionTest;
  * Date: 02.12.14
  * Time: 14:29
  */
-abstract class AbstractAPITest extends \PHPUnit_Framework_TestCase
+abstract class AbstractAPITest extends BaseAbstractAPITest
 {
     protected function setUp()
     {
@@ -29,12 +28,4 @@ abstract class AbstractAPITest extends \PHPUnit_Framework_TestCase
      * @return AbstractAPI
      */
     abstract protected function getApi();
-
-    /**
-     * @return ConnectionInterface|null
-     */
-    protected function getConnection()
-    {
-        return ConnectionTest::getConnection();
-    }
 } 
