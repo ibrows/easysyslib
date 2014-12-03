@@ -13,7 +13,6 @@ namespace Ibrows\EasySysLibrary\Tests\Base\API;
 
 use Ibrows\EasySysLibrary\API\AbstractAPI;
 use Ibrows\EasySysLibrary\API\Contact;
-use Ibrows\EasySysLibrary\API\Invoice;
 
 class APITest extends AbstractAPITest
 {
@@ -34,7 +33,7 @@ class APITest extends AbstractAPITest
     /**
      * @dataProvider provideAPIs
      * @param AbstractAPI $api
-     * @param string      $model
+     * @param string $model
      */
     public function testShow(AbstractAPI $api, $model)
     {
@@ -170,33 +169,15 @@ class APITest extends AbstractAPITest
         $this->assertTrue($return);
     }
 
-    protected function provideContactApi($name = 'gugüs')
-    {
-        $arguments = array();
-        $arguments[] = new Contact($this->getMockConnection());
-        $arguments[] = 'Ibrows\EasySysLibrary\Model\Contact';
-        $model = new \Ibrows\EasySysLibrary\Model\Contact(null, 'first', null, null);
-        $model->setLastName($name);
-        $arguments[] = $model;
-        $arguments[] = array(
-            'name_1' => $name
-        );
-        $arguments[] = array(
-            'name' => $name
-        );
-        return $arguments;
-    }
-
     /**
      * @return array
      */
     public function provideAPIs()
     {
-        $arrAll = array();
-        $arrAll[] = $this->provideContactApi();
-        $arrAll[] = $this->provideContactApi('schwurbbel..%&/ç*');
-        
-        return $arrAll;
+        return array(
+            $this->provideContactApi(),
+            $this->provideContactApi('schwurbbel..%&/ç*')
+        );
 
         /*array(
             new Invoice($this->getMockConnection()),
@@ -212,5 +193,19 @@ class APITest extends AbstractAPITest
                 'asd' => 'gugüs'
             )
         ),*/
+    }
+
+    protected function provideContactApi($name = 'gugüs')
+    {
+        $model = new \Ibrows\EasySysLibrary\Model\Contact(null, 'first', null, null);
+        $model->setLastName($name);
+
+        return array(
+            new Contact($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\Contact',
+            $model,
+            array('name_1' => $name),
+            array('name' => $name)
+        );
     }
 } 
