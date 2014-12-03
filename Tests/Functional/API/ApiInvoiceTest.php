@@ -14,13 +14,13 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 use Ibrows\EasySysLibrary\API\APIInterface;
 use Ibrows\EasySysLibrary\API\Invoice;
 
-class ApiInvoiceTest extends ApiBase
+class ApiInvoiceTest extends AbstractAPITest
 {
     /**
      * @return APIInterface
      */
     protected function getApi()
     {
-        return new Invoice(ConnectionTest::getConnection());
+        return new Invoice($this->getConnection());
     }
 }
