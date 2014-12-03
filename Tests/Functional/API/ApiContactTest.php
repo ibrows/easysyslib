@@ -4,9 +4,10 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 
 use Ibrows\EasySysLibrary\API\APIInterface;
 use Ibrows\EasySysLibrary\API\Contact;
+use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
-class ApiContactTest extends AbstractAPITest
+class ApiContactTest extends AbstractConcreteAPITest
 {
     protected static $listData = array();
 
@@ -146,7 +147,7 @@ class ApiContactTest extends AbstractAPITest
         $result = $api->searchObjects(array('name' => $data->getName(), 'mail' => $data->getMail()));
         $this->assertTrue(is_array($result));
         $result = array_shift($result);
-        $this->assertModel($result);
+        $this->assertModel('contact', $result);
         $this->assertEquals($data, $result);
     }
 
@@ -156,7 +157,7 @@ class ApiContactTest extends AbstractAPITest
         $object = new \Ibrows\EasySysLibrary\Model\Contact($api->getTypeIdPrivate(), 'testabc', $api->getConnection()->getUserId(), $api->getConnection()->getUserId());
         /** @var \Ibrows\EasySysLibrary\Model\Contact $result */
         $result = $api->createFromObject($object);
-        $this->assertModel($object);
+        $this->assertModel('contact', $object);
         $this->assertEquals('testabc', $result->getName());
         $this->updateObject($result);
     }
@@ -166,13 +167,13 @@ class ApiContactTest extends AbstractAPITest
      */
     public function updateObject($object)
     {
-        $this->assertModel($object);
+        $this->assertModel('contact', $object);
 
         $api = $this->getApi();
         $object->setName('testupdateabc');
         $object->setMail('testupdate@abc.ch');
         $result = $api->updateFromObject($object->getId(), $object);
-        $this->assertModel($object);
+        $this->assertModel('contact', $object);
         $this->assertEquals($object->getName(), $result->getName());
         $this->assertEquals($object->getMail(), $result->getMail());
         $this->assertGreaterThan($object->getUpdatedAt(), $result->getUpdatedAt());
@@ -263,18 +264,6 @@ class ApiContactTest extends AbstractAPITest
     }
 
     /**
-     * @return array
-     * @throws \Exception
-     */
-    protected function getValidData()
-    {
-        if (!isset(static::$listData[0])) {
-            throw new \Exception("Call list first to setup listData");
-        }
-        return static::$listData[0];
-    }
-
-    /**
      * @return APIInterface|Contact
      */
     protected function getApi()
@@ -283,31 +272,7 @@ class ApiContactTest extends AbstractAPITest
     }
 
     /**
-     * @param \Ibrows\EasySysLibrary\Model\Contact $object
-     */
-    protected function assertModel($object)
-    {
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Contact', $object);
-    }
-
-    /**
-     * @return \Ibrows\EasySysLibrary\Model\Contact
-     */
-    protected function getValidObject()
-    {
-        return $this->getConverter()->convertEasySysToObject($this->getValidData());
-    }
-
-    /**
-     * @return array
-     */
-    protected function getValidArray()
-    {
-        return $this->getConverter()->convertEasySysToArray($this->getValidData());
-    }
-
-    /**
-     * @return ContactConverter
+     * @return AbstractConverter|ContactConverter
      */
     protected function getConverter()
     {

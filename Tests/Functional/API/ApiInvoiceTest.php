@@ -16,6 +16,11 @@ use Ibrows\EasySysLibrary\API\Invoice;
 
 class ApiInvoiceTest extends AbstractAPITest
 {
+    public function testInvoiced()
+    {
+
+    }
+
     /**
      * @return APIInterface
      */
