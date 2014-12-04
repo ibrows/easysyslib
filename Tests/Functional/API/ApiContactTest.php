@@ -9,16 +9,6 @@ use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
 class ApiContactTest extends AbstractConcreteAPITest
 {
-    protected static $listData = array();
-
-    public function testList()
-    {
-        $api = $this->getApi();
-        $all = $api->search(array(), null, 3);
-        $this->assertCount(3, $all);
-        static::$listData = $all;
-    }
-
     public function testShowMapping()
     {
         $api = $this->getApi();
@@ -34,8 +24,8 @@ class ApiContactTest extends AbstractConcreteAPITest
                 echo "'$key' => '$key', // $type \n";
             }
         }
-        $this->assertCount(count($resultReal), $resultMapped, "not all EasySys values are mapped");
 
+        $this->assertCount(count($resultReal), $resultMapped, "not all EasySys values are mapped");
     }
 
     public function delete($id)

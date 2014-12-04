@@ -20,6 +20,17 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
      */
     protected static $listData = array();
 
+    public function setup()
+    {
+        if (static::$listData) {
+            return;
+        }
+
+        $all = $this->getApi()->search(array(), null, 3);
+        $this->assertCount(3, $all);
+        static::$listData = $all;
+    }
+
     /**
      * @return AbstractAPI
      */
