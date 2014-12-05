@@ -20,7 +20,7 @@ interface ConverterInterface
     public function setArray(array $data);
 
     /**
-     * @param $object
+     * @param object $object
      */
     public function setObject($object);
 
@@ -45,17 +45,19 @@ interface ConverterInterface
     public function setDataEasySys($dataEasySys);
 
     /**
+     * @param array $result
      * @return array
      */
     public function convertEasySysToArray(array $result);
 
     /**
+     * @param object $result
      * @return object
      */
     public function convertEasySysToObject($result);
 
     /**
-     * @param $mixed
+     * @param mixed $mixed
      * @return array
      */
     public function convertToEasySys($mixed);
@@ -67,7 +69,7 @@ interface ConverterInterface
     public function keyConvertToEasySys($key);
 
     /**
-     * @param $keyEasySys
+     * @param string $keyEasySys
      * @return string|null
      */
     public function keyConvert($keyEasySys);
