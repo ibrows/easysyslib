@@ -8,6 +8,10 @@
             <directory>./Tests/Functional</directory>
         </testsuite>
 
+        <testsuite name="IbrowsEasySysLibraryBase">
+            <directory>./Tests/Base</directory>
+        </testsuite>
+
         <testsuite name="IbrowsEasySysLibraryFunctional">
             <directory>./Tests/Functional</directory>
         </testsuite>
