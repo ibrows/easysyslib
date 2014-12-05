@@ -21,6 +21,11 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
     abstract protected function getAPI();
 
     /**
+     * Not possible to test in APITest with provider data
+     */
+    abstract protected function testConvertCriteria();
+
+    /**
      * @return object
      */
     abstract protected function getModel();

@@ -53,15 +53,17 @@ class APITest extends AbstractAPITest
      * @param AbstractAPI $api
      * @param string $model
      * @param object $newObject
+     * @param array $mockData
+     * @param array $data
      */
-    public function testCreate(AbstractAPI $api, $model, $newObject)
+    public function testCreate(AbstractAPI $api, $model, $newObject, array $mockData, array $data)
     {
         $this->assertMethod($api, 'createFromObject');
         $object = $api->createFromObject($newObject);
         $this->assertInstanceOf($model, $object);
 
         $this->assertMethod($api, 'createFromArray');
-        $data = $api->createFromArray(array('name' => 'gugus'));
+        $data = $api->createFromArray(array(current($mockData) => current($data)));
         $this->assertTrue(is_array($data));
     }
 
@@ -104,8 +106,11 @@ class APITest extends AbstractAPITest
      * @dataProvider provideAPIs
      * @param AbstractAPI $api
      * @param string $model
+     * @param object $newObject
+     * @param array $mockData
+     * @param array $data
      */
-    public function testSearch(AbstractAPI $api, $model)
+    public function testSearch(AbstractAPI $api, $model, $newObject, array $mockData, array $data)
     {
         $this->assertMethod($api, 'search');
 
@@ -116,39 +121,16 @@ class APITest extends AbstractAPITest
             ->will($this->returnValue(array(array())));
         $api->setConnection($mock);
 
-        $searchObjects = $api->search(array('name' => 'gugus'));
+        $searchObjects = $api->search(array(current($mockData) => current($data)));
         $this->assertTrue(is_array($searchObjects));
 
-        $searchObjects = $api->searchObjects(array('name' => 'gugus'));
+        $searchObjects = $api->searchObjects(array(current($mockData) => current($data)));
         $searchObject = current($searchObjects);
         $this->assertInstanceOf($model, $searchObject);
 
-        $searchObjects = $api->searchArrays(array('name' => 'gugus'));
+        $searchObjects = $api->searchArrays(array(current($mockData) => current($data)));
         $searchObject = current($searchObjects);
         $this->assertTrue(is_array($searchObject));
-    }
-
-    /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
-     */
-    public function testConvertCriteria(AbstractAPI $api)
-    {
-        $result = $api->convertSimpleCriteria(array());
-        $this->assertEquals(array(), $result);
-
-        $result = $api->convertSimpleCriteria(array(array('field' => 'name', 'value' => 'd')));
-        $this->assertEquals(array(array('field' => 'name', 'value' => 'd')), $result);
-
-        $result = $api->convertSimpleCriteria(array('name' => 'd'));
-        $this->assertEquals(array(array('field' => 'name_1', 'value' => 'd', 'criteria' => '=')), $result);
-
-        $result = $api->convertSimpleCriteria(array('name' => 'd'), 'like');
-        $this->assertEquals(array(array('field' => 'name_1', 'value' => 'd', 'criteria' => 'like')), $result);
-
-        $result = $api->convertSimpleCriteria(array('name' => 'd', 'firstName' => 'b'));
-        $this->assertEquals(array(array('field' => 'name_1', 'value' => 'd', 'criteria' => '='), array('field' => 'name_2', 'value' => 'b', 'criteria' => '=')), $result);
-
     }
 
     /**
@@ -198,6 +180,10 @@ class APITest extends AbstractAPITest
         ),*/
     }
 
+    /**
+     * @param string $name
+     * @return array
+     */
     protected function provideContactApi($name = 'gugüs')
     {
         $model = new \Ibrows\EasySysLibrary\Model\Contact(null, 'first', null, null);
@@ -212,17 +198,21 @@ class APITest extends AbstractAPITest
         );
     }
 
-    protected function provideOrderApi($title = 'Test-Order')
+    /**
+     * @param string $apiReference
+     * @return array
+     */
+    protected function provideOrderApi($apiReference = 'Test-Order')
     {
-        $model = new \Ibrows\EasySysLibrary\Model\Order(1, 1);
-        $model->setTitle($title);
+        $model = new \Ibrows\EasySysLibrary\Model\Order(null, null);
+        $model->setApiReference($apiReference);
 
         return array(
             new Order($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Order',
             $model,
-            array('api_reference' => $title),
-            array('apiReference' => $title)
+            array('api_reference' => $apiReference),
+            array('apiReference' => $apiReference)
         );
     }
 } 

@@ -16,6 +16,66 @@ class Order
     /**
      * @var int
      */
+    protected $id;
+
+    /**
+     * @var int
+     */
+    protected $projectId;
+
+    /**
+     * @var float
+     */
+    protected $totalGross;
+
+    /**
+     * @var float
+     */
+    protected $totalNet;
+
+    /**
+     * @var float
+     */
+    protected $totalTaxes;
+
+    /**
+     * @var float
+     */
+    protected $total;
+
+    /**
+     * @var string
+     */
+    protected $contactAddress;
+
+    /**
+     * @var string
+     */
+    protected $deliveryAddress;
+
+    /**
+     * @var int
+     */
+    protected $kbItemStatusId;
+
+    /**
+     * @var bool
+     */
+    protected $isRecurring;
+
+    /**
+     * @var \DateTime
+     */
+    protected $viewedByClientAt;
+
+    /**
+     * @var \DateTime
+     */
+    protected $updatedAt;
+
+    /**
+     * @var int
+     */
     protected $contactId;
 
     /**
@@ -28,6 +88,11 @@ class Order
      * This field can only be read and edited by the api. It can be used to save references to other systems.
      */
     protected $apiReference;
+
+    /**
+     * @var string
+     */
+    protected $documentNumber;
 
     /**
      * @var int
@@ -227,6 +292,72 @@ class Order
     }
 
     /**
+     * @return float
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param float $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalGross()
+    {
+        return $this->totalGross;
+    }
+
+    /**
+     * @param float $totalGross
+     */
+    public function setTotalGross($totalGross)
+    {
+        $this->totalGross = $totalGross;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalNet()
+    {
+        return $this->totalNet;
+    }
+
+    /**
+     * @param float $totalNet
+     */
+    public function setTotalNet($totalNet)
+    {
+        $this->totalNet = $totalNet;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalTaxes()
+    {
+        return $this->totalTaxes;
+    }
+
+    /**
+     * @param float $totalTaxes
+     */
+    public function setTotalTaxes($totalTaxes)
+    {
+        $this->totalTaxes = $totalTaxes;
+    }
+
+
+
+    /**
      * @param int $contactAddressId
      */
     public function setContactAddressId($contactAddressId)
@@ -381,7 +512,7 @@ class Order
     /**
      * @return boolean
      */
-    public function isIsCompactView()
+    public function getIsCompactView()
     {
         return $this->isCompactView;
     }
@@ -445,7 +576,7 @@ class Order
     /**
      * @return boolean
      */
-    public function isMwstIsNet()
+    public function getMwstIsNet()
     {
         return $this->mwstIsNet;
     }
@@ -541,7 +672,7 @@ class Order
     /**
      * @return boolean
      */
-    public function isShowPositionTaxes()
+    public function getShowPositionTaxes()
     {
         return $this->showPositionTaxes;
     }
@@ -600,5 +731,149 @@ class Order
     public function setUserId($userId)
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentNumber()
+    {
+        return $this->documentNumber;
+    }
+
+    /**
+     * @param string $documentNumber
+     */
+    public function setDocumentNumber($documentNumber)
+    {
+        $this->documentNumber = $documentNumber;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProjectId()
+    {
+        return $this->projectId;
+    }
+
+    /**
+     * @param int $projectId
+     */
+    public function setProjectId($projectId)
+    {
+        $this->projectId = $projectId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactAddress()
+    {
+        return $this->contactAddress;
+    }
+
+    /**
+     * @param string $contactAddress
+     */
+    public function setContactAddress($contactAddress)
+    {
+        $this->contactAddress = $contactAddress;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryAddress()
+    {
+        return $this->deliveryAddress;
+    }
+
+    /**
+     * @param string $deliveryAddress
+     */
+    public function setDeliveryAddress($deliveryAddress)
+    {
+        $this->deliveryAddress = $deliveryAddress;
+    }
+
+    /**
+     * @return int
+     */
+    public function getKbItemStatusId()
+    {
+        return $this->kbItemStatusId;
+    }
+
+    /**
+     * @param int $kbItemStatusId
+     */
+    public function setKbItemStatusId($kbItemStatusId)
+    {
+        $this->kbItemStatusId = $kbItemStatusId;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsRecurring()
+    {
+        return $this->isRecurring;
+    }
+
+    /**
+     * @param boolean $isRecurring
+     */
+    public function setIsRecurring($isRecurring)
+    {
+        $this->isRecurring = $isRecurring;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getViewedByClientAt()
+    {
+        return $this->viewedByClientAt;
+    }
+
+    /**
+     * @param \DateTime $viewedByClientAt
+     */
+    public function setViewedByClientAt(\DateTime $viewedByClientAt = null)
+    {
+        $this->viewedByClientAt = $viewedByClientAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt(\DateTime $updatedAt = null)
+    {
+        $this->updatedAt = $updatedAt;
     }
 } 
