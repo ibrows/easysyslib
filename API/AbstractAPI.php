@@ -408,8 +408,9 @@ abstract class AbstractAPI implements APIInterface
         if (!$resource) {
             $resource = $this->getType();
         }
-        if ($this->parentType) {
-            $resource = "{$this->parentType}/{$this->parentId}/$resource";
+        if ($parent = $this->getParentType()) {
+            $parentId = $this->getParentId();
+            $resource = "{$parent}/{$parentId}/$resource";
         }
         return $resource;
     }
