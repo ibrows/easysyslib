@@ -5,9 +5,32 @@ namespace Ibrows\EasySysLibrary\Model;
 class ArticleType
 {
     /**
+     * @var int
+     */
+    protected $id;
+
+    /**
      * @var string
      */
     protected $name;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return string
@@ -19,7 +42,7 @@ class ArticleType
 
     /**
      * @param string $name
-     * @return ArticleType
+     * @return $this
      */
     public function setName($name)
     {

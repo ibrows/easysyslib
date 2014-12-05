@@ -5,6 +5,11 @@ namespace Ibrows\EasySysLibrary\Model;
 class StockArea
 {
     /**
+     * @var int
+     */
+    protected $id;
+
+    /**
      * @var int Resource stock_location
      */
     protected $stockId;
@@ -13,6 +18,42 @@ class StockArea
      * @var string
      */
     protected $name;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStockId()
+    {
+        return $this->stockId;
+    }
+
+    /**
+     * @param int $stockId
+     * @return $this
+     */
+    public function setStockId($stockId)
+    {
+        $this->stockId = $stockId;
+        return $this;
+    }
 
     /**
      * @return string
@@ -24,7 +65,7 @@ class StockArea
 
     /**
      * @param string $name
-     * @return ArticleType
+     * @return $this
      */
     public function setName($name)
     {

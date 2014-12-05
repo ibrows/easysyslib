@@ -5,6 +5,11 @@ namespace Ibrows\EasySysLibrary\Model;
 class Article
 {
     /**
+     * @var int
+     */
+    protected $id;
+
+    /**
      * @var int Resource account
      */
     protected $accountId;
@@ -183,6 +188,24 @@ class Article
      * @var int
      */
     protected $width;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return Article
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return int
