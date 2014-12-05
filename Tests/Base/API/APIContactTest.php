@@ -30,7 +30,6 @@ class APIContactTest extends AbstractConcreteAPITest
 
         $result = $api->convertSimpleCriteria(array('name' => 'd', 'firstName' => 'b'));
         $this->assertEquals(array(array('field' => 'name_1', 'value' => 'd', 'criteria' => '='), array('field' => 'name_2', 'value' => 'b', 'criteria' => '=')), $result);
-
     }
 
     /**

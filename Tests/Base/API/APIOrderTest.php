@@ -29,7 +29,19 @@ class APIOrderTest extends AbstractConcreteAPITest
      */
     public function testConvertCriteria()
     {
+        $api = $this->getAPI();
 
+        $result = $api->convertSimpleCriteria(array());
+        $this->assertEquals(array(), $result);
+
+        $result = $api->convertSimpleCriteria(array(array('field' => 'apiReference', 'value' => 'd')));
+        $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'd')), $result);
+
+        $result = $api->convertSimpleCriteria(array('apiReference' => 'd'));
+        $this->assertEquals(array(array('field' => 'api_reference', 'value' => 'd', 'criteria' => '=')), $result);
+
+        $result = $api->convertSimpleCriteria(array('apiReference' => 'd'), 'like');
+        $this->assertEquals(array(array('field' => 'api_reference', 'value' => 'd', 'criteria' => 'like')), $result);
     }
 
     /**
