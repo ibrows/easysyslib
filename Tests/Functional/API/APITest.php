@@ -14,7 +14,7 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 use Ibrows\EasySysLibrary\API\AbstractAPI;
 use Ibrows\EasySysLibrary\API\Contact;
 
-class ApiTest extends AbstractAPITest
+class APITest extends AbstractAPITest
 {
     /**
      * @var array

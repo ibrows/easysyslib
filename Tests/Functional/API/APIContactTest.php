@@ -7,7 +7,7 @@ use Ibrows\EasySysLibrary\API\Contact;
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
-class ApiContactTest extends AbstractConcreteAPITest
+class APIContactTest extends AbstractConcreteAPITest
 {
     public function delete($id)
     {
@@ -120,7 +120,7 @@ class ApiContactTest extends AbstractConcreteAPITest
         $result = $api->searchObjects(array('name' => $data->getName(), 'mail' => $data->getMail()));
         $this->assertTrue(is_array($result));
         $result = array_shift($result);
-        $this->assertModel('contact', $result);
+        $this->assertModel($result);
         $this->assertEquals($data, $result);
     }
 
@@ -130,7 +130,7 @@ class ApiContactTest extends AbstractConcreteAPITest
         $object = new \Ibrows\EasySysLibrary\Model\Contact($api->getTypeIdPrivate(), 'testabc', $api->getConnection()->getUserId(), $api->getConnection()->getUserId());
         /** @var \Ibrows\EasySysLibrary\Model\Contact $result */
         $result = $api->createFromObject($object);
-        $this->assertModel('contact', $object);
+        $this->assertModel($object);
         $this->assertEquals('testabc', $result->getName());
         $this->updateObject($result);
     }
@@ -140,13 +140,13 @@ class ApiContactTest extends AbstractConcreteAPITest
      */
     public function updateObject($object)
     {
-        $this->assertModel('contact', $object);
+        $this->assertModel($object);
 
         $api = $this->getApi();
         $object->setName('testupdateabc');
         $object->setMail('testupdate@abc.ch');
         $result = $api->updateFromObject($object->getId(), $object);
-        $this->assertModel('contact', $object);
+        $this->assertModel($object);
         $this->assertEquals($object->getName(), $result->getName());
         $this->assertEquals($object->getMail(), $result->getMail());
         $this->assertGreaterThan($object->getUpdatedAt(), $result->getUpdatedAt());

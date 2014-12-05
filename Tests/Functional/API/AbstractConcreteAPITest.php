@@ -55,12 +55,19 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
     }
 
     /**
-     * @param string $name
      * @param object $object
      */
-    protected function assertModel($name, $object)
+    protected function assertModel($object)
     {
-        $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\\' . ucfirst($name), $object);
+        $this->assertInstanceOf($this->getModelName(), $object);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModelName()
+    {
+        return get_class($this->getValidObject());
     }
 
     /**

@@ -92,7 +92,7 @@ class Order
     /**
      * @var string
      */
-    protected $documentNumber;
+    protected $documentNr;
 
     /**
      * @var int
@@ -736,17 +736,17 @@ class Order
     /**
      * @return string
      */
-    public function getDocumentNumber()
+    public function getDocumentNr()
     {
-        return $this->documentNumber;
+        return $this->documentNr;
     }
 
     /**
-     * @param string $documentNumber
+     * @param string $documentNr
      */
-    public function setDocumentNumber($documentNumber)
+    public function setDocumentNr($documentNr)
     {
-        $this->documentNumber = $documentNumber;
+        $this->documentNr = $documentNr;
     }
 
     /**

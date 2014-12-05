@@ -14,7 +14,7 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 use Ibrows\EasySysLibrary\API\APIInterface;
 use Ibrows\EasySysLibrary\API\Invoice;
 
-class ApiInvoiceTest extends AbstractAPITest
+class APIInvoiceTest extends AbstractAPITest
 {
     public function testInvoiced()
     {

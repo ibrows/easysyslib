@@ -17,7 +17,7 @@ class OrderConverter extends AbstractConverter
      */
     protected $mapping = array(
         'id'                    => 'id', // int
-        'document_nr'           => 'documentNumber', // string
+        'document_nr'           => 'documentNr', // string
         'title'                 => 'title', // string
         'contact_id'            => 'contactId', // int
         'contact_sub_id'        => 'contactSubId', // int
