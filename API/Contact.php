@@ -45,7 +45,6 @@ class Contact extends AbstractAPI
     public function __construct(ConnectionInterface $connection)
     {
         parent::__construct($connection);
-        $this->type = 'contact';
         $this->converter = new ContactConverter();
     }
 
@@ -249,15 +248,7 @@ class Contact extends AbstractAPI
      */
     public function getType()
     {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
+        return 'contact';
     }
 
     /**

@@ -27,4 +27,12 @@ class Invoice extends AbstractAPI
     {
         return $this->connection->call("$this->type/$id");
     }
+
+    /**
+     * @return string
+     */
+    protected function getType()
+    {
+        return 'invoice';
+    }
 } 

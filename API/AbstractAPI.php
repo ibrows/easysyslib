@@ -12,7 +12,7 @@ use Psr\Log\NullLogger;
  * @author marcsteiner
  *
  */
-class AbstractAPI implements APIInterface
+abstract class AbstractAPI implements APIInterface
 {
     /**
      * @var LoggerInterface
@@ -28,11 +28,6 @@ class AbstractAPI implements APIInterface
      * @var string
      */
     protected $type;
-
-    /**
-     * @var string
-     */
-    protected $parentType;
 
     /**
      * @var string
@@ -109,21 +104,21 @@ class AbstractAPI implements APIInterface
         $this->converter = $converter;
     }
 
-    /**
-     * @return string
-     */
-    public function getParentType()
-    {
-        return $this->parentType;
-    }
-
-    /**
-     * @param string $parentType
-     */
-    public function setParentType($parentType)
-    {
-        $this->parentType = $parentType;
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getParentType()
+//    {
+//        return $this->parentType;
+//    }
+//
+//    /**
+//     * @param string $parentType
+//     */
+//    public function setParentType($parentType)
+//    {
+//        $this->parentType = $parentType;
+//    }
 
     /**
      * @return string
@@ -411,7 +406,7 @@ class AbstractAPI implements APIInterface
     protected function getResource($resource = null)
     {
         if (!$resource) {
-            $resource = $this->type;
+            $resource = $this->getType();
         }
         if ($this->parentType) {
             $resource = "{$this->parentType}/{$this->parentId}/$resource";
@@ -419,4 +414,16 @@ class AbstractAPI implements APIInterface
         return $resource;
     }
 
+    /**
+     * @return string
+     */
+    abstract protected function getType();
+
+    /**
+     * @return string
+     */
+    protected function getParentType()
+    {
+        return null;
+    }
 }
