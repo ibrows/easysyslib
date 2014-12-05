@@ -13,6 +13,7 @@ namespace Ibrows\EasySysLibrary\Tests\Base\API;
 
 use Ibrows\EasySysLibrary\API\AbstractAPI;
 use Ibrows\EasySysLibrary\API\Contact;
+use Ibrows\EasySysLibrary\API\Order;
 
 class APITest extends AbstractAPITest
 {
@@ -176,7 +177,9 @@ class APITest extends AbstractAPITest
     {
         return array(
             $this->provideContactApi(),
-            $this->provideContactApi('schwurbbel..%&/ç*')
+            $this->provideContactApi('schwurbbel..%&/ç*'),
+            $this->provideOrderApi(),
+            $this->provideOrderApi('schwurbbel..%&/ç*')
         );
 
         /*array(
@@ -206,6 +209,20 @@ class APITest extends AbstractAPITest
             $model,
             array('name_1' => $name),
             array('name' => $name)
+        );
+    }
+
+    protected function provideOrderApi($title = 'Test-Order')
+    {
+        $model = new \Ibrows\EasySysLibrary\Model\Order(1, 1);
+        $model->setTitle($title);
+
+        return array(
+            new Order($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\Order',
+            $model,
+            array('api_reference' => $title),
+            array('apiReference' => $title)
         );
     }
 } 
