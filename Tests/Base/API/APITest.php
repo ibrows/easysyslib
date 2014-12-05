@@ -13,8 +13,11 @@ namespace Ibrows\EasySysLibrary\Tests\Base\API;
 
 use Ibrows\EasySysLibrary\API\AbstractAPI;
 use Ibrows\EasySysLibrary\API\Article;
+use Ibrows\EasySysLibrary\API\ArticleType;
 use Ibrows\EasySysLibrary\API\Contact;
 use Ibrows\EasySysLibrary\API\Order;
+use Ibrows\EasySysLibrary\API\StockArea;
+use Ibrows\EasySysLibrary\API\StockLocation;
 
 class APITest extends AbstractAPITest
 {
@@ -173,6 +176,12 @@ class APITest extends AbstractAPITest
             $this->provideOrderApi('schwurbbel..%&/ç*'),
             $this->provideArticleApi(),
             $this->provideArticleApi('schwurbbel..%&/ç*'),
+            $this->provideArticleTypeApi(),
+            $this->provideArticleTypeApi('schwurbbel..%&/ç*'),
+            $this->provideStockLocationApi(),
+            $this->provideStockLocationApi('schwurbbel..%&/ç*'),
+            $this->provideStockAreaApi(),
+            $this->provideStockAreaApi('schwurbbel..%&/ç*'),
         );
 
         /*array(
@@ -231,7 +240,7 @@ class APITest extends AbstractAPITest
      * @param string $apiReference
      * @return array
      */
-    protected function provideArticleApi($apiReference = 'Test-Item')
+    protected function provideArticleApi($apiReference = 'Test-Article')
     {
         $model = new \Ibrows\EasySysLibrary\Model\Article();
         $model->setDelivererCode($apiReference);
@@ -242,6 +251,63 @@ class APITest extends AbstractAPITest
             $model,
             array('deliverer_code' => $apiReference),
             array('delivererCode' => $apiReference)
+        );
+    }
+
+    /**
+     * @param string $apiReference
+     * @return array
+     */
+    protected function provideArticleTypeApi($apiReference = 'Test-Article-Type')
+    {
+        $model = new \Ibrows\EasySysLibrary\Model\ArticleType();
+        $model->setName($apiReference);
+
+        return array(
+            new ArticleType($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\ArticleType',
+            $model,
+            array('name' => $apiReference),
+            array('name' => $apiReference),
+            array('call', 'show', 'search')
+        );
+    }
+
+    /**
+     * @param string $apiReference
+     * @return array
+     */
+    protected function provideStockLocationApi($apiReference = 'Test-Stock-Location')
+    {
+        $model = new \Ibrows\EasySysLibrary\Model\StockLocation();
+        $model->setName($apiReference);
+
+        return array(
+            new StockLocation($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\StockLocation',
+            $model,
+            array('name' => $apiReference),
+            array('name' => $apiReference),
+            array('call', 'show', 'search')
+        );
+    }
+
+    /**
+     * @param string $apiReference
+     * @return array
+     */
+    protected function provideStockAreaApi($apiReference = 'Test-Stock-Area')
+    {
+        $model = new \Ibrows\EasySysLibrary\Model\StockArea();
+        $model->setName($apiReference);
+
+        return array(
+            new StockArea($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\StockArea',
+            $model,
+            array('name' => $apiReference),
+            array('name' => $apiReference),
+            array('call', 'show', 'search')
         );
     }
 } 
