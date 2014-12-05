@@ -20,15 +20,23 @@ class APITest extends AbstractAPITest
     /**
      * @dataProvider provideAPIs
      * @param AbstractAPI $api
+     * @param string $model
+     * @param object $newObject
+     * @param array $mockData
+     * @param array $data
+     * @param array $methods
      */
-    public function testApiMethods(AbstractAPI $api)
-    {
-        $this->assertMethod($api, 'call');
-        $this->assertMethod($api, 'show');
-        $this->assertMethod($api, 'search');
-        $this->assertMethod($api, 'create');
-        $this->assertMethod($api, 'update');
-        $this->assertMethod($api, 'delete');
+    public function testApiMethods(
+        AbstractAPI $api,
+        $model,
+        $newObject,
+        array $mockData,
+        array $data,
+        array $methods = array('call', 'show', 'search', 'create', 'update', 'delete')
+    ) {
+        foreach($methods as $method){
+            $this->assertMethod($api, $method);
+        }
     }
 
     /**
