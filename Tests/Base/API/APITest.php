@@ -12,6 +12,7 @@
 namespace Ibrows\EasySysLibrary\Tests\Base\API;
 
 use Ibrows\EasySysLibrary\API\AbstractAPI;
+use Ibrows\EasySysLibrary\API\Article;
 use Ibrows\EasySysLibrary\API\Contact;
 use Ibrows\EasySysLibrary\API\Order;
 
@@ -161,7 +162,9 @@ class APITest extends AbstractAPITest
             $this->provideContactApi(),
             $this->provideContactApi('schwurbbel..%&/ç*'),
             $this->provideOrderApi(),
-            $this->provideOrderApi('schwurbbel..%&/ç*')
+            $this->provideOrderApi('schwurbbel..%&/ç*'),
+            $this->provideArticleApi(),
+            $this->provideArticleApi('schwurbbel..%&/ç*'),
         );
 
         /*array(
@@ -213,6 +216,24 @@ class APITest extends AbstractAPITest
             $model,
             array('api_reference' => $apiReference),
             array('apiReference' => $apiReference)
+        );
+    }
+
+    /**
+     * @param string $apiReference
+     * @return array
+     */
+    protected function provideArticleApi($apiReference = 'Test-Item')
+    {
+        $model = new \Ibrows\EasySysLibrary\Model\Article();
+        $model->setDelivererCode($apiReference);
+
+        return array(
+            new Article($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\Article',
+            $model,
+            array('deliverer_code' => $apiReference),
+            array('delivererCode' => $apiReference)
         );
     }
 } 

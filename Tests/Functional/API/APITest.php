@@ -12,6 +12,7 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 
 use Ibrows\EasySysLibrary\API\AbstractAPI;
+use Ibrows\EasySysLibrary\API\Article;
 use Ibrows\EasySysLibrary\API\Contact;
 
 class APITest extends AbstractAPITest
@@ -86,7 +87,8 @@ class APITest extends AbstractAPITest
     public function provideAPIs()
     {
         return array(
-            $this->provideContactApi()
+            $this->provideContactApi(),
+            $this->provideArticleApi()
         );
     }
 
@@ -112,6 +114,18 @@ class APITest extends AbstractAPITest
         $data = array(
             new Contact($this->getConnection()),
             'firstName'
+        );
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    protected function provideArticleApi()
+    {
+        $data = array(
+            new Article($this->getConnection()),
+            'internName'
         );
         return $data;
     }
