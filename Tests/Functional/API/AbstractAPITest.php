@@ -16,20 +16,16 @@ use Ibrows\EasySysLibrary\Tests\Functional\ConnectionTest;
 
 abstract class AbstractAPITest extends \PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
-        if (!$this->getConnection()) {
-            $this->markTestSkipped(
-                'The credentials.ini File is not available or wrong'
-            );
-        }
-    }
-
     /**
      * @return ConnectionInterface|null
      */
     protected function getConnection()
     {
-        return ConnectionTest::getConnection();
+        if(!$connection = ConnectionTest::getConnection()){
+            $this->markTestSkipped(
+                'The credentials.ini File is not available or wrong'
+            );
+        }
+        return $connection;
     }
 } 

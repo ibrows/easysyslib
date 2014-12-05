@@ -16,6 +16,9 @@ use Ibrows\EasySysLibrary\API\Contact;
 
 class ApiTest extends AbstractAPITest
 {
+    /**
+     * @var array
+     */
     protected static $listData = array();
 
     /**
