@@ -3,11 +3,6 @@
 <phpunit bootstrap="./Tests/bootstrap.php" colors="true">
 
     <testsuites>
-        <testsuite name="IbrowsEasySysLibrary">
-            <directory>./Tests/Base</directory>
-            <directory>./Tests/Functional</directory>
-        </testsuite>
-
         <testsuite name="IbrowsEasySysLibraryBase">
             <directory>./Tests/Base</directory>
         </testsuite>
