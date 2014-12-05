@@ -42,6 +42,11 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
     abstract protected function getConverter();
 
     /**
+     * Very hard to test without concrete implementation (mapping)
+     */
+    abstract protected function testShow();
+
+    /**
      * @return array
      */
     protected function getValidArray()

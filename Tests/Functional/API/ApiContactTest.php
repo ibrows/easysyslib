@@ -9,44 +9,11 @@ use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
 class ApiContactTest extends AbstractConcreteAPITest
 {
-    public function testShowMapping()
-    {
-        $api = $this->getApi();
-        $data = $this->getValidData();
-        $resultReal = $api->show($data['id']);
-        $this->assertTrue(is_array($resultReal));
-
-        $resultMapped = $api->showArray($data['id']);
-        if (array_key_exists('addiationalData', $resultMapped)) {
-            echo "unmapped EasySys values \n";
-            foreach ($resultMapped['additionalData'] as $key => $value) {
-                $type = gettype($value);
-                echo "'$key' => '$key', // $type \n";
-            }
-        }
-
-        $this->assertCount(count($resultReal), $resultMapped, "not all EasySys values are mapped");
-    }
-
     public function delete($id)
     {
         $api = $this->getApi();
         $result = $api->delete($id);
         $this->assertTrue($result);
-    }
-
-    public function testListArray()
-    {
-        $all = $this->getApi()->searchArrays(array(), null, 3);
-        $this->assertCount(3, $all);
-        $this->assertArrayHasKey('firstName', $all[0]);
-    }
-
-    public function testListObject()
-    {
-        $all = $this->getApi()->searchArrays(array(), null, 3);
-        $this->assertCount(3, $all);
-        $this->assertArrayHasKey('firstName', $all[0]);
     }
 
     public function testShow()
@@ -67,6 +34,22 @@ class ApiContactTest extends AbstractConcreteAPITest
         $this->assertTrue(is_object($result));
         $this->assertEquals($data['name_1'], $result->getLastName());
         $this->assertEquals($data['name_2'], $result->getFirstName());
+    }
+
+    /**
+     * @return APIInterface|Contact
+     */
+    protected function getApi()
+    {
+        return new Contact($this->getConnection());
+    }
+
+    /**
+     * @return AbstractConverter|ContactConverter
+     */
+    protected function getConverter()
+    {
+        return $converter = new ContactConverter();
     }
 
     public function testSearchPerson()
@@ -251,21 +234,5 @@ class ApiContactTest extends AbstractConcreteAPITest
         $this->assertEquals($data['name'], $result['name']);
         $this->assertEquals($data['firstName'], $result['firstName']);
         $this->assertEquals($data['mail'], $result['mail']);
-    }
-
-    /**
-     * @return APIInterface|Contact
-     */
-    protected function getApi()
-    {
-        return new Contact($this->getConnection());
-    }
-
-    /**
-     * @return AbstractConverter|ContactConverter
-     */
-    protected function getConverter()
-    {
-        return $converter = new ContactConverter();
     }
 }
