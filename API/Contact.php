@@ -182,13 +182,22 @@ class Contact extends AbstractAPI
     }
 
     /**
+     * @return string
+     */
+    public function getType()
+    {
+        return 'contact';
+    }
+
+    /**
      * @param string $name
      * @return object
      */
     public function getModelInstance($name)
     {
-        $this->converter->setDataEasySys($this->addDefaults());
-        $contact = $this->converter->getObject();
+        $converter = $this->getConverter();
+        $converter->setDataEasySys($this->addDefaults());
+        $contact = $converter->getObject();
         $contact->setName($name);
         return $contact;
     }
@@ -241,14 +250,6 @@ class Contact extends AbstractAPI
     public function setCountryId($countryId)
     {
         $this->countryId = $countryId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'contact';
     }
 
     /**
