@@ -46,6 +46,13 @@ class ArticleConverter extends AbstractConverter
         'stock_min_nr' => 'stockMinNr', // float
         'stock_nr' => 'stockNr', // float
         'stock_place_id' => 'stockPlaceId', // int
+        'is_stock' => 'isStock', // bool
+        'stock_reserved_nr' => 'stockReservedNr', // float
+        'stock_available_nr' => 'stockAvailableNr', // float
+        'stock_picked_nr' => 'stockPickedNr', // float
+        'stock_disposed_nr' => 'stockDisposedNr', // float
+        'stock_ordered_nr' => 'stockOrderedNr', //float
+        'tax_id' => 'taxId', // int
         'tax_expense_id' => 'taxExpenseId', // int
         'tax_income_id' => 'taxIncomeId', // int
         'unit_id' => 'unitId', // int

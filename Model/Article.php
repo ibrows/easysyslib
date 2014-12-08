@@ -155,6 +155,41 @@ class Article
     protected $stockPlaceId;
 
     /**
+     * @var bool
+     */
+    protected $isStock;
+
+    /**
+     * @var float
+     */
+    protected $stockReservedNr;
+
+    /**
+     * @var float
+     */
+    protected $stockAvailableNr;
+
+    /**
+     * @var float
+     */
+    protected $stockPickedNr;
+
+    /**
+     * @var float
+     */
+    protected $stockDisposedNr;
+
+    /**
+     * @var float
+     */
+    protected $stockOrderedNr;
+
+    /**
+     * @var int Resource tax
+     */
+    protected $taxId;
+
+    /**
      * @var int Resource tax
      */
     protected $taxExpenseId;
@@ -204,7 +239,7 @@ class Article
 
     /**
      * @param int $id
-     * @return Article
+     * @return $this
      */
     public function setId($id)
     {
@@ -735,6 +770,132 @@ class Article
     }
 
     /**
+     * @return boolean
+     */
+    public function isIsStock()
+    {
+        return $this->isStock;
+    }
+
+    /**
+     * @param boolean $isStock
+     * @return $this
+     */
+    public function setIsStock($isStock)
+    {
+        $this->isStock = $isStock;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getStockReservedNr()
+    {
+        return $this->stockReservedNr;
+    }
+
+    /**
+     * @param float $stockReservedNr
+     * @return $this
+     */
+    public function setStockReservedNr($stockReservedNr)
+    {
+        $this->stockReservedNr = $stockReservedNr;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getStockAvailableNr()
+    {
+        return $this->stockAvailableNr;
+    }
+
+    /**
+     * @param float $stockAvailableNr
+     * @return $this
+     */
+    public function setStockAvailableNr($stockAvailableNr)
+    {
+        $this->stockAvailableNr = $stockAvailableNr;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getStockPickedNr()
+    {
+        return $this->stockPickedNr;
+    }
+
+    /**
+     * @param float $stockPickedNr
+     * @return $this
+     */
+    public function setStockPickedNr($stockPickedNr)
+    {
+        $this->stockPickedNr = $stockPickedNr;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getStockDisposedNr()
+    {
+        return $this->stockDisposedNr;
+    }
+
+    /**
+     * @param float $stockDisposedNr
+     * @return $this
+     */
+    public function setStockDisposedNr($stockDisposedNr)
+    {
+        $this->stockDisposedNr = $stockDisposedNr;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getStockOrderedNr()
+    {
+        return $this->stockOrderedNr;
+    }
+
+    /**
+     * @param float $stockOrderedNr
+     * @return $this
+     */
+    public function setStockOrderedNr($stockOrderedNr)
+    {
+        $this->stockOrderedNr = $stockOrderedNr;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTaxId()
+    {
+        return $this->taxId;
+    }
+
+    /**
+     * @param int $taxId
+     * @return $this
+     */
+    public function setTaxId($taxId)
+    {
+        $this->taxId = $taxId;
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getTaxExpenseId()
@@ -870,9 +1031,11 @@ class Article
 
     /**
      * @param array $additionalData
+     * @return $this
      */
     public function setAdditionalData($additionalData)
     {
         $this->additionalData = $additionalData;
+        return $this;
     }
 }
