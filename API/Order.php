@@ -66,6 +66,31 @@ class Order extends AbstractAPI
     }
 
     /**
+     * @param int $contactId
+     * @return \Ibrows\EasySysLibrary\Model\Order
+     */
+    public function getModelInstance($contactId)
+    {
+        $converter = $this->getConverter();
+        $converter->setDataEasySys($this->addDefaults());
+
+        /** @var \Ibrows\EasySysLibrary\Model\Order $order */
+        $order = $converter->getObject();
+        $order->setContactId($contactId);
+
+        return $order;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function addDefaults(array $data = array())
+    {
+        return $data;
+    }
+
+    /**
      * @param array $data
      * @return array
      */
