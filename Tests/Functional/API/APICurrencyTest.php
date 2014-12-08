@@ -12,9 +12,9 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 
 use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Tax;
+use Ibrows\EasySysLibrary\API\Currency;
 
-class APITaxTest extends AbstractConcreteAPITest
+class APICurrencyTest extends AbstractConcreteAPITest
 {
     /**
      * @expectedException Ibrows\EasySysLibrary\Connection\Exception\StatusCodeException
@@ -27,11 +27,11 @@ class APITaxTest extends AbstractConcreteAPITest
     }
 
     /**
-     * @return AbstractAPI|Tax
+     * @return AbstractAPI|Currency
      */
     protected function getApi()
     {
-        return new Tax($this->getConnection());
+        return new Currency($this->getConnection());
     }
 
     /**
@@ -44,17 +44,18 @@ class APITaxTest extends AbstractConcreteAPITest
 
         $result = $api->show($data['id']);
         $this->assertArray($result);
-        $this->assertEquals($data['value'], $result['value']);
+        $this->assertEquals($data['name'], $result['name']);
         $this->assertEquals($data['id'], $result['id']);
 
         $result = $api->showArray($data['id']);
         $this->assertArray($result);
-        $this->assertEquals($data['value'], $result['value']);
+        $this->assertEquals($data['name'], $result['name']);
         $this->assertEquals($data['id'], $result['id']);
 
+        /** @var \Ibrows\EasySysLibrary\Model\Currency $result */
         $result = $api->showObject($data['id']);
         $this->assertObject($result);
-        $this->assertEquals($data['value'], $result->getValue());
+        $this->assertEquals($data['name'], $result->getName());
         $this->assertEquals($data['id'], $result->getId());
     }
 }

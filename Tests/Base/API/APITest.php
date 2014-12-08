@@ -18,6 +18,7 @@ use Ibrows\EasySysLibrary\API\Contact;
 use Ibrows\EasySysLibrary\API\Order;
 use Ibrows\EasySysLibrary\API\StockArea;
 use Ibrows\EasySysLibrary\API\StockLocation;
+use Ibrows\EasySysLibrary\Model\Currency;
 use Ibrows\EasySysLibrary\Model\Tax;
 
 class APITest extends AbstractAPITest
@@ -184,6 +185,7 @@ class APITest extends AbstractAPITest
             $this->provideStockAreaApi(),
             $this->provideStockAreaApi('schwurbbel..%&/ç*'),
             $this->provideTaxApi(),
+            $this->provideCurrencyApi()
         );
     }
 
@@ -198,6 +200,21 @@ class APITest extends AbstractAPITest
             $model,
             array('value' => 8.00),
             array('value' => 8.00)
+        );
+    }
+
+    protected function provideCurrencyApi()
+    {
+        $model = new Currency();
+        $model->setName('CHF');
+        $model->setRoundFactor(0.050);
+
+        return array(
+            new \Ibrows\EasySysLibrary\API\Currency($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\Currency',
+            $model,
+            array('name' => 'CHF', 'round_factor' => 0.050),
+            array('name' => 'CHF', 'roundFactor' => 0.050)
         );
     }
 
