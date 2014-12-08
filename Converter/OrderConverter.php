@@ -2,6 +2,8 @@
 
 namespace Ibrows\EasySysLibrary\Converter;
 
+use Ibrows\EasySysLibrary\Converter\Type\DateTime;
+
 /**
  * @see https://docs.easysys.ch/ressources/kb_order/#show-order
  */
@@ -46,4 +48,16 @@ class OrderConverter extends AbstractConverter
         'viewed_by_client_at'   => 'viewedByClientAt', // datetime
         'updated_at'            => 'updatedAt', // datetime
     );
+
+    /**
+     * @return array|null
+     */
+    protected function setupConvertTypes()
+    {
+        return array(
+            'viewed_by_client_at' => new DateTime($this->getDefaultDateTimeFormat(), $this->getDefaultTimeZone()),
+            'updated_at'          => new DateTime($this->getDefaultDateTimeFormat(), $this->getDefaultTimeZone()),
+            'is_valid_from'       => new DateTime($this->getDefaultDateFormat(), $this->getDefaultTimeZone()),
+        );
+    }
 }

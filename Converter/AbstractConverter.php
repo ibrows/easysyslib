@@ -25,6 +25,11 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @var string
      */
+    protected $defaultDateFormat = 'YYYY-mm-dd';
+
+    /**
+     * @var string
+     */
     protected $defaultTimeFormat = 'H:i:s';
 
     /**
@@ -287,6 +292,22 @@ abstract class AbstractConverter implements ConverterInterface
     public function setDefaultTimeZone($defaultTimeZone)
     {
         $this->defaultTimeZone = $defaultTimeZone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultDateFormat()
+    {
+        return $this->defaultDateFormat;
+    }
+
+    /**
+     * @param string $defaultDateFormat
+     */
+    public function setDefaultDateFormat($defaultDateFormat)
+    {
+        $this->defaultDateFormat = $defaultDateFormat;
     }
 
     /**
