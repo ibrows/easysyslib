@@ -20,12 +20,12 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @var string
      */
-    protected $defaultDateTimeFormat = 'YYYY-mm-dd H:i:s';
+    protected $defaultDateTimeFormat = 'Y-m-d H:i:s';
 
     /**
      * @var string
      */
-    protected $defaultDateFormat = 'YYYY-mm-dd';
+    protected $defaultDateFormat = 'Y-m-d';
 
     /**
      * @var string
@@ -61,6 +61,11 @@ abstract class AbstractConverter implements ConverterInterface
      * @var array
      */
     protected $convertTypes = array();
+
+    /**
+     * @var bool
+     */
+    protected $throwExceptionOnAdditionalData = true;
 
     public function __construct()
     {
@@ -247,6 +252,14 @@ abstract class AbstractConverter implements ConverterInterface
     }
 
     /**
+     * @param boolean $throwExceptionOnAdditionalData
+     */
+    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
+    {
+        $this->throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
+    }
+
+    /**
      * @return boolean
      */
     public function isSetNull()
@@ -357,6 +370,7 @@ abstract class AbstractConverter implements ConverterInterface
 
     /**
      * @param object|array $objectOrArray
+     * @throws \Exception
      * @return object|array
      */
     protected function get($objectOrArray)
@@ -367,6 +381,9 @@ abstract class AbstractConverter implements ConverterInterface
 
         foreach ($this->dataEasySys as $key => $value) {
             if (!array_key_exists($key, $mapping)) {
+                if ($this->throwExceptionOnAdditionalData) {
+                    throw new \RuntimeException("Mapping for key " . $key . " not found - add to mappings of ". get_class($this));
+                }
                 $additionalData[$key] = $value;
                 continue;
             }
@@ -376,14 +393,18 @@ abstract class AbstractConverter implements ConverterInterface
                 $mappingLib = "[$mappingLib]";
             }
 
-            $accessor->setValue($objectOrArray, $mappingLib, $this->convertTypeFromEasySys($key, $value));
+            $value = $this->convertTypeFromEasySys($key, $value, is_array($objectOrArray));
+            $accessor->setValue($objectOrArray, $mappingLib, $value);
         }
 
         if (count($additionalData) > 0) {
-            if (is_array($objectOrArray)) {
-                $accessor->setValue($objectOrArray, '[additionalData]', $additionalData);
-            } else {
-                $accessor->setValue($objectOrArray, 'additionalData', $additionalData);
+            try {
+                $propertyPath = is_array($objectOrArray) ? '[additionalData]' : 'additionalData';
+                $accessor->setValue($objectOrArray, $propertyPath, $additionalData);
+            } catch (\Exception $e) {
+                if ($this->throwExceptionOnAdditionalData) {
+                    throw $e;
+                }
             }
         }
 
@@ -393,15 +414,35 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @param string $field
      * @param mixed $value
-     * @return mixed
+     * @param $asArray
      * @throws \Exception
+     * @return mixed
      */
-    protected function convertTypeFromEasySys($field, $value)
+    protected function convertTypeFromEasySys($field, $value, $asArray)
     {
         if (!$type = $this->getTypeConverter($field)) {
             return $value;
         }
-        return $type->convertFromEasySys($value);
+
+        $value = $type->convertFromEasySys($value);
+
+        if (is_array($value)) {
+            $values = array();
+            foreach ($value as $key => $data) {
+                if ($data instanceof ConverterInterface) {
+                    $values[$key] = $asArray ? $data->getArray() : $data->getObject();
+                    continue;
+                }
+                $values[$key] = $data;
+            }
+            return $values;
+        }
+
+        if ($value instanceof ConverterInterface) {
+            return $asArray ? $value->getArray() : $value->getObject();
+        }
+
+        return $value;
     }
 
     /**

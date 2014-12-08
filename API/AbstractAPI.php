@@ -7,6 +7,7 @@ use Ibrows\EasySysLibrary\Connection\Exception\Status404Exception;
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Saxulum\HttpClient\Request;
 
 /**
  * @author marcsteiner
@@ -89,6 +90,19 @@ abstract class AbstractAPI implements APIInterface
     }
 
     /**
+     * @param boolean $throwExceptionOnAdditionalData
+     * @throws \Exception
+     */
+    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
+    {
+        if (!$converter = $this->getConverter()) {
+            throw new \Exception("No converter found");
+        }
+
+        $converter->setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData);
+    }
+
+    /**
      * @return ConverterInterface
      */
     public function getConverter()
@@ -103,22 +117,6 @@ abstract class AbstractAPI implements APIInterface
     {
         $this->converter = $converter;
     }
-
-//    /**
-//     * @return string
-//     */
-//    public function getParentType()
-//    {
-//        return $this->parentType;
-//    }
-//
-//    /**
-//     * @param string $parentType
-//     */
-//    public function setParentType($parentType)
-//    {
-//        $this->parentType = $parentType;
-//    }
 
     /**
      * @return string
@@ -157,7 +155,7 @@ abstract class AbstractAPI implements APIInterface
      */
     public function showObject($id)
     {
-        return $this->converter->convertEasySysToObject($this->show($id));
+        return $this->getConverter()->convertEasySysToObject($this->show($id));
 
     }
 
@@ -168,7 +166,7 @@ abstract class AbstractAPI implements APIInterface
      */
     public function showArray($id)
     {
-        return $this->converter->convertEasySysToArray($this->show($id));
+        return $this->getConverter()->convertEasySysToArray($this->show($id));
     }
 
     /**
@@ -204,7 +202,7 @@ abstract class AbstractAPI implements APIInterface
     public function searchObjects(array $criteria = array(), $type = null, $limit = 0, $offset = 0, $orderBy = null)
     {
         $result = $this->search($criteria, $type, $limit, $offset, $orderBy);
-        return array_map(array($this->converter, "convertEasySysToObject"), $result);
+        return array_map(array($this->getConverter(), "convertEasySysToObject"), $result);
     }
 
     /**
@@ -219,11 +217,11 @@ abstract class AbstractAPI implements APIInterface
     public function searchArrays(array $criteria = array(), $type = null, $limit = 0, $offset = 0, $orderBy = null)
     {
         $result = $this->search($criteria, $type, $limit, $offset, $orderBy);
-        return array_map(array($this->converter, "convertEasySysToArray"), $result);
+        return array_map(array($this->getConverter(), "convertEasySysToArray"), $result);
     }
 
     /**
-     * @param array $data
+     * @param array $data native data sent to api
      * @param null $type
      * @param bool $includeUserId
      * @throws ConnectionException
@@ -234,7 +232,7 @@ abstract class AbstractAPI implements APIInterface
         if ($includeUserId) {
             $data['user_id'] = $this->connection->getUserId();
         }
-        return $this->connection->call($this->getResource($type), array(), $data, "POST");
+        return $this->connection->call($this->getResource($type), array(), $data, Request::METHOD_POST);
     }
 
     /**
@@ -246,8 +244,8 @@ abstract class AbstractAPI implements APIInterface
      */
     public function createFromObject($object, $type = null, $includeUserId = true)
     {
-        $result = $this->create($this->converter->convertToEasySys($object), $type, $includeUserId);
-        return $this->converter->convertEasySysToObject($result);
+        $result = $this->create($this->getConverter()->convertToEasySys($object), $type, $includeUserId);
+        return $this->getConverter()->convertEasySysToObject($result);
     }
 
     /**
@@ -259,21 +257,21 @@ abstract class AbstractAPI implements APIInterface
      */
     public function createFromArray(array $data, $type = null, $includeUserId = true)
     {
-        $data = $this->converter->convertToEasySys($data);
+        $data = $this->getConverter()->convertToEasySys($data);
         $result = $this->create($data, $type, $includeUserId);
-        return $this->converter->convertEasySysToArray($result);
+        return $this->getConverter()->convertEasySysToArray($result);
     }
 
     /**
      * @param int $id
-     * @param array $data
+     * @param array $data native data sent to api
      * @param null $type
      * @throws ConnectionException
      * @return array
      */
     public function update($id, array $data, $type = null)
     {
-        return $this->connection->call($this->getResource($type) . "/$id", array(), $data, "POST");
+        return $this->connection->call($this->getResource($type) . "/$id", array(), $data, Request::METHOD_POST);
     }
 
     /**
@@ -285,8 +283,8 @@ abstract class AbstractAPI implements APIInterface
      */
     public function updateFromObject($id, $object, $type = null)
     {
-        $result = $this->update($id, $this->converter->convertToEasySys($object), $type);
-        return $this->converter->convertEasySysToObject($result);
+        $result = $this->update($id, $this->getConverter()->convertToEasySys($object), $type);
+        return $this->getConverter()->convertEasySysToObject($result);
     }
 
     /**
@@ -298,8 +296,8 @@ abstract class AbstractAPI implements APIInterface
      */
     public function updateFromArray($id, array $data, $type = null)
     {
-        $result = $this->update($id, $this->converter->convertToEasySys($data), $type);
-        return $this->converter->convertEasySysToArray($result);
+        $result = $this->update($id, $this->getConverter()->convertToEasySys($data), $type);
+        return $this->getConverter()->convertEasySysToArray($result);
     }
 
     /**
@@ -310,7 +308,7 @@ abstract class AbstractAPI implements APIInterface
     public function delete($id)
     {
         try {
-            $return = $this->connection->call($this->getResource() . '/' . $id, array(), array(), "DELETE");
+            $return = $this->connection->call($this->getResource() . '/' . $id, array(), array(), Request::METHOD_DELETE);
             return (bool)$return['success'];
         } catch (Status404Exception $e) {
             return false;
@@ -341,7 +339,7 @@ abstract class AbstractAPI implements APIInterface
                 }
             }
 
-            $newKey = $this->converter->keyConvertToEasySys($key);
+            $newKey = $this->getConverter()->keyConvertToEasySys($key);
             if ($newKey !== false) {
                 $key = $newKey;
             }

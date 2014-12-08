@@ -69,8 +69,9 @@ class APIOrderTest extends AbstractConcreteAPITest
     public function testSearchObject()
     {
         $api = $this->getApi();
+        /** @var \Ibrows\EasySysLibrary\Model\Order $data */
         $data = $this->getValidObject();
-        $result = $api->searchObjects(array('documentNr' => $data->getDocumentNumber(), 'title' => $data->getTitle()));
+        $result = $api->searchObjects(array('documentNumber' => $data->getDocumentNumber(), 'title' => $data->getTitle()));
         $this->assertTrue(is_array($result));
         $result = array_shift($result);
         $this->assertModel($result);
@@ -97,12 +98,17 @@ class APIOrderTest extends AbstractConcreteAPITest
         $this->assertModel($object);
 
         $api = $this->getApi();
+
         $object->setTitle('testupdateabc');
-        $object->setDeliveryAddress("Mike Meier\nSeestrasse 356\n8038 Zürich");
+        $object->setDeliveryAddressManual("Mike Meier\nSeestrasse 356\n8038 Zürich");
+
+        /** @var \Ibrows\EasySysLibrary\Model\Order $result */
         $result = $api->updateFromObject($object->getId(), $object);
+
         $this->assertModel($object);
         $this->assertEquals($object->getTitle(), $result->getTitle());
-        $this->assertEquals($object->getDeliveryAddress(), $result->getDeliveryAddress());
+        $this->assertEquals($object->getDeliveryAddressManual(), $result->getDeliveryAddress());
+
         $this->assertGreaterThan($object->getUpdatedAt(), $result->getUpdatedAt());
         $this->delete($result->getId());
     }
@@ -110,7 +116,7 @@ class APIOrderTest extends AbstractConcreteAPITest
     public function testCreateArray()
     {
         $api = $this->getApi();
-        $result = $api->createFromArray(array('title' => 'testabc'));
+        $result = $api->createFromArray(array('title' => 'testabc', 'contactId' => 1));
         $this->assertTrue(is_array($result));
         $this->assertEquals('testabc', $result['title']);
         $this->updateArray($result);
@@ -119,17 +125,17 @@ class APIOrderTest extends AbstractConcreteAPITest
     public function updateArray($data)
     {
         $api = $this->getApi();
-        $result = $api->updateFromArray($data['id'], array('title' => 'testupdateabc', 'api_reference' => 'api-ref',));
+        $result = $api->updateFromArray($data['id'], array('title' => 'testupdateabc', 'apiReference' => 'api-ref'));
         $this->assertTrue(is_array($result));
         $this->assertEquals('testupdateabc', $result['title']);
-        $this->assertEquals('api-ref', $result['api_reference']);
+        $this->assertEquals('api-ref', $result['apiReference']);
         $this->delete($data['id']);
     }
 
     public function testCreate()
     {
         $api = $this->getApi();
-        $result = $api->create(array('title' => 'Neue Order'));
+        $result = $api->create(array('title' => 'Neue Order', 'contact_id' => 1));
         $this->assertTrue(is_array($result));
         $this->assertEquals('Neue Order', $result['title']);
         $this->update($result);
@@ -152,7 +158,7 @@ class APIOrderTest extends AbstractConcreteAPITest
         $result = $api->search(
             array(
                 array('field' => 'document_nr', 'value' => $data['document_nr'], 'criteria' => 'equal'),
-                array('field' => 'api_reference', 'value' => $data['api_reference'], 'criteria' => 'like'),
+                array('field' => 'contact_id', 'value' => $data['contact_id'], 'criteria' => 'like'),
             )
         );
         $this->assertTrue(is_array($result));
@@ -181,12 +187,12 @@ class APIOrderTest extends AbstractConcreteAPITest
     {
         $api = $this->getApi();
         $data = $this->getValidArray();
-        $result = $api->searchArrays(array('document_nr' => $data['document_nr'], 'api_reference' => $data['api_reference']));
+        $result = $api->searchArrays(array('document_nr' => $data['documentNumber'], 'api_reference' => $data['apiReference']));
         $this->assertTrue(is_array($result));
         $result = array_shift($result);
         $this->assertTrue(is_array($result));
-        $this->assertEquals($data['document_nr'], $result['document_nr']);
-        $this->assertEquals($data['api_reference'], $result['api_reference']);
+        $this->assertEquals($data['documentNumber'], $result['documentNumber']);
+        $this->assertEquals($data['apiReference'], $result['apiReference']);
         $this->assertEquals($data['title'], $result['title']);
     }
 }

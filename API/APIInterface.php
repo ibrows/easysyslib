@@ -24,6 +24,11 @@ interface APIInterface
     public function setConnection(ConnectionInterface $connection);
 
     /**
+     * @param bool $throwExceptionOnAdditionalData
+     */
+    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true);
+
+    /**
      * @param string $resource
      * @param array $urlParams
      * @param array $postParams

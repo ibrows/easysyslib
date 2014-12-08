@@ -61,7 +61,7 @@ class Order
     /**
      * @var bool
      */
-    protected $isRecurring;
+    protected $recurring;
 
     /**
      * @var \DateTime
@@ -92,7 +92,7 @@ class Order
     /**
      * @var string
      */
-    protected $documentNr;
+    protected $documentNumber;
 
     /**
      * @var int
@@ -147,12 +147,12 @@ class Order
     /**
      * @var bool
      */
-    protected $isCompactView;
+    protected $compactView;
 
     /**
      * @var \DateTime (converted to yyyy-mm-dd)
      */
-    protected $isValidFrom;
+    protected $validFrom;
 
     /**
      * @var int
@@ -165,13 +165,24 @@ class Order
     protected $logopaperId;
 
     /**
+     * @var mixed
+     * @todo resolve correct type - what is it?
+     */
+    protected $tax;
+
+    /**
      * @var bool
      *
      * This value affects the total if the field mwst_type has been set to 0.
      * false = Taxes are included in the total
      * true = Taxes will be added to the total
      */
-    protected $mwstIsNet;
+    protected $mwstNet;
+
+    /**
+     * @var array
+     */
+    protected $taxs;
 
     /**
      * @var int
@@ -221,7 +232,7 @@ class Order
     /**
      * @var OrderPosition[]
      */
-    protected $positions = array();
+    protected $positions;
 
     /**
      * @param int $contactId
@@ -248,6 +259,30 @@ class Order
     {
         foreach (array_keys($this->positions, $orderPosition) as $key) {
             unset($this->positions[$key]);
+        }
+    }
+
+    /**
+     * @return OrderPosition[]
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
+
+    /**
+     * @param OrderPosition[] $positions
+     */
+    public function setPositions($positions)
+    {
+        $this->positions = null;
+
+        if (is_null($positions)) {
+            return;
+        }
+
+        foreach ($positions as $position) {
+            $this->addPosition($position);
         }
     }
 
@@ -289,6 +324,14 @@ class Order
     public function getContactAddressId()
     {
         return $this->contactAddressId;
+    }
+
+    /**
+     * @param int $contactAddressId
+     */
+    public function setContactAddressId($contactAddressId)
+    {
+        $this->contactAddressId = $contactAddressId;
     }
 
     /**
@@ -353,16 +396,6 @@ class Order
     public function setTotalTaxes($totalTaxes)
     {
         $this->totalTaxes = $totalTaxes;
-    }
-
-
-
-    /**
-     * @param int $contactAddressId
-     */
-    public function setContactAddressId($contactAddressId)
-    {
-        $this->contactAddressId = $contactAddressId;
     }
 
     /**
@@ -458,6 +491,7 @@ class Order
      */
     public function setDeliveryAddressManual($deliveryAddressManual)
     {
+        $this->setDeliveryAddressType(\Ibrows\EasySysLibrary\API\Order::DELIVERY_TYPE_OWN);
         $this->deliveryAddressManual = $deliveryAddressManual;
     }
 
@@ -510,38 +544,6 @@ class Order
     }
 
     /**
-     * @return boolean
-     */
-    public function getIsCompactView()
-    {
-        return $this->isCompactView;
-    }
-
-    /**
-     * @param boolean $isCompactView
-     */
-    public function setIsCompactView($isCompactView)
-    {
-        $this->isCompactView = $isCompactView;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getIsValidFrom()
-    {
-        return $this->isValidFrom;
-    }
-
-    /**
-     * @param \DateTime $isValidFrom
-     */
-    public function setIsValidFrom(\DateTime $isValidFrom = null)
-    {
-        $this->isValidFrom = $isValidFrom;
-    }
-
-    /**
      * @return int
      */
     public function getLanguageId()
@@ -571,22 +573,6 @@ class Order
     public function setLogopaperId($logopaperId)
     {
         $this->logopaperId = $logopaperId;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getMwstIsNet()
-    {
-        return $this->mwstIsNet;
-    }
-
-    /**
-     * @param boolean $mwstIsNet
-     */
-    public function setMwstIsNet($mwstIsNet)
-    {
-        $this->mwstIsNet = $mwstIsNet;
     }
 
     /**
@@ -672,7 +658,7 @@ class Order
     /**
      * @return boolean
      */
-    public function getShowPositionTaxes()
+    public function isShowPositionTaxes()
     {
         return $this->showPositionTaxes;
     }
@@ -731,22 +717,6 @@ class Order
     public function setUserId($userId)
     {
         $this->userId = $userId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDocumentNr()
-    {
-        return $this->documentNr;
-    }
-
-    /**
-     * @param string $documentNr
-     */
-    public function setDocumentNr($documentNr)
-    {
-        $this->documentNr = $documentNr;
     }
 
     /**
@@ -830,22 +800,6 @@ class Order
     }
 
     /**
-     * @return boolean
-     */
-    public function getIsRecurring()
-    {
-        return $this->isRecurring;
-    }
-
-    /**
-     * @param boolean $isRecurring
-     */
-    public function setIsRecurring($isRecurring)
-    {
-        $this->isRecurring = $isRecurring;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getViewedByClientAt()
@@ -876,4 +830,116 @@ class Order
     {
         $this->updatedAt = $updatedAt;
     }
-} 
+
+    /**
+     * @return array
+     */
+    public function getTaxs()
+    {
+        return $this->taxs;
+    }
+
+    /**
+     * @param array $taxs
+     */
+    public function setTaxs(array $taxs = null)
+    {
+        $this->taxs = $taxs;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCompactView()
+    {
+        return $this->compactView;
+    }
+
+    /**
+     * @param boolean $compactView
+     */
+    public function setCompactView($compactView)
+    {
+        $this->compactView = $compactView;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isMwstNet()
+    {
+        return $this->mwstNet;
+    }
+
+    /**
+     * @param boolean $mwstNet
+     */
+    public function setMwstNet($mwstNet)
+    {
+        $this->mwstNet = $mwstNet;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRecurring()
+    {
+        return $this->recurring;
+    }
+
+    /**
+     * @param boolean $recurring
+     */
+    public function setRecurring($recurring)
+    {
+        $this->recurring = $recurring;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getValidFrom()
+    {
+        return $this->validFrom;
+    }
+
+    /**
+     * @param \DateTime $validFrom
+     */
+    public function setValidFrom(\DateTime $validFrom = null)
+    {
+        $this->validFrom = $validFrom;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    /**
+     * @param mixed $tax
+     */
+    public function setTax($tax = null)
+    {
+        $this->tax = $tax;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentNumber()
+    {
+        return $this->documentNumber;
+    }
+
+    /**
+     * @param string $documentNumber
+     */
+    public function setDocumentNumber($documentNumber)
+    {
+        $this->documentNumber = $documentNumber;
+    }
+}

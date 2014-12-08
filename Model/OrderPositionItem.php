@@ -3,20 +3,35 @@
 /**
  * Created by PhpStorm.
  * Project: coffeeconnection
- * 
+ *
  * User: mikemeier
- * Date: 05.12.14
- * Time: 11:43
+ * Date: 08.12.14
+ * Time: 15:57
  */
 
 namespace Ibrows\EasySysLibrary\Model;
 
-class OrderPositionDefault extends OrderPosition
+class OrderPositionItem extends OrderPosition
 {
     /**
      * @var float
      */
     protected $amount;
+
+    /**
+     * @var int
+     */
+    protected $unitId;
+
+    /**
+     * @var string
+     */
+    protected $unitName;
+
+    /**
+     * @var int
+     */
+    protected $articleId;
 
     /**
      * @var int
@@ -34,16 +49,6 @@ class OrderPositionDefault extends OrderPosition
     protected $unitPrice;
 
     /**
-     * @var string
-     */
-    protected $unitName;
-
-    /**
-     * @var float
-     */
-    protected $positionTotal;
-
-    /**
      * @var int
      */
     protected $accountId;
@@ -54,23 +59,20 @@ class OrderPositionDefault extends OrderPosition
     protected $discountInPercent;
 
     /**
-     * @var string (4000)
+     * @var float
      */
-    protected $text;
-
-    /**
-     * @var int
-     */
-    protected $unitId;
+    protected $positionTotal;
 
     /**
      * @param float $amount
+     * @param int $articleId
      * @param int $taxId
      * @param float $unitPrice
      */
-    public function __construct($amount, $taxId, $unitPrice)
+    public function __construct($amount, $articleId, $taxId, $unitPrice)
     {
         $this->amount = $amount;
+        $this->articleId = $articleId;
         $this->taxId = $taxId;
         $this->unitPrice = $unitPrice;
     }
@@ -108,6 +110,22 @@ class OrderPositionDefault extends OrderPosition
     }
 
     /**
+     * @return int
+     */
+    public function getArticleId()
+    {
+        return $this->articleId;
+    }
+
+    /**
+     * @param int $articleId
+     */
+    public function setArticleId($articleId)
+    {
+        $this->articleId = $articleId;
+    }
+
+    /**
      * @return float
      */
     public function getDiscountInPercent()
@@ -140,22 +158,6 @@ class OrderPositionDefault extends OrderPosition
     }
 
     /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param string $text
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-    }
-
-    /**
      * @return int
      */
     public function getUnitId()
@@ -169,30 +171,6 @@ class OrderPositionDefault extends OrderPosition
     public function setUnitId($unitId)
     {
         $this->unitId = $unitId;
-    }
-
-    /**
-     * @return float
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
-    }
-
-    /**
-     * @param float $unitPrice
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getType()
-    {
-        return 'KbPositionCustom';
     }
 
     /**
@@ -214,17 +192,17 @@ class OrderPositionDefault extends OrderPosition
     /**
      * @return float
      */
-    public function getTaxValue()
+    public function getUnitPrice()
     {
-        return $this->taxValue;
+        return $this->unitPrice;
     }
 
     /**
-     * @param float $taxValue
+     * @param float $unitPrice
      */
-    public function setTaxValue($taxValue)
+    public function setUnitPrice($unitPrice)
     {
-        $this->taxValue = $taxValue;
+        $this->unitPrice = $unitPrice;
     }
 
     /**
@@ -241,5 +219,29 @@ class OrderPositionDefault extends OrderPosition
     public function setPositionTotal($positionTotal)
     {
         $this->positionTotal = $positionTotal;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getType()
+    {
+        return 'KbPositionArticle';
+    }
+
+    /**
+     * @return float
+     */
+    public function getTaxValue()
+    {
+        return $this->taxValue;
+    }
+
+    /**
+     * @param float $taxValue
+     */
+    public function setTaxValue($taxValue)
+    {
+        $this->taxValue = $taxValue;
     }
 }

@@ -72,4 +72,9 @@ interface ConverterInterface
      * @return string|null
      */
     public function keyConvert($keyEasySys);
+
+    /**
+     * @param bool $throwExceptionOnAdditionalData
+     */
+    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true);
 }
