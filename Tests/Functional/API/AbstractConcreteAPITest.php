@@ -20,6 +20,11 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
      */
     protected static $listData = array();
 
+    public static function setUpBeforeClass()
+    {
+        static::$listData = array();
+    }
+
     public function setup()
     {
         if (static::$listData) {
