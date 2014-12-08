@@ -190,7 +190,7 @@ class OrderPositionDefault extends OrderPosition
     /**
      * @return string
      */
-    protected function getType()
+    public function getType()
     {
         return 'KbPositionCustom';
     }

@@ -224,7 +224,7 @@ class OrderPositionItem extends OrderPosition
     /**
      * @return string
      */
-    protected function getType()
+    public function getType()
     {
         return 'KbPositionArticle';
     }

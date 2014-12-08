@@ -22,6 +22,7 @@ abstract class OrderPositionConverter extends AbstractConverter
         'parent_id'    => 'parentId', // int
         'internal_pos' => 'internalPosition', // int
         'pos'          => 'position', // int
-        'is_optional'  => 'optional',
+        'is_optional'  => 'optional', // bool
+        'text'         => 'text' // string
     );
 } 

@@ -13,7 +13,7 @@ namespace Ibrows\EasySysLibrary\Converter\Type;
 
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 
-class Converter implements TypeInterface
+class ProxyConverter implements TypeInterface
 {
     /**
      * @var ConverterInterface
@@ -84,24 +84,27 @@ class Converter implements TypeInterface
 
             $values = array();
             foreach ($value as $key => $data) {
+                $converter = $this->getConverter($data);
                 if (is_array($data)) {
-                    $this->getConverter()->setArray($data);
+                    $converter->setArray($data);
                 } else {
-                    $this->getConverter()->setObject($data);
+                    $converter->setObject($data);
                 }
-                $values[$key] = $this->getConverter()->getDataEasySys();
+                $values[$key] = $converter->getDataEasySys();
             }
 
             return $values;
         }
 
+        $converter = $this->getConverter($value);
+
         if (is_array($value)) {
-            $this->getConverter()->setArray($value);
+            $converter->setArray($value);
         } else {
-            $this->getConverter()->setObject($value);
+            $converter->setObject($value);
         }
 
-        return $this->getConverter()->getDataEasySys();
+        return $converter->getDataEasySys();
     }
 
     /**

@@ -2,9 +2,10 @@
 
 namespace Ibrows\EasySysLibrary\Converter;
 
-use Ibrows\EasySysLibrary\Converter\Type\Converter;
 use Ibrows\EasySysLibrary\Converter\Type\DateTime;
+use Ibrows\EasySysLibrary\Converter\Type\OrderPosition;
 use Ibrows\EasySysLibrary\Converter\Type\OrderPositionConverter;
+use Ibrows\EasySysLibrary\Converter\Type\ProxyConverter;
 
 /**
  * @see https://docs.easysys.ch/ressources/kb_order/#show-order
@@ -68,7 +69,7 @@ class OrderConverter extends AbstractConverter
             'viewed_by_client_at' => new DateTime($this->getDefaultDateTimeFormat(), $this->getDefaultTimeZone()),
             'updated_at'          => new DateTime($this->getDefaultDateTimeFormat(), $this->getDefaultTimeZone()),
             'is_valid_from'       => new DateTime($this->getDefaultDateFormat(), $this->getDefaultTimeZone()),
-            'taxs'                => new Converter(new OrderTaxConverter()),
+            'taxs'                => new ProxyConverter(new OrderTaxConverter()),
             'positions'           => new OrderPositionConverter()
         );
     }

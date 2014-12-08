@@ -6,6 +6,9 @@ use Ibrows\EasySysLibrary\API\APIInterface;
 use Ibrows\EasySysLibrary\API\Order;
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\OrderConverter;
+use Ibrows\EasySysLibrary\Model\OrderPositionDefault;
+use Ibrows\EasySysLibrary\Model\OrderPositionSubPosition;
+use Ibrows\EasySysLibrary\Model\OrderPositionText;
 
 class APIOrderTest extends AbstractConcreteAPITest
 {
@@ -83,8 +86,10 @@ class APIOrderTest extends AbstractConcreteAPITest
         $api = $this->getApi();
         $object = new \Ibrows\EasySysLibrary\Model\Order($api->getConnection()->getUserId(), $api->getConnection()->getUserId());
         $object->setTitle('Test-Create-Order');
+
         /** @var \Ibrows\EasySysLibrary\Model\Order $result */
         $result = $api->createFromObject($object);
+
         $this->assertModel($object);
         $this->assertEquals('Test-Create-Order', $result->getTitle());
         $this->updateObject($result);
@@ -102,6 +107,7 @@ class APIOrderTest extends AbstractConcreteAPITest
         $object->setTitle('testupdateabc');
         $object->setDeliveryAddressManual("Mike Meier\nSeestrasse 356\n8038 Zürich");
 
+        sleep(1);
         /** @var \Ibrows\EasySysLibrary\Model\Order $result */
         $result = $api->updateFromObject($object->getId(), $object);
 
@@ -130,6 +136,31 @@ class APIOrderTest extends AbstractConcreteAPITest
         $this->assertEquals('testupdateabc', $result['title']);
         $this->assertEquals('api-ref', $result['apiReference']);
         $this->delete($data['id']);
+    }
+
+    public function testCreatePositions()
+    {
+        $api = $this->getApi();
+
+        $order = new \Ibrows\EasySysLibrary\Model\Order(1, 1);
+        $order->setTitle('Text-Position');
+
+        $order->addPosition(new OrderPositionText('Super-Position #1'));
+        $order->addPosition(new OrderPositionText('Super-Position #2'));
+
+        /** @var \Ibrows\EasySysLibrary\Model\Order $result */
+        $result = $api->createFromObject($order);
+        $this->assertCount(2, $result->getPositions());
+
+        $order = new \Ibrows\EasySysLibrary\Model\Order(1, 1);
+        $order->setTitle('OrderPositionDefaults');
+
+        $order->addPosition(new OrderPositionDefault(10, 1, 18.75));
+        $order->addPosition(new OrderPositionDefault(15, 1, 15.30));
+
+        /** @var \Ibrows\EasySysLibrary\Model\Order $result */
+        $result = $api->createFromObject($order);
+        $this->assertCount(2, $result->getPositions());
     }
 
     public function testCreate()

@@ -19,9 +19,22 @@ class OrderPositionSubPosition extends OrderPosition
     protected $showPositionNumber;
 
     /**
+     * @var bool
+     */
+    protected $showPositionPrices;
+
+    /**
      * @var float
      */
     protected $totalSum;
+
+    /**
+     * @param bool $showPositionNumber
+     */
+    public function __construct($showPositionNumber)
+    {
+        $this->setShowPositionNumber($showPositionNumber);
+    }
 
     /**
      * @return boolean
@@ -58,8 +71,24 @@ class OrderPositionSubPosition extends OrderPosition
     /**
      * @return string
      */
-    protected function getType()
+    public function getType()
     {
         return 'KbPositionSubposition';
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isShowPositionPrices()
+    {
+        return $this->showPositionPrices;
+    }
+
+    /**
+     * @param boolean $showPositionPrices
+     */
+    public function setShowPositionPrices($showPositionPrices)
+    {
+        $this->showPositionPrices = $showPositionPrices;
     }
 }

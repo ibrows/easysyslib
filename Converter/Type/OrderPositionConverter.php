@@ -11,12 +11,14 @@
 
 namespace Ibrows\EasySysLibrary\Converter\Type;
 
+use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 use Ibrows\EasySysLibrary\Converter\OrderPositionDefaultConverter;
 use Ibrows\EasySysLibrary\Converter\OrderPositionItemConverter;
 use Ibrows\EasySysLibrary\Converter\OrderPositionSubPositionConverter;
 use Ibrows\EasySysLibrary\Converter\OrderPositionTextConverter;
+use Ibrows\EasySysLibrary\Model\OrderPosition;
 
-class OrderPositionConverter extends Converter
+class OrderPositionConverter extends ProxyConverter
 {
     /**
      * @var string
@@ -30,6 +32,7 @@ class OrderPositionConverter extends Converter
 
     /**
      * @param string $key
+     * @param bool $multi
      */
     public function __construct($key = 'type', $multi = true)
     {
@@ -56,13 +59,14 @@ class OrderPositionConverter extends Converter
 
         $key = $this->getKey();
         if (is_array($context) && array_key_exists($key, $context)) {
-            $type = $context[$key];
-            $types = $this->getTypes();
-            if (!array_key_exists($type, $types)) {
-                throw new \Exception("Type " . $type . " is not a valid OrderPosition");
-            }
-            return $types[$type];
+            return $this->getConverterForType($context[$key]);
         }
+
+        if($context instanceof OrderPosition){
+            return $this->getConverterForType($context->getType());
+        }
+
+        throw new \Exception("Could not find correct converter for context");
     }
 
     /**
@@ -95,5 +99,19 @@ class OrderPositionConverter extends Converter
     public function setKey($key)
     {
         $this->key = $key;
+    }
+
+    /**
+     * @param string $type
+     * @return ConverterInterface
+     * @throws \Exception
+     */
+    protected function getConverterForType($type)
+    {
+        $types = $this->getTypes();
+        if (!array_key_exists($type, $types)) {
+            throw new \Exception("Type " . $type . " is not a valid OrderPosition");
+        }
+        return $types[$type];
     }
 }

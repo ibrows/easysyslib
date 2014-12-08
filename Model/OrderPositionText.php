@@ -19,6 +19,14 @@ class OrderPositionText extends OrderPosition
     protected $showPositionNumber;
 
     /**
+     * @param string $text
+     */
+    public function __construct($text)
+    {
+        $this->setText($text);
+    }
+
+    /**
      * @return boolean
      */
     public function isShowPositionNumber()
@@ -37,7 +45,7 @@ class OrderPositionText extends OrderPosition
     /**
      * @return string
      */
-    protected function getType()
+    public function getType()
     {
         return 'KbPositionText';
     }

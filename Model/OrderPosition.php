@@ -153,5 +153,5 @@ abstract class OrderPosition
     /**
      * @return string
      */
-    abstract protected function getType();
+    abstract public function getType();
 } 
