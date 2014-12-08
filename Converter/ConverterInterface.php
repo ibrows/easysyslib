@@ -13,7 +13,6 @@ namespace Ibrows\EasySysLibrary\Converter;
  */
 interface ConverterInterface
 {
-
     /**
      * @param array $data
      */
@@ -42,22 +41,22 @@ interface ConverterInterface
     /**
      * @param array $dataEasySys
      */
-    public function setDataEasySys($dataEasySys);
+    public function setDataEasySys(array $dataEasySys = null);
 
     /**
      * @param array $result
      * @return array
      */
-    public function convertEasySysToArray(array $result);
+    public function convertEasySysToArray(array $result = null);
 
     /**
-     * @param object $result
+     * @param array $result
      * @return object
      */
-    public function convertEasySysToObject($result);
+    public function convertEasySysToObject(array $result = null);
 
     /**
-     * @param mixed $mixed
+     * @param array|object $mixed
      * @return array
      */
     public function convertToEasySys($mixed);

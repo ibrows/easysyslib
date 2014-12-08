@@ -7,7 +7,9 @@
  */
 namespace Ibrows\EasySysLibrary\Converter;
 
+use Ibrows\EasySysLibrary\Converter\Type\TypeInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Class AbstractConverter
@@ -15,6 +17,20 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 abstract class AbstractConverter implements ConverterInterface
 {
+    /**
+     * @var string
+     */
+    protected $defaultDateTimeFormat = 'YYYY-mm-dd H:i:s';
+
+    /**
+     * @var string
+     */
+    protected $defaultTimeFormat = 'H:i:s';
+
+    /**
+     * @var string
+     */
+    protected $defaultTimeZone = 'CET';
 
     /**
      * @var bool
@@ -27,13 +43,30 @@ abstract class AbstractConverter implements ConverterInterface
     protected $dataEasySys = array();
 
     /**
-     * @var null
+     * @var string
      */
-    protected $modelClass = null;
+    protected $modelClass;
+
     /**
-     * @var null
+     * @var array
      */
-    protected $mapping = null;
+    protected $mapping = array();
+
+    /**
+     * @var array
+     */
+    protected $convertTypes = array();
+
+    public function __construct()
+    {
+        if ($mapping = $this->setupMapping()) {
+            $this->setMapping($mapping);
+        }
+
+        if ($types = $this->setupConvertTypes()) {
+            $this->setConvertTypes($types);
+        }
+    }
 
     /**
      * @return array
@@ -46,9 +79,41 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @param array $mapping
      */
-    public function setMapping($mapping)
+    public function setMapping(array $mapping = null)
     {
         $this->mapping = $mapping;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultDateTimeFormat()
+    {
+        return $this->defaultDateTimeFormat;
+    }
+
+    /**
+     * @param string $defaultDateTimeFormat
+     */
+    public function setDefaultDateTimeFormat($defaultDateTimeFormat)
+    {
+        $this->defaultDateTimeFormat = $defaultDateTimeFormat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultTimeFormat()
+    {
+        return $this->defaultTimeFormat;
+    }
+
+    /**
+     * @param string $defaultTimeFormat
+     */
+    public function setDefaultTimeFormat($defaultTimeFormat)
+    {
+        $this->defaultTimeFormat = $defaultTimeFormat;
     }
 
     /**
@@ -67,7 +132,6 @@ abstract class AbstractConverter implements ConverterInterface
         $this->modelClass = $modelClass;
     }
 
-
     /**
      * @param array $data
      */
@@ -83,59 +147,6 @@ abstract class AbstractConverter implements ConverterInterface
     {
         $this->set($object);
     }
-
-    /**
-     * @param $objectOrArray
-     */
-    protected function set($objectOrArray)
-    {
-        $this->dataEasySys = array();
-        $accessor = PropertyAccess::createPropertyAccessor();
-        foreach ($this->getMapping() as $mappingEasySys => $mappingLib) {
-            if (is_array($objectOrArray)) {
-                $mappingLib = "[$mappingLib]";
-            }
-            $value = $accessor->getValue($objectOrArray, $mappingLib);
-            if ($this->setNull || $value !== null) {
-                $this->dataEasySys[$mappingEasySys] = $value;
-            }
-        }
-    }
-
-    protected function getPropertyAccessor()
-    {
-        return PropertyAccess::createPropertyAccessor();
-    }
-
-    /**
-     * @param $objectOrArray
-     * @return mixed
-     */
-    protected function get($objectOrArray)
-    {
-        $additionalData = array();
-        $accessor = $this->getPropertyAccessor();
-        foreach ($this->dataEasySys as $key => $value) {
-            if (!array_key_exists($key, $this->getMapping())) {
-                $additionalData[$key] = $value;
-                continue;
-            }
-            $mappingLib = $this->getMapping()[$key];
-            if (is_array($objectOrArray)) {
-                $mappingLib = "[$mappingLib]";
-            }
-            $accessor->setValue($objectOrArray, $mappingLib, $value);
-        }
-        if (count($additionalData) > 0) {
-            if (is_array($objectOrArray)) {
-                $accessor->setValue($objectOrArray, '[additionalData]', $additionalData);
-            } else {
-                $accessor->setValue($objectOrArray, 'additionalData', $additionalData);
-            }
-        }
-        return $objectOrArray;
-    }
-
 
     /**
      * @return array
@@ -166,7 +177,7 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @param array $dataEasySys
      */
-    public function setDataEasySys($dataEasySys)
+    public function setDataEasySys(array $dataEasySys = null)
     {
         if ($dataEasySys == null) {
             $dataEasySys = array();
@@ -175,6 +186,7 @@ abstract class AbstractConverter implements ConverterInterface
     }
 
     /**
+     * @param array $result
      * @return array
      */
     public function convertEasySysToArray(array $result = null)
@@ -184,16 +196,17 @@ abstract class AbstractConverter implements ConverterInterface
     }
 
     /**
+     * @param array $result
      * @return object
      */
-    public function convertEasySysToObject($result)
+    public function convertEasySysToObject(array $result = null)
     {
         $this->setDataEasySys($result);
         return $this->getObject();
     }
 
     /**
-     * @param $mixed
+     * @param array|object $mixed
      * @return array
      */
     public function convertToEasySys($mixed)
@@ -207,10 +220,9 @@ abstract class AbstractConverter implements ConverterInterface
 
     }
 
-
     /**
-     * @param $key
-     * @return mixed
+     * @param string $key
+     * @return string
      */
     public function keyConvertToEasySys($key)
     {
@@ -218,8 +230,8 @@ abstract class AbstractConverter implements ConverterInterface
     }
 
     /**
-     * @param $keyEasySys
-     * @return null
+     * @param string $keyEasySys
+     * @return string
      */
     public function keyConvert($keyEasySys)
     {
@@ -245,5 +257,163 @@ abstract class AbstractConverter implements ConverterInterface
         $this->setNull = $setNull;
     }
 
+    /**
+     * @return array
+     */
+    public function getConvertTypes()
+    {
+        return $this->convertTypes;
+    }
 
+    /**
+     * @param array $convertTypes
+     */
+    public function setConvertTypes(array $convertTypes = null)
+    {
+        $this->convertTypes = $convertTypes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultTimeZone()
+    {
+        return $this->defaultTimeZone;
+    }
+
+    /**
+     * @param string $defaultTimeZone
+     */
+    public function setDefaultTimeZone($defaultTimeZone)
+    {
+        $this->defaultTimeZone = $defaultTimeZone;
+    }
+
+    /**
+     * @return array|null
+     */
+    protected function setupMapping()
+    {
+        return null;
+    }
+
+    /**
+     * @return array|null
+     */
+    protected function setupConvertTypes()
+    {
+        return null;
+    }
+
+    /**
+     * @param object|array $objectOrArray
+     */
+    protected function set($objectOrArray)
+    {
+        $this->dataEasySys = array();
+        $accessor = PropertyAccess::createPropertyAccessor();
+        foreach ($this->getMapping() as $mappingEasySys => $mappingLib) {
+            if (is_array($objectOrArray)) {
+                $mappingLib = "[$mappingLib]";
+            }
+
+            $value = $accessor->getValue($objectOrArray, $mappingLib);
+            $convertedValue = $this->convertTypeToEasySys($mappingEasySys, $value);
+
+            if ($this->setNull || $convertedValue !== null) {
+                $this->dataEasySys[$mappingEasySys] = $convertedValue;
+            }
+        }
+    }
+
+    /**
+     * @return PropertyAccessor
+     */
+    protected function getPropertyAccessor()
+    {
+        return PropertyAccess::createPropertyAccessor();
+    }
+
+    /**
+     * @param object|array $objectOrArray
+     * @return object|array
+     */
+    protected function get($objectOrArray)
+    {
+        $additionalData = array();
+        $accessor = $this->getPropertyAccessor();
+        $mapping = $this->getMapping();
+
+        foreach ($this->dataEasySys as $key => $value) {
+            if (!array_key_exists($key, $mapping)) {
+                $additionalData[$key] = $value;
+                continue;
+            }
+
+            $mappingLib = $mapping[$key];
+            if (is_array($objectOrArray)) {
+                $mappingLib = "[$mappingLib]";
+            }
+
+            $accessor->setValue($objectOrArray, $mappingLib, $this->convertTypeFromEasySys($key, $value));
+        }
+
+        if (count($additionalData) > 0) {
+            if (is_array($objectOrArray)) {
+                $accessor->setValue($objectOrArray, '[additionalData]', $additionalData);
+            } else {
+                $accessor->setValue($objectOrArray, 'additionalData', $additionalData);
+            }
+        }
+
+        return $objectOrArray;
+    }
+
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function convertTypeFromEasySys($field, $value)
+    {
+        if (!$type = $this->getTypeConverter($field)) {
+            return $value;
+        }
+        return $type->convertFromEasySys($value);
+    }
+
+    /**
+     * @param string $field
+     * @return null|TypeInterface
+     * @throws \Exception
+     */
+    protected function getTypeConverter($field)
+    {
+        $types = $this->getConvertTypes();
+        if (!array_key_exists($field, $types)) {
+            return null;
+        }
+
+        $type = $types[$field];
+        if (!$type instanceof TypeInterface) {
+            throw new \Exception("Type needs to implement TypeInterface");
+        }
+
+        return $type;
+    }
+
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function convertTypeToEasySys($field, $value)
+    {
+        if (!$type = $this->getTypeConverter($field)) {
+            return $value;
+        }
+        return $type->convertToEasySys($value);
+    }
 }

@@ -16,8 +16,8 @@ class StockAreaConverter extends AbstractConverter
      * @var array
      */
     protected $mapping = array(
-        'id' => 'id', // int
+        'id'       => 'id', // int
         'stock_id' => 'stockId', // int
-        'name' => 'name', // string
+        'name'     => 'name', // string
     );
 }

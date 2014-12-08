@@ -23,7 +23,7 @@ class APIOrderTest extends AbstractConcreteAPITest
 
         $result = $api->show($data['id']);
         $this->assertTrue(is_array($result));
-        $this->assertEquals($data['api_reference'], $result['apiReference']);
+        $this->assertEquals($data['api_reference'], $result['api_reference']);
         $this->assertEquals($data['title'], $result['title']);
 
         $result = $api->showArray($data['id']);

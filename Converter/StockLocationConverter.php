@@ -16,7 +16,7 @@ class StockLocationConverter extends AbstractConverter
      * @var array
      */
     protected $mapping = array(
-        'id' => 'id', // int
+        'id'   => 'id', // int
         'name' => 'name', // string
     );
 }
