@@ -44,14 +44,6 @@ class APIContactTest extends AbstractConcreteAPITest
         return new Contact($this->getConnection());
     }
 
-    /**
-     * @return AbstractConverter|ContactConverter
-     */
-    protected function getConverter()
-    {
-        return $converter = new ContactConverter();
-    }
-
     public function testSearchPerson()
     {
         $api = $this->getApi();

@@ -44,12 +44,15 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
     /**
      * @return AbstractConverter
      */
-    abstract protected function getConverter();
+    protected function getConverter()
+    {
+        return $this->getApi()->getConverter();
+    }
 
     /**
      * Very hard to test without concrete implementation (mapping)
      */
-    abstract protected function testShow();
+    abstract public function testShow();
 
     /**
      * @return array
@@ -62,9 +65,25 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
     /**
      * @param object $object
      */
+    protected function assertObject($object)
+    {
+        $this->assertTrue(is_object($object));
+    }
+
+    /**
+     * @param object $object
+     */
     protected function assertModel($object)
     {
         $this->assertInstanceOf($this->getModelName(), $object);
+    }
+
+    /**
+     * @param array $array
+     */
+    protected function assertArray($array)
+    {
+        $this->assertTrue(is_array($array));
     }
 
     /**

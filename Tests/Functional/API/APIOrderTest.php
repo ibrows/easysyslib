@@ -48,14 +48,6 @@ class APIOrderTest extends AbstractConcreteAPITest
         return new Order($this->getConnection());
     }
 
-    /**
-     * @return AbstractConverter|OrderConverter
-     */
-    protected function getConverter()
-    {
-        return $converter = new OrderConverter();
-    }
-
     public function testSearch()
     {
         $api = $this->getApi();

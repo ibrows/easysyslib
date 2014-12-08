@@ -382,7 +382,7 @@ abstract class AbstractConverter implements ConverterInterface
         foreach ($this->dataEasySys as $key => $value) {
             if (!array_key_exists($key, $mapping)) {
                 if ($this->throwExceptionOnAdditionalData) {
-                    throw new \RuntimeException("Mapping for key " . $key . " not found - add to mappings of ". get_class($this));
+                    throw new \RuntimeException("Mapping for key '" . $key . "' not found - add to mappings of ". get_class($this));
                 }
                 $additionalData[$key] = $value;
                 continue;

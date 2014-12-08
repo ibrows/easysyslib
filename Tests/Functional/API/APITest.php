@@ -14,6 +14,7 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\API;
 use Ibrows\EasySysLibrary\API\AbstractAPI;
 use Ibrows\EasySysLibrary\API\Article;
 use Ibrows\EasySysLibrary\API\Contact;
+use Ibrows\EasySysLibrary\API\Tax;
 
 class APITest extends AbstractAPITest
 {
@@ -88,7 +89,8 @@ class APITest extends AbstractAPITest
     {
         return array(
             $this->provideContactApi(),
-            $this->provideArticleApi()
+            $this->provideArticleApi(),
+            $this->provideTaxApi()
         );
     }
 
@@ -114,6 +116,18 @@ class APITest extends AbstractAPITest
         $data = array(
             new Contact($this->getConnection()),
             'firstName'
+        );
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    protected function provideTaxApi()
+    {
+        $data = array(
+            new Tax($this->getConnection()),
+            'value'
         );
         return $data;
     }

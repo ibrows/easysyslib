@@ -18,6 +18,7 @@ use Ibrows\EasySysLibrary\API\Contact;
 use Ibrows\EasySysLibrary\API\Order;
 use Ibrows\EasySysLibrary\API\StockArea;
 use Ibrows\EasySysLibrary\API\StockLocation;
+use Ibrows\EasySysLibrary\Model\Tax;
 
 class APITest extends AbstractAPITest
 {
@@ -38,7 +39,7 @@ class APITest extends AbstractAPITest
         array $data,
         array $methods = array('call', 'show', 'search', 'create', 'update', 'delete')
     ) {
-        foreach($methods as $method){
+        foreach ($methods as $method) {
             $this->assertMethod($api, $method);
         }
     }
@@ -182,22 +183,22 @@ class APITest extends AbstractAPITest
             $this->provideStockLocationApi('schwurbbel..%&/ç*'),
             $this->provideStockAreaApi(),
             $this->provideStockAreaApi('schwurbbel..%&/ç*'),
+            $this->provideTaxApi(),
         );
+    }
 
-        /*array(
-            new Invoice($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\Invoice',
-            function () {
-                $invoice = new \Ibrows\EasySysLibrary\Model\Invoice();
-                return $invoice;
-            },
-            array(
-                'asd_1' => 'gugüs'
-            ),
-            array(
-                'asd' => 'gugüs'
-            )
-        ),*/
+    protected function provideTaxApi()
+    {
+        $model = new Tax();
+        $model->setValue(8.00);
+
+        return array(
+            new \Ibrows\EasySysLibrary\API\Tax($this->getMockConnection()),
+            'Ibrows\EasySysLibrary\Model\Tax',
+            $model,
+            array('value' => 8.00),
+            array('value' => 8.00)
+        );
     }
 
     /**
