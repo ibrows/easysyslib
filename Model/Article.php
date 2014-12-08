@@ -190,6 +190,11 @@ class Article
     protected $width;
 
     /**
+     * @var array
+     */
+    protected $additionalData;
+
+    /**
      * @return int
      */
     public function getId()
@@ -853,5 +858,21 @@ class Article
     {
         $this->width = $width;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdditionalData()
+    {
+        return $this->additionalData;
+    }
+
+    /**
+     * @param array $additionalData
+     */
+    public function setAdditionalData($additionalData)
+    {
+        $this->additionalData = $additionalData;
     }
 }
