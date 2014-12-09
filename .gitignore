@@ -1,4 +1,4 @@
 /ibrowshooks
 /vendor
 /composer.lock
-/Tests/Functional/credentials.ini
+/tests/Functional/credentials.ini
