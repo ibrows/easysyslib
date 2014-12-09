@@ -7,7 +7,6 @@
         "library",
         "api"
     ],
-    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
@@ -30,7 +29,7 @@
         "saxulum/saxulum-http-client-adapter-buzz": "~1.0,>=1.0.4"
     },
     "autoload": {
-        "psr-4": {"Ibrows\\EasySysLibrary\\": ""}
+        "psr-4": {"Ibrows\\EasySysLibrary\\": "src/"}
     },
     "suggest": {
         "ibrows/easysys-bundle": "Integrated the api into a symfony2 bundle",
