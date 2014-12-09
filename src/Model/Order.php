@@ -257,7 +257,7 @@ class Order
      */
     public function removePosition(OrderPosition $orderPosition)
     {
-        foreach (array_keys($this->positions, $orderPosition) as $key) {
+        foreach (array_keys($this->positions, $orderPosition, true) as $key) {
             unset($this->positions[$key]);
         }
     }
