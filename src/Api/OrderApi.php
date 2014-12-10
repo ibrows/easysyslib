@@ -16,6 +16,7 @@ use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 use Ibrows\EasySysLibrary\Converter\InvoiceConverter;
 use Ibrows\EasySysLibrary\Converter\OrderConverter;
 use Ibrows\EasySysLibrary\Model\Invoice;
+use Ibrows\EasySysLibrary\Model\Order;
 use Ibrows\EasySysLibrary\Model\OrderPosition;
 use Ibrows\EasySysLibrary\Model\OrderPositionAmountInterface;
 use Saxulum\HttpClient\Request;
@@ -48,20 +49,20 @@ class OrderApi extends AbstractApi
     }
 
     /**
-     * @param \Ibrows\EasySysLibrary\Model\Order $order
+     * @param Order $order
      * @return Invoice
      */
-    public function createInvoiceObject(\Ibrows\EasySysLibrary\Model\Order $order)
+    public function createInvoiceObject(Order $order)
     {
         return $this->createInvoiceWithPositionsObject($order, $order->getPositions());
     }
 
     /**
-     * @param \Ibrows\EasySysLibrary\Model\Order $order
+     * @param Order $order
      * @param OrderPosition[] $positions
      * @return Invoice
      */
-    public function createInvoiceWithPositionsObject(\Ibrows\EasySysLibrary\Model\Order $order, array $positions)
+    public function createInvoiceWithPositionsObject(Order $order, array $positions)
     {
         $positionData = array();
 

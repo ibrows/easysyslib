@@ -11,6 +11,8 @@
 
 namespace Ibrows\EasySysLibrary\Model;
 
+use Ibrows\EasySysLibrary\Api\OrderApi;
+
 class Order
 {
     /**
@@ -491,7 +493,7 @@ class Order
      */
     public function setDeliveryAddressManual($deliveryAddressManual)
     {
-        $this->setDeliveryAddressType(\Ibrows\EasySysLibrary\Api\Order::DELIVERY_TYPE_OWN);
+        $this->setDeliveryAddressType(OrderApi::DELIVERY_TYPE_OWN);
         $this->deliveryAddressManual = $deliveryAddressManual;
     }
 
