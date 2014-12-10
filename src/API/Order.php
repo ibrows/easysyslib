@@ -222,4 +222,15 @@ class Order extends AbstractAPI
         unset($data['updated_at']);
         return $data;
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function showPdfArray($id)
+    {
+        $append = '/' . $id . '/pdf';
+
+        return $this->connection->call($this->getResource() . $append);
+    }
 }
