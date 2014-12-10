@@ -3,9 +3,8 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\ApiInterface;
-use Ibrows\EasySysLibrary\Api\Contact;
-use Ibrows\EasySysLibrary\Converter\AbstractConverter;
-use Ibrows\EasySysLibrary\Converter\ContactConverter;
+use Ibrows\EasySysLibrary\Api\ContactApi;
+use Ibrows\EasySysLibrary\Model\Contact;
 
 class ApiContactTest extends AbstractConcreteApiTest
 {
@@ -37,11 +36,11 @@ class ApiContactTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @return ApiInterface|Contact
+     * @return ApiInterface|ContactApi
      */
     protected function getApi()
     {
-        return new Contact($this->getConnection());
+        return new ContactApi($this->getConnection());
     }
 
     public function testSearchPerson()
@@ -119,8 +118,8 @@ class ApiContactTest extends AbstractConcreteApiTest
     public function testCreateObject()
     {
         $api = $this->getApi();
-        $object = new \Ibrows\EasySysLibrary\Model\Contact($api->getTypeIdPrivate(), 'testabc', $api->getConnection()->getUserId(), $api->getConnection()->getUserId());
-        /** @var \Ibrows\EasySysLibrary\Model\Contact $result */
+        $object = new Contact($api->getTypeIdPrivate(), 'testabc', $api->getConnection()->getUserId(), $api->getConnection()->getUserId());
+        /** @var Contact $result */
         $result = $api->createFromObject($object);
         $this->assertModel($object);
         $this->assertEquals('testabc', $result->getName());
@@ -128,15 +127,17 @@ class ApiContactTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @param \Ibrows\EasySysLibrary\Model\Contact $object
+     * @param Contact $object
      */
     public function updateObject($object)
     {
         $this->assertModel($object);
 
         $api = $this->getApi();
+
         $object->setName('testupdateabc');
         $object->setMail('testupdate@abc.ch');
+
         $result = $api->updateFromObject($object->getId(), $object);
         $this->assertModel($object);
         $this->assertEquals($object->getName(), $result->getName());

@@ -12,13 +12,21 @@
 namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\Article;
-use Ibrows\EasySysLibrary\Api\ArticleType;
-use Ibrows\EasySysLibrary\Api\Contact;
-use Ibrows\EasySysLibrary\Api\Order;
-use Ibrows\EasySysLibrary\Api\StockArea;
-use Ibrows\EasySysLibrary\Api\StockLocation;
+use Ibrows\EasySysLibrary\Api\ArticleApi;
+use Ibrows\EasySysLibrary\Api\ArticleTypeApi;
+use Ibrows\EasySysLibrary\Api\ContactApi;
+use Ibrows\EasySysLibrary\Api\CurrencyApi;
+use Ibrows\EasySysLibrary\Api\OrderApi;
+use Ibrows\EasySysLibrary\Api\StockAreaApi;
+use Ibrows\EasySysLibrary\Api\StockLocationApi;
+use Ibrows\EasySysLibrary\Api\TaxApi;
+use Ibrows\EasySysLibrary\Model\Article;
+use Ibrows\EasySysLibrary\Model\ArticleType;
+use Ibrows\EasySysLibrary\Model\Contact;
 use Ibrows\EasySysLibrary\Model\Currency;
+use Ibrows\EasySysLibrary\Model\Order;
+use Ibrows\EasySysLibrary\Model\StockArea;
+use Ibrows\EasySysLibrary\Model\StockLocation;
 use Ibrows\EasySysLibrary\Model\Tax;
 
 class ApiTest extends AbstractApiTest
@@ -195,7 +203,7 @@ class ApiTest extends AbstractApiTest
         $model->setValue(8.00);
 
         return array(
-            new \Ibrows\EasySysLibrary\Api\Tax($this->getMockConnection()),
+            new TaxApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Tax',
             $model,
             array('value' => 8.00),
@@ -210,7 +218,7 @@ class ApiTest extends AbstractApiTest
         $model->setRoundFactor(0.050);
 
         return array(
-            new \Ibrows\EasySysLibrary\Api\Currency($this->getMockConnection()),
+            new CurrencyApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Currency',
             $model,
             array('name' => 'CHF', 'round_factor' => 0.050),
@@ -224,11 +232,11 @@ class ApiTest extends AbstractApiTest
      */
     protected function provideContactApi($name = 'gugüs')
     {
-        $model = new \Ibrows\EasySysLibrary\Model\Contact(null, 'first', null, null);
+        $model = new Contact(null, 'first', null, null);
         $model->setLastName($name);
 
         return array(
-            new Contact($this->getMockConnection()),
+            new ContactApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Contact',
             $model,
             array('name_1' => $name),
@@ -242,11 +250,11 @@ class ApiTest extends AbstractApiTest
      */
     protected function provideOrderApi($apiReference = 'Test-Order')
     {
-        $model = new \Ibrows\EasySysLibrary\Model\Order(null, null);
+        $model = new Order(null, null);
         $model->setApiReference($apiReference);
 
         return array(
-            new Order($this->getMockConnection()),
+            new OrderApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Order',
             $model,
             array('api_reference' => $apiReference),
@@ -260,11 +268,11 @@ class ApiTest extends AbstractApiTest
      */
     protected function provideArticleApi($apiReference = 'Test-Article')
     {
-        $model = new \Ibrows\EasySysLibrary\Model\Article();
+        $model = new Article();
         $model->setDelivererCode($apiReference);
 
         return array(
-            new Article($this->getMockConnection()),
+            new ArticleApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Article',
             $model,
             array('deliverer_code' => $apiReference),
@@ -278,11 +286,11 @@ class ApiTest extends AbstractApiTest
      */
     protected function provideArticleTypeApi($apiReference = 'Test-Article-Type')
     {
-        $model = new \Ibrows\EasySysLibrary\Model\ArticleType();
+        $model = new ArticleType();
         $model->setName($apiReference);
 
         return array(
-            new ArticleType($this->getMockConnection()),
+            new ArticleTypeApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\ArticleType',
             $model,
             array('name' => $apiReference),
@@ -297,11 +305,11 @@ class ApiTest extends AbstractApiTest
      */
     protected function provideStockLocationApi($apiReference = 'Test-Stock-Location')
     {
-        $model = new \Ibrows\EasySysLibrary\Model\StockLocation();
+        $model = new StockLocation();
         $model->setName($apiReference);
 
         return array(
-            new StockLocation($this->getMockConnection()),
+            new StockLocationApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\StockLocation',
             $model,
             array('name' => $apiReference),
@@ -316,11 +324,11 @@ class ApiTest extends AbstractApiTest
      */
     protected function provideStockAreaApi($apiReference = 'Test-Stock-Area')
     {
-        $model = new \Ibrows\EasySysLibrary\Model\StockArea();
+        $model = new StockArea();
         $model->setName($apiReference);
 
         return array(
-            new StockArea($this->getMockConnection()),
+            new StockAreaApi($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\StockArea',
             $model,
             array('name' => $apiReference),

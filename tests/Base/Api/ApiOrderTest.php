@@ -12,7 +12,8 @@
 namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\Order;
+use Ibrows\EasySysLibrary\Api\OrderApi;
+use Ibrows\EasySysLibrary\Model\Order;
 
 class ApiOrderTest extends AbstractConcreteApiTest
 {
@@ -21,7 +22,7 @@ class ApiOrderTest extends AbstractConcreteApiTest
      */
     protected function getApi()
     {
-        return new Order($this->getMockConnection());
+        return new OrderApi($this->getMockConnection());
     }
 
     /**
@@ -49,7 +50,7 @@ class ApiOrderTest extends AbstractConcreteApiTest
      */
     protected function getModel()
     {
-        $model = new \Ibrows\EasySysLibrary\Model\Order(null, null);
+        $model = new Order(null, null);
         $model->setTitle('Test-Order');
         return $model;
     }

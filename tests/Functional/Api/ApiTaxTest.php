@@ -12,7 +12,7 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\Tax;
+use Ibrows\EasySysLibrary\Api\TaxApi;
 
 class ApiTaxTest extends AbstractConcreteApiTest
 {
@@ -27,11 +27,11 @@ class ApiTaxTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @return AbstractApi|Tax
+     * @return AbstractApi|TaxApi
      */
     protected function getApi()
     {
-        return new Tax($this->getConnection());
+        return new TaxApi($this->getConnection());
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\Article;
-use Ibrows\EasySysLibrary\Model\Article as ArticleModel;
+use Ibrows\EasySysLibrary\Api\ArticleApi;
+use Ibrows\EasySysLibrary\Model\Article;
 
 class ApiArticleTest extends AbstractConcreteApiTest
 {
@@ -13,7 +13,7 @@ class ApiArticleTest extends AbstractConcreteApiTest
      */
     protected function getApi()
     {
-        return new Article($this->getMockConnection());
+        return new ArticleApi($this->getMockConnection());
     }
 
     /**
@@ -41,9 +41,8 @@ class ApiArticleTest extends AbstractConcreteApiTest
      */
     protected function getModel()
     {
-        $model = new ArticleModel();
+        $model = new Article();
         $model->setInternName('test');
-
         return $model;
     }
 }

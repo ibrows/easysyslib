@@ -3,8 +3,8 @@
 namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\StockLocation;
-use Ibrows\EasySysLibrary\Model\StockLocation as StockLocationModel;
+use Ibrows\EasySysLibrary\Api\StockLocationApi;
+use Ibrows\EasySysLibrary\Model\StockLocation;
 
 class ApiStockLocationTest extends AbstractConcreteApiTest
 {
@@ -13,7 +13,7 @@ class ApiStockLocationTest extends AbstractConcreteApiTest
      */
     protected function getApi()
     {
-        return new StockLocation($this->getMockConnection());
+        return new StockLocationApi($this->getMockConnection());
     }
 
     /**
@@ -41,9 +41,8 @@ class ApiStockLocationTest extends AbstractConcreteApiTest
      */
     protected function getModel()
     {
-        $model = new StockLocationModel();
+        $model = new StockLocation();
         $model->setName('test');
-
         return $model;
     }
 }

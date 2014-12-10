@@ -37,6 +37,11 @@ abstract class AbstractConcreteApiTest extends AbstractApiTest
     }
 
     /**
+     * Very hard to test without concrete implementation (mapping)
+     */
+    abstract public function testShow();
+
+    /**
      * @return AbstractApi
      */
     abstract protected function getApi();
@@ -48,11 +53,6 @@ abstract class AbstractConcreteApiTest extends AbstractApiTest
     {
         return $this->getApi()->getConverter();
     }
-
-    /**
-     * Very hard to test without concrete implementation (mapping)
-     */
-    abstract public function testShow();
 
     /**
      * @return array

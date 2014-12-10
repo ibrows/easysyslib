@@ -32,4 +32,4 @@ abstract class AbstractApiTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(method_exists($object, $method), "Method $method doesn't exist at " . get_class($object));
     }
-} 
+}

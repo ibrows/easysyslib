@@ -16,14 +16,14 @@ use Ibrows\EasySysLibrary\Api\AbstractApi;
 abstract class AbstractConcreteApiTest extends AbstractApiTest
 {
     /**
-     * @return AbstractApi
-     */
-    abstract protected function getApi();
-
-    /**
      * Not possible to test in ApiTest with provider data
      */
     abstract public function testConvertCriteria();
+
+    /**
+     * @return AbstractApi
+     */
+    abstract protected function getApi();
 
     /**
      * @return object

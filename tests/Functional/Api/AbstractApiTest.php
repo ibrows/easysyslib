@@ -21,7 +21,7 @@ abstract class AbstractApiTest extends \PHPUnit_Framework_TestCase
      */
     protected function getConnection()
     {
-        if(!$connection = ConnectionTest::getConnection()){
+        if (!$connection = ConnectionTest::getConnection()) {
             $this->markTestSkipped(
                 'The credentials.ini File is not available or wrong'
             );

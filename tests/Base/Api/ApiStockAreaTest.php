@@ -3,8 +3,8 @@
 namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\StockArea;
-use Ibrows\EasySysLibrary\Model\StockArea as StockAreaModel;
+use Ibrows\EasySysLibrary\Api\StockAreaApi;
+use Ibrows\EasySysLibrary\Model\StockArea;
 
 class ApiStockAreaTest extends AbstractConcreteApiTest
 {
@@ -13,7 +13,7 @@ class ApiStockAreaTest extends AbstractConcreteApiTest
      */
     protected function getApi()
     {
-        return new StockArea($this->getMockConnection());
+        return new StockAreaApi($this->getMockConnection());
     }
 
     /**
@@ -41,9 +41,8 @@ class ApiStockAreaTest extends AbstractConcreteApiTest
      */
     protected function getModel()
     {
-        $model = new StockAreaModel();
+        $model = new StockArea();
         $model->setName('test');
-
         return $model;
     }
 }

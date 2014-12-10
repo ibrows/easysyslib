@@ -12,9 +12,9 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\Article;
-use Ibrows\EasySysLibrary\Api\Contact;
-use Ibrows\EasySysLibrary\Api\Tax;
+use Ibrows\EasySysLibrary\Api\ArticleApi;
+use Ibrows\EasySysLibrary\Api\ContactApi;
+use Ibrows\EasySysLibrary\Api\TaxApi;
 
 class ApiTest extends AbstractApiTest
 {
@@ -114,7 +114,7 @@ class ApiTest extends AbstractApiTest
     protected function provideContactApi()
     {
         $data = array(
-            new Contact($this->getConnection()),
+            new ContactApi($this->getConnection()),
             'firstName'
         );
         return $data;
@@ -126,7 +126,7 @@ class ApiTest extends AbstractApiTest
     protected function provideTaxApi()
     {
         $data = array(
-            new Tax($this->getConnection()),
+            new TaxApi($this->getConnection()),
             'value'
         );
         return $data;
@@ -138,7 +138,7 @@ class ApiTest extends AbstractApiTest
     protected function provideArticleApi()
     {
         $data = array(
-            new Article($this->getConnection()),
+            new ArticleApi($this->getConnection()),
             'internName'
         );
         return $data;

@@ -3,7 +3,8 @@
 namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\Contact;
+use Ibrows\EasySysLibrary\Api\ContactApi;
+use Ibrows\EasySysLibrary\Model\Contact;
 
 class ApiContactTest extends AbstractConcreteApiTest
 {
@@ -33,11 +34,11 @@ class ApiContactTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @return AbstractApi|Contact
+     * @return AbstractApi|ContactApi
      */
     protected function getApi()
     {
-        return new Contact($this->getMockConnection());
+        return new ContactApi($this->getMockConnection());
     }
 
     /**
@@ -45,7 +46,7 @@ class ApiContactTest extends AbstractConcreteApiTest
      */
     protected function getModel()
     {
-        $model = new \Ibrows\EasySysLibrary\Model\Contact(null, 'last', null, null);
+        $model = new Contact(null, 'last', null, null);
         $model->setFirstName('first');
         return $model;
     }

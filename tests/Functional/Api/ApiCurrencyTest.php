@@ -12,7 +12,7 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
-use Ibrows\EasySysLibrary\Api\Currency;
+use Ibrows\EasySysLibrary\Api\CurrencyApi;
 
 class ApiCurrencyTest extends AbstractConcreteApiTest
 {
@@ -27,11 +27,11 @@ class ApiCurrencyTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @return AbstractApi|Currency
+     * @return AbstractApi|CurrencyApi
      */
     protected function getApi()
     {
-        return new Currency($this->getConnection());
+        return new CurrencyApi($this->getConnection());
     }
 
     /**

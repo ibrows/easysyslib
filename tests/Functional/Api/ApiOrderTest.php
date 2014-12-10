@@ -3,11 +3,9 @@
 namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\ApiInterface;
-use Ibrows\EasySysLibrary\Api\Order;
-use Ibrows\EasySysLibrary\Converter\AbstractConverter;
-use Ibrows\EasySysLibrary\Converter\OrderConverter;
+use Ibrows\EasySysLibrary\Api\OrderApi;
+use Ibrows\EasySysLibrary\Model\Order;
 use Ibrows\EasySysLibrary\Model\OrderPositionDefault;
-use Ibrows\EasySysLibrary\Model\OrderPositionSubPosition;
 use Ibrows\EasySysLibrary\Model\OrderPositionText;
 
 class ApiOrderTest extends AbstractConcreteApiTest
@@ -52,11 +50,11 @@ class ApiOrderTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @return ApiInterface|Order
+     * @return ApiInterface|OrderApi
      */
     protected function getApi()
     {
-        return new Order($this->getConnection());
+        return new OrderApi($this->getConnection());
     }
 
     public function testSearch()
@@ -75,7 +73,7 @@ class ApiOrderTest extends AbstractConcreteApiTest
     public function testSearchObject()
     {
         $api = $this->getApi();
-        /** @var \Ibrows\EasySysLibrary\Model\Order $data */
+        /** @var Order $data */
         $data = $this->getValidObject();
         $result = $api->searchObjects(array('documentNumber' => $data->getDocumentNumber(), 'title' => $data->getTitle()));
         $this->assertTrue(is_array($result));
@@ -87,10 +85,10 @@ class ApiOrderTest extends AbstractConcreteApiTest
     public function testCreateObject()
     {
         $api = $this->getApi();
-        $object = new \Ibrows\EasySysLibrary\Model\Order($api->getConnection()->getUserId(), $api->getConnection()->getUserId());
+        $object = new Order($api->getConnection()->getUserId(), $api->getConnection()->getUserId());
         $object->setTitle('Test-Create-Order');
 
-        /** @var \Ibrows\EasySysLibrary\Model\Order $result */
+        /** @var Order $result */
         $result = $api->createFromObject($object);
 
         $this->assertModel($object);
@@ -99,7 +97,7 @@ class ApiOrderTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @param \Ibrows\EasySysLibrary\Model\Order $object
+     * @param Order $object
      */
     public function updateObject($object)
     {
@@ -111,7 +109,7 @@ class ApiOrderTest extends AbstractConcreteApiTest
         $object->setDeliveryAddressManual("Mike Meier\nSeestrasse 356\n8038 Zürich");
 
         sleep(1);
-        /** @var \Ibrows\EasySysLibrary\Model\Order $result */
+        /** @var Order $result */
         $result = $api->updateFromObject($object->getId(), $object);
 
         $this->assertModel($object);
@@ -145,7 +143,7 @@ class ApiOrderTest extends AbstractConcreteApiTest
     {
         $api = $this->getApi();
 
-        $order = new \Ibrows\EasySysLibrary\Model\Order(1, 1);
+        $order = new Order(1, 1);
         $order->setTitle('Text-Position');
         $order->setMwstNet(false);
 
@@ -153,11 +151,11 @@ class ApiOrderTest extends AbstractConcreteApiTest
         $order->addPosition(new OrderPositionText('Super-Position #2'));
         $order->addPosition(new OrderPositionDefault(10, 1, 18.75));
 
-        /** @var \Ibrows\EasySysLibrary\Model\Order $result */
+        /** @var Order $result */
         $result = $api->createFromObject($order);
         $this->assertCount(count($order->getPositions()), $result->getPositions());
 
-        $order = new \Ibrows\EasySysLibrary\Model\Order(1, 1);
+        $order = new Order(1, 1);
         $order->setTitle('OrderPositionDefaults');
         $order->setMwstNet(false);
 
@@ -171,7 +169,7 @@ class ApiOrderTest extends AbstractConcreteApiTest
 
         $order->addPosition(new OrderPositionText('Super-Position #2'));
 
-        /** @var \Ibrows\EasySysLibrary\Model\Order $result */
+        /** @var Order $result */
         $result = $api->createFromObject($order);
         $this->assertCount(count($order->getPositions()), $result->getPositions());
 
