@@ -9,16 +9,16 @@
  * Time: 14:53
  */
 
-namespace Ibrows\EasySysLibrary\Converter\Order;
+namespace Ibrows\EasySysLibrary\Converter\Invoice;
 
 use Ibrows\EasySysLibrary\Converter\Traits\Position\TextPosition;
 
-class OrderPositionTextConverter extends OrderPositionConverter
+class InvoicePositionTextConverter extends InvoicePositionConverter
 {
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderPositionText';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Invoice\InvoicePositionText';
 
     use TextPosition;
 

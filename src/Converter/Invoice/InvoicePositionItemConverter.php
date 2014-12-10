@@ -9,18 +9,18 @@
  * Time: 14:53
  */
 
-namespace Ibrows\EasySysLibrary\Converter\Order;
+namespace Ibrows\EasySysLibrary\Converter\Invoice;
 
 use Ibrows\EasySysLibrary\Converter\Traits\Position\ItemPosition;
 
-class OrderPositionItemConverter extends OrderPositionConverter
+class InvoicePositionItemConverter extends InvoicePositionConverter
 {
     use ItemPosition;
 
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderPositionItem';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Invoice\InvoicePositionItem';
 
     /**
      * @return array

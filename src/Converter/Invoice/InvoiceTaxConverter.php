@@ -9,17 +9,17 @@
  * Time: 14:47
  */
 
-namespace Ibrows\EasySysLibrary\Converter\Order;
+namespace Ibrows\EasySysLibrary\Converter\Invoice;
 
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\Traits\Tax;
 
-class OrderTaxConverter extends AbstractConverter
+class InvoiceTaxConverter extends AbstractConverter
 {
     use Tax;
 
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderTax';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Invoice\InvoiceTax';
 } 

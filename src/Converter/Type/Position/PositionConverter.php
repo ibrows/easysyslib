@@ -3,22 +3,15 @@
 /**
  * Created by PhpStorm.
  * Project: coffeeconnection
- *
+ * 
  * User: mikemeier
- * Date: 08.12.14
- * Time: 15:42
+ * Date: 10.12.14
+ * Time: 21:29
  */
 
-namespace Ibrows\EasySysLibrary\Converter\Type;
+namespace Ibrows\EasySysLibrary\Converter\Type\Position;
 
-use Ibrows\EasySysLibrary\Converter\ConverterInterface;
-use Ibrows\EasySysLibrary\Converter\Order\OrderPositionDefaultConverter;
-use Ibrows\EasySysLibrary\Converter\Order\OrderPositionItemConverter;
-use Ibrows\EasySysLibrary\Converter\Order\OrderPositionSubPositionConverter;
-use Ibrows\EasySysLibrary\Converter\Order\OrderPositionTextConverter;
-use Ibrows\EasySysLibrary\Model\Order\OrderPosition;
-
-class OrderPositionConverter extends ProxyConverter
+abstract class PositionConverter
 {
     /**
      * @var string
@@ -38,13 +31,13 @@ class OrderPositionConverter extends ProxyConverter
     {
         $this->multi = $multi;
         $this->key = $key;
-        $this->types = array(
-            'KbPositionArticle'     => new OrderPositionItemConverter(),
-            'KbPositionCustom'      => new OrderPositionDefaultConverter(),
-            'KbPositionText'        => new OrderPositionTextConverter(),
-            'KbPositionSubposition' => new OrderPositionSubPositionConverter(),
-        );
+        $this->types = $this->setupTypes();
     }
+
+    /**
+     * @return array
+     */
+    abstract protected function setupTypes();
 
     /**
      * @param array|null|object $context
@@ -114,4 +107,4 @@ class OrderPositionConverter extends ProxyConverter
         }
         return $types[$type];
     }
-}
+} 

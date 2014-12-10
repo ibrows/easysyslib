@@ -3,6 +3,9 @@
 namespace Ibrows\EasySysLibrary\Converter\Invoice;
 
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
+use Ibrows\EasySysLibrary\Converter\Type\DateTime;
+use Ibrows\EasySysLibrary\Converter\Type\Posistion\InvoicePositionConverter;
+use Ibrows\EasySysLibrary\Converter\Type\ProxyConverter;
 
 class InvoiceConverter extends AbstractConverter
 {
@@ -49,4 +52,18 @@ class InvoiceConverter extends AbstractConverter
         'positions'                => 'positions', // InvoicePosition[]
         'network_link'             => 'networkLink', // int
     );
+
+    /**
+     * @return array|null
+     */
+    protected function setupConvertTypes()
+    {
+        return array(
+            'viewed_by_client_at' => new DateTime($this->getDefaultDateTimeFormat(), $this->getDefaultTimeZone()),
+            'updated_at'          => new DateTime($this->getDefaultDateTimeFormat(), $this->getDefaultTimeZone()),
+            'is_valid_from'       => new DateTime($this->getDefaultDateFormat(), $this->getDefaultTimeZone()),
+            'taxs'                => new ProxyConverter(new InvoiceTaxConverter()),
+            'positions'           => new InvoicePositionConverter()
+        );
+    }
 }

@@ -4,7 +4,7 @@ namespace Ibrows\EasySysLibrary\Converter\Order;
 
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\Type\DateTime;
-use Ibrows\EasySysLibrary\Converter\Type\OrderPositionConverter;
+use Ibrows\EasySysLibrary\Converter\Type\Position\OrderPositionConverter;
 use Ibrows\EasySysLibrary\Converter\Type\ProxyConverter;
 
 /**
