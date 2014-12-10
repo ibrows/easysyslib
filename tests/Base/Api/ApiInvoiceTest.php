@@ -26,14 +26,14 @@ class ApiInvoiceTest extends AbstractConcreteApiTest
         $result = $api->convertSimpleCriteria(array());
         $this->assertEquals(array(), $result);
 
-        $result = $api->convertSimpleCriteria(array(array('field' => 'apiReference', 'value' => 'test')));
-        $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'test')), $result);
+        $result = $api->convertSimpleCriteria(array(array('field' => 'apiReference', 'value' => 'd')));
+        $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'd')), $result);
 
-        $result = $api->convertSimpleCriteria(array('apiReference' => 'test'));
-        $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'test', 'criteria' => '=')), $result);
+        $result = $api->convertSimpleCriteria(array('apiReference' => 'd'));
+        $this->assertEquals(array(array('field' => 'api_reference', 'value' => 'd', 'criteria' => '=')), $result);
 
-        $result = $api->convertSimpleCriteria(array('apiReference' => 'test'), 'like');
-        $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'test', 'criteria' => 'like')), $result);
+        $result = $api->convertSimpleCriteria(array('apiReference' => 'd'), 'like');
+        $this->assertEquals(array(array('field' => 'api_reference', 'value' => 'd', 'criteria' => 'like')), $result);
     }
 
     /**
