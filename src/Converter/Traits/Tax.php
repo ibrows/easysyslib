@@ -14,10 +14,13 @@ namespace Ibrows\EasySysLibrary\Converter\Traits;
 trait Tax
 {
     /**
-     * @var array
+     * @return array
      */
-    protected $mapping = array(
-        'percentage' => 'percentage',
-        'value'      => 'value'
-    );
+    protected function setupMapping()
+    {
+        return array(
+            'percentage' => 'percentage',
+            'value'      => 'value'
+        );
+    }
 } 

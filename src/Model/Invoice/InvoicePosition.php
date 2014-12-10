@@ -11,9 +11,10 @@
 
 namespace Ibrows\EasySysLibrary\Model\Invoice;
 
+use Ibrows\EasySysLibrary\Model\PositionInterface;
 use Ibrows\EasySysLibrary\Model\Traits\Position\Position;
 
-abstract class InvoicePosition
+abstract class InvoicePosition implements PositionInterface
 {
     use Position
 } 

@@ -4,7 +4,7 @@ namespace Ibrows\EasySysLibrary\Converter\Invoice;
 
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\Type\DateTime;
-use Ibrows\EasySysLibrary\Converter\Type\Posistion\InvoicePositionConverter;
+use Ibrows\EasySysLibrary\Converter\Type\Position\InvoicePositionConverter;
 use Ibrows\EasySysLibrary\Converter\Type\ProxyConverter;
 
 class InvoiceConverter extends AbstractConverter

@@ -3,7 +3,7 @@
 /**
  * Created by PhpStorm.
  * Project: coffeeconnection
- * 
+ *
  * User: mikemeier
  * Date: 10.12.14
  * Time: 21:29
@@ -11,7 +11,11 @@
 
 namespace Ibrows\EasySysLibrary\Converter\Type\Position;
 
-abstract class PositionConverter
+use Ibrows\EasySysLibrary\Converter\ConverterInterface;
+use Ibrows\EasySysLibrary\Converter\Type\ProxyConverter;
+use Ibrows\EasySysLibrary\Model\PositionInterface;
+
+abstract class PositionConverter extends ProxyConverter
 {
     /**
      * @var string
@@ -35,11 +39,6 @@ abstract class PositionConverter
     }
 
     /**
-     * @return array
-     */
-    abstract protected function setupTypes();
-
-    /**
      * @param array|null|object $context
      * @return \Ibrows\EasySysLibrary\Converter\ConverterInterface
      * @throws \Exception
@@ -55,7 +54,7 @@ abstract class PositionConverter
             return $this->getConverterForType($context[$key]);
         }
 
-        if($context instanceof OrderPosition){
+        if ($context instanceof PositionInterface) {
             return $this->getConverterForType($context->getType());
         }
 
@@ -95,6 +94,11 @@ abstract class PositionConverter
     }
 
     /**
+     * @return array
+     */
+    abstract protected function setupTypes();
+
+    /**
      * @param string $type
      * @return ConverterInterface
      * @throws \Exception
@@ -103,7 +107,7 @@ abstract class PositionConverter
     {
         $types = $this->getTypes();
         if (!array_key_exists($type, $types)) {
-            throw new \Exception("Type " . $type . " is not a valid OrderPosition");
+            throw new \Exception("Type " . $type . " is not a valid Position");
         }
         return $types[$type];
     }

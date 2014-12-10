@@ -11,7 +11,9 @@
 
 namespace Ibrows\EasySysLibrary\Model\Order;
 
-abstract class OrderPosition
+use Ibrows\EasySysLibrary\Model\PositionInterface;
+
+abstract class OrderPosition implements PositionInterface
 {
     /**
      * @var int

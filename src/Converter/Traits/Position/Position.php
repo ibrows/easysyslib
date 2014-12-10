@@ -14,15 +14,18 @@ namespace Ibrows\EasySysLibrary\Converter\Traits\Position;
 trait Position
 {
     /**
-     * @var array
+     * @return array
      */
-    protected $mapping = array(
-        'id'           => 'id', // int
-        'type'         => 'type', // string
-        'parent_id'    => 'parentId', // int
-        'internal_pos' => 'internalPosition', // int
-        'pos'          => 'position', // int
-        'is_optional'  => 'optional', // bool
-        'text'         => 'text' // string
-    );
+    protected function getPositionMapping()
+    {
+        return array(
+            'id'           => 'id', // int
+            'type'         => 'type', // string
+            'parent_id'    => 'parentId', // int
+            'internal_pos' => 'internalPosition', // int
+            'pos'          => 'position', // int
+            'is_optional'  => 'optional', // bool
+            'text'         => 'text' // string
+        );
+    }
 }
