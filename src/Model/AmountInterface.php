@@ -9,9 +9,9 @@
  * Time: 12:38
  */
 
-namespace Ibrows\EasySysLibrary\Model\Order;
+namespace Ibrows\EasySysLibrary\Model;
 
-interface OrderPositionAmountInterface
+interface AmountInterface
 {
     /**
      * @return int

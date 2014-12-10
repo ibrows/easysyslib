@@ -4,7 +4,11 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\ApiInterface;
 use Ibrows\EasySysLibrary\Api\OrderApi;
+use Ibrows\EasySysLibrary\Model\AmountInterface;
+use Ibrows\EasySysLibrary\Model\Invoice\Invoice;
+use Ibrows\EasySysLibrary\Model\Invoice\InvoicePosition;
 use Ibrows\EasySysLibrary\Model\Order\Order;
+use Ibrows\EasySysLibrary\Model\Order\OrderPosition;
 use Ibrows\EasySysLibrary\Model\Order\OrderPositionDefault;
 use Ibrows\EasySysLibrary\Model\Order\OrderPositionText;
 
@@ -16,9 +20,40 @@ class ApiOrderTest extends AbstractConcreteApiTest
         $order = $this->testCreatePositions();
 
         $invoice = $api->createInvoiceObject($order);
+        $this->assertInstanceOf(get_class(new Invoice(1, 1)), $invoice);
+        $this->assertCount(count($order->getPositions()), $invoice->getPositions());
 
-        var_dump($invoice);
-        die;
+        /** @var OrderPosition[] $orderPositions */
+        $orderPositions = $order->getPositions();
+
+        /** @var InvoicePosition[] $invoicePositions */
+        $invoicePositions = $invoice->getPositions();
+
+        foreach($orderPositions as $key => $orderPosition){
+            $invoicePosition = $invoicePositions[$key];
+            $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Order\OrderPosition', $orderPosition);
+            $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Invoice\InvoicePosition', $invoicePosition);
+
+            $this->assertSame($orderPosition->getText(), $invoicePosition->getText());
+
+            if($orderPosition instanceof AmountInterface){
+                /** @var AmountInterface $invoicePosition */
+                $this->assertTrue($invoicePosition instanceof AmountInterface);
+                $this->assertSame($orderPosition->getAmount(), $invoicePosition->getAmount());
+            }
+        }
+    }
+
+    public function testShowPdfObject()
+    {
+        $order = $this->testCreatePositions();
+
+        $pdfArray = $this->getApi()->showPdfArray($order->getId());
+        $this->assertInternalType('array', $pdfArray);
+        $this->assertArrayHasKey('name', $pdfArray);
+        $this->assertArrayHasKey('size', $pdfArray);
+        $this->assertArrayHasKey('mime', $pdfArray);
+        $this->assertArrayHasKey('content', $pdfArray);
     }
 
     public function delete($id)

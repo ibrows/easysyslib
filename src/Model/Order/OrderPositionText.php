@@ -11,42 +11,9 @@
 
 namespace Ibrows\EasySysLibrary\Model\Order;
 
+use Ibrows\EasySysLibrary\Model\Traits\Position\TextPosition;
+
 class OrderPositionText extends OrderPosition
 {
-    /**
-     * @var bool
-     */
-    protected $showPositionNumber;
-
-    /**
-     * @param string $text
-     */
-    public function __construct($text)
-    {
-        $this->setText($text);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isShowPositionNumber()
-    {
-        return $this->showPositionNumber;
-    }
-
-    /**
-     * @param boolean $showPositionNumber
-     */
-    public function setShowPositionNumber($showPositionNumber)
-    {
-        $this->showPositionNumber = $showPositionNumber;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return 'KbPositionText';
-    }
+    use TextPosition;
 }

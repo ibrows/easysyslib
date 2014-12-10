@@ -53,11 +53,6 @@ trait DefaultPosition
     protected $discountInPercent;
 
     /**
-     * @var string (4000)
-     */
-    protected $text;
-
-    /**
      * @var int
      */
     protected $unitId;
@@ -136,22 +131,6 @@ trait DefaultPosition
     public function setTaxId($taxId)
     {
         $this->taxId = $taxId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param string $text
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
     }
 
     /**

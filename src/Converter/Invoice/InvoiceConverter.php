@@ -20,7 +20,7 @@ class InvoiceConverter extends AbstractConverter
     /**
      * @return array
      */
-    protected function setupMappging()
+    protected function setupMapping()
     {
         return array_merge(
             $this->getDocumentMapping(),

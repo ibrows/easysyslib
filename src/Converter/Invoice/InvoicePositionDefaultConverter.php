@@ -25,8 +25,8 @@ class InvoicePositionDefaultConverter extends InvoicePositionConverter
     /**
      * @return array
      */
-    protected function getBaseMapping()
+    protected function setupMapping()
     {
-        return $this->mapping;
+        return array_merge(parent::setupMapping(), $this->getDefaultPositionMapping());
     }
 }

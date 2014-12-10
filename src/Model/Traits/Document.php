@@ -171,6 +171,37 @@ trait Document
     protected $positions = array();
 
     /**
+     * @var mixed
+     */
+    protected $tax;
+
+    /**
+     * @param int $contactId
+     * @param int $userId
+     */
+    public function __construct($contactId, $userId)
+    {
+        $this->contactId = $contactId;
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    /**
+     * @param mixed $tax
+     */
+    public function setTax($tax)
+    {
+        $this->tax = $tax;
+    }
+
+    /**
      * @return string
      */
     public function getApiReference()
@@ -587,19 +618,19 @@ trait Document
     }
 
     /**
-     * @param PositionInterface $orderPosition
+     * @param PositionInterface $position
      */
-    public function addPosition(PositionInterface $orderPosition)
+    public function addPosition(PositionInterface $position)
     {
-        $this->positions[] = $orderPosition;
+        $this->positions[] = $position;
     }
 
     /**
-     * @param PositionInterface $orderPosition
+     * @param PositionInterface $position
      */
-    public function removePosition(PositionInterface $orderPosition)
+    public function removePosition(PositionInterface $position)
     {
-        foreach (array_keys($this->positions, $orderPosition, true) as $key) {
+        foreach (array_keys($this->positions, $position, true) as $key) {
             unset($this->positions[$key]);
         }
     }

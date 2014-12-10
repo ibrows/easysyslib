@@ -16,5 +16,5 @@ use Ibrows\EasySysLibrary\Model\Traits\Position\Position;
 
 abstract class InvoicePosition implements PositionInterface
 {
-    use Position
+    use Position;
 } 

@@ -11,9 +11,10 @@
 
 namespace Ibrows\EasySysLibrary\Model\Invoice;
 
+use Ibrows\EasySysLibrary\Model\AmountInterface;
 use Ibrows\EasySysLibrary\Model\Traits\Position\ItemPosition;
 
-class InvoicePositionItem extends InvoicePosition
+class InvoicePositionItem extends InvoicePosition implements AmountInterface
 {
     use ItemPosition;
 }

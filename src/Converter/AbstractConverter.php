@@ -254,6 +254,22 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @return boolean
      */
+    public function isThrowExceptionOnAdditionalData()
+    {
+        return $this->throwExceptionOnAdditionalData;
+    }
+
+    /**
+     * @param boolean $throwExceptionOnAdditionalData
+     */
+    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
+    {
+        $this->throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
+    }
+
+    /**
+     * @return boolean
+     */
     public function isSetNull()
     {
         return $this->setNull;
@@ -313,22 +329,6 @@ abstract class AbstractConverter implements ConverterInterface
     public function setDefaultDateFormat($defaultDateFormat)
     {
         $this->defaultDateFormat = $defaultDateFormat;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isThrowExceptionOnAdditionalData()
-    {
-        return $this->throwExceptionOnAdditionalData;
-    }
-
-    /**
-     * @param boolean $throwExceptionOnAdditionalData
-     */
-    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
-    {
-        $this->throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
     }
 
     /**

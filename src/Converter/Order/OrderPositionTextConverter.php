@@ -15,18 +15,18 @@ use Ibrows\EasySysLibrary\Converter\Traits\Position\TextPosition;
 
 class OrderPositionTextConverter extends OrderPositionConverter
 {
+    use TextPosition;
+
     /**
      * @var string
      */
     protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderPositionText';
 
-    use TextPosition;
-
     /**
      * @return array
      */
-    protected function getBaseMapping()
+    protected function setupMapping()
     {
-        return $this->mapping;
+        return array_merge(parent::setupMapping(), $this->getTextPositionMapping());
     }
 }

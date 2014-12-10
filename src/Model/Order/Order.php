@@ -24,11 +24,6 @@ class Order
     protected $compactView;
 
     /**
-     * @var mixed
-     */
-    protected $tax;
-
-    /**
      * @var string
      */
     protected $contactAddressManual;
@@ -67,16 +62,6 @@ class Order
      * @var int
      */
     protected $nbDecimalsPrice;
-
-    /**
-     * @param int $contactId
-     * @param int $userId
-     */
-    public function __construct($contactId, $userId)
-    {
-        $this->contactId = $contactId;
-        $this->userId = $userId;
-    }
 
     /**
      * @return boolean
@@ -221,21 +206,5 @@ class Order
     public function setShowPositionTaxes($showPositionTaxes)
     {
         $this->showPositionTaxes = $showPositionTaxes;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTax()
-    {
-        return $this->tax;
-    }
-
-    /**
-     * @param mixed $tax
-     */
-    public function setTax($tax)
-    {
-        $this->tax = $tax;
     }
 }
