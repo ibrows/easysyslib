@@ -4,12 +4,12 @@ namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
 use Ibrows\EasySysLibrary\Api\ArticleTypeApi;
-use Ibrows\EasySysLibrary\Model\ArticleType;
+use Ibrows\EasySysLibrary\Model\Article\ArticleType;
 
 class ApiArticleTypeTest extends AbstractConcreteApiTest
 {
     /**
-     * @return AbstractApi
+     * @return AbstractApi|ArticleTypeApi
      */
     protected function getApi()
     {
@@ -37,7 +37,7 @@ class ApiArticleTypeTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @return object
+     * @return ArticleType
      */
     protected function getModel()
     {

@@ -2,8 +2,8 @@
 
 namespace Ibrows\EasySysLibrary\Tests\Base\Converter;
 
-use Ibrows\EasySysLibrary\Converter\ContactConverter;
-use Ibrows\EasySysLibrary\Model\Contact;
+use Ibrows\EasySysLibrary\Converter\Contact\ContactConverter;
+use Ibrows\EasySysLibrary\Model\Contact\Contact;
 
 /**
  * Class ConverterTest

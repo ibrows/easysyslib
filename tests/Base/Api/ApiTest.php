@@ -20,14 +20,14 @@ use Ibrows\EasySysLibrary\Api\OrderApi;
 use Ibrows\EasySysLibrary\Api\StockAreaApi;
 use Ibrows\EasySysLibrary\Api\StockLocationApi;
 use Ibrows\EasySysLibrary\Api\TaxApi;
-use Ibrows\EasySysLibrary\Model\Article;
-use Ibrows\EasySysLibrary\Model\ArticleType;
-use Ibrows\EasySysLibrary\Model\Contact;
-use Ibrows\EasySysLibrary\Model\Currency;
-use Ibrows\EasySysLibrary\Model\Order;
-use Ibrows\EasySysLibrary\Model\StockArea;
-use Ibrows\EasySysLibrary\Model\StockLocation;
-use Ibrows\EasySysLibrary\Model\Tax;
+use Ibrows\EasySysLibrary\Model\Article\Article;
+use Ibrows\EasySysLibrary\Model\Article\ArticleType;
+use Ibrows\EasySysLibrary\Model\Contact\Contact;
+use Ibrows\EasySysLibrary\Model\Currency\Currency;
+use Ibrows\EasySysLibrary\Model\Order\Order;
+use Ibrows\EasySysLibrary\Model\Stock\StockArea;
+use Ibrows\EasySysLibrary\Model\Stock\StockLocation;
+use Ibrows\EasySysLibrary\Model\Tax\Tax;
 
 class ApiTest extends AbstractApiTest
 {
@@ -237,7 +237,7 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new ContactApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\Contact',
+            'Ibrows\EasySysLibrary\Model\Contact\Contact',
             $model,
             array('name_1' => $name),
             array('name' => $name)

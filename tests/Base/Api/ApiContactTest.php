@@ -4,7 +4,7 @@ namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
 use Ibrows\EasySysLibrary\Api\ContactApi;
-use Ibrows\EasySysLibrary\Model\Contact;
+use Ibrows\EasySysLibrary\Model\Contact\Contact;
 
 class ApiContactTest extends AbstractConcreteApiTest
 {
@@ -42,7 +42,7 @@ class ApiContactTest extends AbstractConcreteApiTest
     }
 
     /**
-     * @return object|\Ibrows\EasySysLibrary\Model\Contact
+     * @return object|Contact
      */
     protected function getModel()
     {

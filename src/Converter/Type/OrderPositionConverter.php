@@ -12,11 +12,11 @@
 namespace Ibrows\EasySysLibrary\Converter\Type;
 
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
-use Ibrows\EasySysLibrary\Converter\OrderPositionDefaultConverter;
-use Ibrows\EasySysLibrary\Converter\OrderPositionItemConverter;
-use Ibrows\EasySysLibrary\Converter\OrderPositionSubPositionConverter;
-use Ibrows\EasySysLibrary\Converter\OrderPositionTextConverter;
-use Ibrows\EasySysLibrary\Model\OrderPosition;
+use Ibrows\EasySysLibrary\Converter\Order\OrderPositionDefaultConverter;
+use Ibrows\EasySysLibrary\Converter\Order\OrderPositionItemConverter;
+use Ibrows\EasySysLibrary\Converter\Order\OrderPositionSubPositionConverter;
+use Ibrows\EasySysLibrary\Converter\Order\OrderPositionTextConverter;
+use Ibrows\EasySysLibrary\Model\Order\OrderPosition;
 
 class OrderPositionConverter extends ProxyConverter
 {

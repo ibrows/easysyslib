@@ -13,12 +13,12 @@ namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
-use Ibrows\EasySysLibrary\Converter\InvoiceConverter;
-use Ibrows\EasySysLibrary\Converter\OrderConverter;
-use Ibrows\EasySysLibrary\Model\Invoice;
-use Ibrows\EasySysLibrary\Model\Order;
-use Ibrows\EasySysLibrary\Model\OrderPosition;
-use Ibrows\EasySysLibrary\Model\OrderPositionAmountInterface;
+use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
+use Ibrows\EasySysLibrary\Converter\Order\OrderConverter;
+use Ibrows\EasySysLibrary\Model\Invoice\Invoice;
+use Ibrows\EasySysLibrary\Model\Order\Order;
+use Ibrows\EasySysLibrary\Model\Order\OrderPosition;
+use Ibrows\EasySysLibrary\Model\Order\OrderPositionAmountInterface;
 use Saxulum\HttpClient\Request;
 
 class OrderApi extends AbstractApi
@@ -117,14 +117,14 @@ class OrderApi extends AbstractApi
 
     /**
      * @param int $contactId
-     * @return \Ibrows\EasySysLibrary\Model\Order
+     * @return Order
      */
     public function getModelInstance($contactId)
     {
         $converter = $this->getConverter();
         $converter->setDataEasySys($this->addDefaults());
 
-        /** @var \Ibrows\EasySysLibrary\Model\Order $order */
+        /** @var Order $order */
         $order = $converter->getObject();
         $order->setContactId($contactId);
 

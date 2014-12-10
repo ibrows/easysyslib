@@ -3,7 +3,7 @@
 namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\ArticleTypeConverter;
+use Ibrows\EasySysLibrary\Converter\Article\ArticleTypeConverter;
 
 class ArticleTypeApi extends AbstractApi
 {

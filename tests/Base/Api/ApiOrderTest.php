@@ -13,7 +13,7 @@ namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
 use Ibrows\EasySysLibrary\Api\OrderApi;
-use Ibrows\EasySysLibrary\Model\Order;
+use Ibrows\EasySysLibrary\Model\Order\Order;
 
 class ApiOrderTest extends AbstractConcreteApiTest
 {

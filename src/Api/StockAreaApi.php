@@ -3,7 +3,7 @@
 namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\StockAreaConverter;
+use Ibrows\EasySysLibrary\Converter\Stock\StockAreaConverter;
 
 class StockAreaApi extends AbstractApi
 {

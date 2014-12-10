@@ -4,7 +4,7 @@ namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
 use Ibrows\EasySysLibrary\Api\StockAreaApi;
-use Ibrows\EasySysLibrary\Model\StockArea;
+use Ibrows\EasySysLibrary\Model\Stock\StockArea;
 
 class ApiStockAreaTest extends AbstractConcreteApiTest
 {

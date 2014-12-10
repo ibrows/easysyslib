@@ -4,7 +4,7 @@ namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
 use Ibrows\EasySysLibrary\Api\StockLocationApi;
-use Ibrows\EasySysLibrary\Model\StockLocation;
+use Ibrows\EasySysLibrary\Model\Stock\StockLocation;
 
 class ApiStockLocationTest extends AbstractConcreteApiTest
 {

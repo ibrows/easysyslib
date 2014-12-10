@@ -13,6 +13,7 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\AbstractApi;
 use Ibrows\EasySysLibrary\Api\CurrencyApi;
+use Ibrows\EasySysLibrary\Model\Currency\Currency;
 
 class ApiCurrencyTest extends AbstractConcreteApiTest
 {
@@ -52,7 +53,7 @@ class ApiCurrencyTest extends AbstractConcreteApiTest
         $this->assertEquals($data['name'], $result['name']);
         $this->assertEquals($data['id'], $result['id']);
 
-        /** @var \Ibrows\EasySysLibrary\Model\Currency $result */
+        /** @var Currency $result */
         $result = $api->showObject($data['id']);
         $this->assertObject($result);
         $this->assertEquals($data['name'], $result->getName());

@@ -4,7 +4,7 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\ApiInterface;
 use Ibrows\EasySysLibrary\Api\ContactApi;
-use Ibrows\EasySysLibrary\Model\Contact;
+use Ibrows\EasySysLibrary\Model\Contact\Contact;
 
 class ApiContactTest extends AbstractConcreteApiTest
 {

@@ -12,7 +12,7 @@
 namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\TaxConverter;
+use Ibrows\EasySysLibrary\Converter\Tax\TaxConverter;
 
 class TaxApi extends AbstractApi
 {

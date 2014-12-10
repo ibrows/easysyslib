@@ -4,9 +4,9 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Api\ApiInterface;
 use Ibrows\EasySysLibrary\Api\OrderApi;
-use Ibrows\EasySysLibrary\Model\Order;
-use Ibrows\EasySysLibrary\Model\OrderPositionDefault;
-use Ibrows\EasySysLibrary\Model\OrderPositionText;
+use Ibrows\EasySysLibrary\Model\Order\Order;
+use Ibrows\EasySysLibrary\Model\Order\OrderPositionDefault;
+use Ibrows\EasySysLibrary\Model\Order\OrderPositionText;
 
 class ApiOrderTest extends AbstractConcreteApiTest
 {

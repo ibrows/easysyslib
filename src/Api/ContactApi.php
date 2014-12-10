@@ -2,7 +2,7 @@
 namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\ContactConverter;
+use Ibrows\EasySysLibrary\Converter\Contact\ContactConverter;
 
 /**
  * @author marcsteiner

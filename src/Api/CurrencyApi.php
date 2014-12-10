@@ -12,7 +12,7 @@
 namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\CurrencyConverter;
+use Ibrows\EasySysLibrary\Converter\Currency\CurrencyConverter;
 
 class CurrencyApi extends AbstractApi
 {

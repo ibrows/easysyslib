@@ -20,8 +20,7 @@ abstract class AbstractApiTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockConnection()
     {
-        $mock = $this->getMock('Ibrows\EasySysLibrary\Connection\ConnectionInterface');
-        return $mock;
+        return $this->getMock('Ibrows\EasySysLibrary\Connection\ConnectionInterface');
     }
 
     /**

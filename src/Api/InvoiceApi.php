@@ -12,7 +12,7 @@
 namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\InvoiceConverter;
+use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
 
 class InvoiceApi extends AbstractApi
 {
