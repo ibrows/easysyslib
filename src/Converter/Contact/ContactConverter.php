@@ -57,7 +57,7 @@ class ContactConverter extends AbstractConverter
     protected function setupConvertTypes()
     {
         return array(
-            'birthday'   => new DateTime($this->getDefaultTimeFormat(), $this->getDefaultTimeZone()),
+            'birthday'   => new DateTime($this->getDefaultDateFormat(), $this->getDefaultTimeZone()),
             'updated_at' => new DateTime($this->getDefaultDateTimeFormat(), $this->getDefaultTimeZone()),
         );
     }

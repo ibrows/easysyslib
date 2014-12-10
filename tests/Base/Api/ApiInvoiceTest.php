@@ -30,10 +30,10 @@ class ApiInvoiceTest extends AbstractConcreteApiTest
         $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'test')), $result);
 
         $result = $api->convertSimpleCriteria(array('apiReference' => 'test'));
-        $this->assertEquals(array(array('field' => 'api_reference', 'value' => 'test', 'criteria' => '=')), $result);
+        $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'test', 'criteria' => '=')), $result);
 
         $result = $api->convertSimpleCriteria(array('apiReference' => 'test'), 'like');
-        $this->assertEquals(array(array('field' => 'api_reference', 'value' => 'test', 'criteria' => 'like')), $result);
+        $this->assertEquals(array(array('field' => 'apiReference', 'value' => 'test', 'criteria' => 'like')), $result);
     }
 
     /**

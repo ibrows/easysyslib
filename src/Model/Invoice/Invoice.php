@@ -11,26 +11,114 @@
 
 namespace Ibrows\EasySysLibrary\Model\Invoice;
 
+use Ibrows\EasySysLibrary\Model\Traits\Document;
+
 class Invoice
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    use Document;
 
     /**
-     * @return int
+     * @var float
      */
-    public function getId()
+    protected $totalReceivedPayments;
+
+    /**
+     * @var float
+     */
+    protected $totalCreditVouchers;
+
+    /**
+     * @var float
+     */
+    protected $totalRemainingPayments;
+
+    /**
+     * @var \DateTime
+     */
+    protected $validTo;
+
+    /**
+     * @var string
+     */
+    protected $networkLink;
+
+    /**
+     * @return string
+     */
+    public function getNetworkLink()
     {
-        return $this->id;
+        return $this->networkLink;
     }
 
     /**
-     * @param int $id
+     * @param string $networkLink
      */
-    public function setId($id)
+    public function setNetworkLink($networkLink)
     {
-        $this->id = $id;
+        $this->networkLink = $networkLink;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalCreditVouchers()
+    {
+        return $this->totalCreditVouchers;
+    }
+
+    /**
+     * @param float $totalCreditVouchers
+     */
+    public function setTotalCreditVouchers($totalCreditVouchers)
+    {
+        $this->totalCreditVouchers = $totalCreditVouchers;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalReceivedPayments()
+    {
+        return $this->totalReceivedPayments;
+    }
+
+    /**
+     * @param float $totalReceivedPayments
+     */
+    public function setTotalReceivedPayments($totalReceivedPayments)
+    {
+        $this->totalReceivedPayments = $totalReceivedPayments;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalRemainingPayments()
+    {
+        return $this->totalRemainingPayments;
+    }
+
+    /**
+     * @param float $totalRemainingPayments
+     */
+    public function setTotalRemainingPayments($totalRemainingPayments)
+    {
+        $this->totalRemainingPayments = $totalRemainingPayments;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getValidTo()
+    {
+        return $this->validTo;
+    }
+
+    /**
+     * @param \DateTime $validTo
+     */
+    public function setValidTo(\DateTime $validTo = null)
+    {
+        $this->validTo = $validTo;
     }
 }
