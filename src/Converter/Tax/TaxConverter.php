@@ -18,7 +18,7 @@ class TaxConverter extends AbstractConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Tax';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Tax\Tax';
 
     /**
      * @var array

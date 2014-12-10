@@ -18,7 +18,7 @@ class CurrencyConverter extends AbstractConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Currency';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Currency\Currency';
 
     /**
      * @var array

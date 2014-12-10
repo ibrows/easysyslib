@@ -9,7 +9,7 @@ class InvoiceConverter extends AbstractConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Invoice';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Invoice\Invoice';
 
     /**
      * @var array

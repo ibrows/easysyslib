@@ -529,7 +529,7 @@ class Article
     /**
      * @param boolean $usingSetPriceCalc
      */
-    public function setIsUsingSetPriceCalc($usingSetPriceCalc)
+    public function setUsingSetPriceCalc($usingSetPriceCalc)
     {
         $this->usingSetPriceCalc = $usingSetPriceCalc;
     }
@@ -714,7 +714,7 @@ class Article
     /**
      * @return boolean
      */
-    public function isIsStock()
+    public function isStock()
     {
         return $this->stock;
     }
@@ -722,7 +722,7 @@ class Article
     /**
      * @param boolean $stock
      */
-    public function setIsStock($stock)
+    public function setStock($stock)
     {
         $this->stock = $stock;
     }

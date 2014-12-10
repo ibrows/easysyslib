@@ -15,7 +15,7 @@ class OrderConverter extends AbstractConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\Order';
 
     /**
      * @var array

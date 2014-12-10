@@ -16,7 +16,7 @@ class OrderPositionSubPositionConverter extends OrderPositionConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\OrderPositionSubPosition';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderPositionSubPosition';
 
     /**
      * @return array|null

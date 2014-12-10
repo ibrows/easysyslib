@@ -12,7 +12,7 @@ class StockAreaConverter extends AbstractConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\StockArea';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Stock\StockArea';
 
     /**
      * @var array

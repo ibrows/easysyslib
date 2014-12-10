@@ -12,7 +12,7 @@ class ArticleConverter extends AbstractConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Article';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Article\Article';
 
     /**
      * @var array

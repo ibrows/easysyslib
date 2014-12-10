@@ -16,7 +16,7 @@ class OrderPositionTextConverter extends OrderPositionConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\OrderPositionText';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderPositionText';
 
     /**
      * @return array|null

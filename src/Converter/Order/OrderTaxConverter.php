@@ -18,7 +18,7 @@ class OrderTaxConverter extends AbstractConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\OrderTax';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderTax';
 
     /**
      * @var array

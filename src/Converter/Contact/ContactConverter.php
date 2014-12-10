@@ -15,7 +15,7 @@ class ContactConverter extends AbstractConverter
     /**
      * @see https://docs.easysys.ch/ressources/contact/#show-contact
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Contact';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Contact\Contact';
 
     /**
      * @var array

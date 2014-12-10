@@ -16,7 +16,7 @@ class OrderPositionDefaultConverter extends OrderPositionConverter
     /**
      * @var string
      */
-    protected $modelClass = 'Ibrows\EasySysLibrary\Model\OrderPositionDefault';
+    protected $modelClass = 'Ibrows\EasySysLibrary\Model\Order\OrderPositionDefault';
 
     /**
      * @return array|null

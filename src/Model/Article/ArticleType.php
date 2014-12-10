@@ -24,12 +24,11 @@ class ArticleType
 
     /**
      * @param int $id
-     * @return $this
+     * 
      */
     public function setId($id)
     {
         $this->id = $id;
-
     }
 
     /**
@@ -42,11 +41,9 @@ class ArticleType
 
     /**
      * @param string $name
-     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
-
     }
 }

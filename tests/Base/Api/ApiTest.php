@@ -34,7 +34,6 @@ class ApiTest extends AbstractApiTest
     /**
      * @dataProvider provideApis
      * @param AbstractApi $api
-     * @param string $model
      * @param object $newObject
      * @param array $mockData
      * @param array $data
@@ -42,7 +41,6 @@ class ApiTest extends AbstractApiTest
      */
     public function testApiMethods(
         AbstractApi $api,
-        $model,
         $newObject,
         array $mockData,
         array $data,
@@ -56,9 +54,8 @@ class ApiTest extends AbstractApiTest
     /**
      * @dataProvider provideApis
      * @param AbstractApi $api
-     * @param string $model
      */
-    public function testShow(AbstractApi $api, $model)
+    public function testShow(AbstractApi $api, $newObject)
     {
         $this->assertMethod($api, 'show');
 
@@ -67,22 +64,21 @@ class ApiTest extends AbstractApiTest
 
         $showObject = $api->showObject(1);
         $this->assertTrue(is_object($showObject));
-        $this->assertInstanceOf($model, $showObject);
+        $this->assertInstanceOf(get_class($newObject), $showObject);
     }
 
     /**
      * @dataProvider provideApis
      * @param AbstractApi $api
-     * @param string $model
      * @param object $newObject
      * @param array $mockData
      * @param array $data
      */
-    public function testCreate(AbstractApi $api, $model, $newObject, array $mockData, array $data)
+    public function testCreate(AbstractApi $api, $newObject, array $mockData, array $data)
     {
         $this->assertMethod($api, 'createFromObject');
         $object = $api->createFromObject($newObject);
-        $this->assertInstanceOf($model, $object);
+        $this->assertInstanceOf(get_class($newObject), $object);
 
         $this->assertMethod($api, 'createFromArray');
         $data = $api->createFromArray(array(current($mockData) => current($data)));
@@ -92,12 +88,11 @@ class ApiTest extends AbstractApiTest
     /**
      * @dataProvider provideApis
      * @param AbstractApi $api
-     * @param string $model
      * @param object $newObject
      * @param array $mockData
      * @param array $data
      */
-    public function testUpdate(AbstractApi $api, $model, $newObject, array $mockData, array $data)
+    public function testUpdate(AbstractApi $api, $newObject, array $mockData, array $data)
     {
         $mock = $this->getMockConnection();
         $mock->expects($this->exactly(3))
@@ -120,19 +115,18 @@ class ApiTest extends AbstractApiTest
         $this->assertMethod($api, 'updateFromObject');
         $update = $api->updateFromObject(1, $newObject);
 
-        $this->assertInstanceOf($model, $update);
+        $this->assertInstanceOf(get_class($newObject), $update);
         $this->assertEquals($newObject, $update);
     }
 
     /**
      * @dataProvider provideApis
      * @param AbstractApi $api
-     * @param string $model
      * @param object $newObject
      * @param array $mockData
      * @param array $data
      */
-    public function testSearch(AbstractApi $api, $model, $newObject, array $mockData, array $data)
+    public function testSearch(AbstractApi $api, $newObject, array $mockData, array $data)
     {
         $this->assertMethod($api, 'search');
 
@@ -148,7 +142,7 @@ class ApiTest extends AbstractApiTest
 
         $searchObjects = $api->searchObjects(array(current($mockData) => current($data)));
         $searchObject = current($searchObjects);
-        $this->assertInstanceOf($model, $searchObject);
+        $this->assertInstanceOf(get_class($newObject), $searchObject);
 
         $searchObjects = $api->searchArrays(array(current($mockData) => current($data)));
         $searchObject = current($searchObjects);
@@ -204,7 +198,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new TaxApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\Tax',
             $model,
             array('value' => 8.00),
             array('value' => 8.00)
@@ -219,7 +212,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new CurrencyApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\Currency',
             $model,
             array('name' => 'CHF', 'round_factor' => 0.050),
             array('name' => 'CHF', 'roundFactor' => 0.050)
@@ -237,7 +229,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new ContactApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\Contact\Contact',
             $model,
             array('name_1' => $name),
             array('name' => $name)
@@ -255,7 +246,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new OrderApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\Order',
             $model,
             array('api_reference' => $apiReference),
             array('apiReference' => $apiReference)
@@ -273,7 +263,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new ArticleApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\Article',
             $model,
             array('deliverer_code' => $apiReference),
             array('delivererCode' => $apiReference)
@@ -291,7 +280,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new ArticleTypeApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\ArticleType',
             $model,
             array('name' => $apiReference),
             array('name' => $apiReference),
@@ -310,7 +298,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new StockLocationApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\StockLocation',
             $model,
             array('name' => $apiReference),
             array('name' => $apiReference),
@@ -329,7 +316,6 @@ class ApiTest extends AbstractApiTest
 
         return array(
             new StockAreaApi($this->getMockConnection()),
-            'Ibrows\EasySysLibrary\Model\StockArea',
             $model,
             array('name' => $apiReference),
             array('name' => $apiReference),
