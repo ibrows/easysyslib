@@ -232,7 +232,7 @@ class Order
     /**
      * @var OrderPosition[]
      */
-    protected $positions;
+    protected $positions = array();
 
     /**
      * @param int $contactId

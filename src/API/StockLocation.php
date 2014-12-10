@@ -12,8 +12,8 @@ class StockLocation extends AbstractAPI
      */
     public function __construct(ConnectionInterface $connection)
     {
-        parent::__construct($connection);
         $this->converter = new StockLocationConverter();
+        parent::__construct($connection);
     }
 
     /**

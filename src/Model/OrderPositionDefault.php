@@ -11,7 +11,7 @@
 
 namespace Ibrows\EasySysLibrary\Model;
 
-class OrderPositionDefault extends OrderPosition
+class OrderPositionDefault extends OrderPosition implements OrderPositionAmountInterface
 {
     /**
      * @var float

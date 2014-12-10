@@ -252,14 +252,6 @@ abstract class AbstractConverter implements ConverterInterface
     }
 
     /**
-     * @param boolean $throwExceptionOnAdditionalData
-     */
-    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
-    {
-        $this->throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
-    }
-
-    /**
      * @return boolean
      */
     public function isSetNull()
@@ -324,6 +316,22 @@ abstract class AbstractConverter implements ConverterInterface
     }
 
     /**
+     * @return boolean
+     */
+    public function isThrowExceptionOnAdditionalData()
+    {
+        return $this->throwExceptionOnAdditionalData;
+    }
+
+    /**
+     * @param boolean $throwExceptionOnAdditionalData
+     */
+    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
+    {
+        $this->throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
+    }
+
+    /**
      * @return array|null
      */
     protected function setupMapping()
@@ -381,8 +389,8 @@ abstract class AbstractConverter implements ConverterInterface
 
         foreach ($this->dataEasySys as $key => $value) {
             if (!array_key_exists($key, $mapping)) {
-                if ($this->throwExceptionOnAdditionalData) {
-                    throw new \RuntimeException("Mapping for key '" . $key . "' not found - add to mappings of ". get_class($this));
+                if ($this->isThrowExceptionOnAdditionalData()) {
+                    throw new \RuntimeException("Mapping for key '" . $key . "' not found - add to mappings of " . get_class($this));
                 }
                 $additionalData[$key] = $value;
                 continue;
@@ -402,7 +410,7 @@ abstract class AbstractConverter implements ConverterInterface
                 $propertyPath = is_array($objectOrArray) ? '[additionalData]' : 'additionalData';
                 $accessor->setValue($objectOrArray, $propertyPath, $additionalData);
             } catch (\Exception $e) {
-                if ($this->throwExceptionOnAdditionalData) {
+                if ($this->isThrowExceptionOnAdditionalData()) {
                     throw $e;
                 }
             }

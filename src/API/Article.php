@@ -12,8 +12,8 @@ class Article extends AbstractAPI
      */
     public function __construct(ConnectionInterface $connection)
     {
-        parent::__construct($connection);
         $this->converter = new ArticleConverter();
+        parent::__construct($connection);
     }
 
     /**

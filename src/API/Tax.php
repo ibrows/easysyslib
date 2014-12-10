@@ -21,8 +21,8 @@ class Tax extends AbstractAPI
      */
     public function __construct(ConnectionInterface $connection)
     {
-        parent::__construct($connection);
         $this->converter = new TaxConverter();
+        parent::__construct($connection);
     }
 
     /**

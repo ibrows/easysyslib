@@ -44,8 +44,8 @@ class Contact extends AbstractAPI
      */
     public function __construct(ConnectionInterface $connection)
     {
-        parent::__construct($connection);
         $this->converter = new ContactConverter();
+        parent::__construct($connection);
     }
 
     /**

@@ -77,4 +77,9 @@ interface ConverterInterface
      * @param bool $throwExceptionOnAdditionalData
      */
     public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true);
+
+    /**
+     * @return bool
+     */
+    public function isThrowExceptionOnAdditionalData();
 }

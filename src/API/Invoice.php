@@ -11,21 +11,18 @@
 
 namespace Ibrows\EasySysLibrary\API;
 
+use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
+use Ibrows\EasySysLibrary\Converter\InvoiceConverter;
+
 class Invoice extends AbstractAPI
 {
-    public function markAsInvoiced($id)
+    /**
+     * @param ConnectionInterface $connection
+     */
+    public function __construct(ConnectionInterface $connection)
     {
-        return $this->connection->call("$this->type/$id/issue", array(), array(), "POST");
-    }
-
-    public function markAsPayed($id, $value)
-    {
-        return $this->connection->call("$this->type/$id/payment", array(), array('value' => $value), "POST");
-    }
-
-    public function show($id)
-    {
-        return $this->connection->call("$this->type/$id");
+        parent::__construct($connection);
+        $this->converter = new InvoiceConverter();
     }
 
     /**
@@ -33,6 +30,6 @@ class Invoice extends AbstractAPI
      */
     protected function getType()
     {
-        return 'invoice';
+        return 'kb_invoice';
     }
 } 

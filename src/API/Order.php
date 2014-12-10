@@ -12,7 +12,13 @@
 namespace Ibrows\EasySysLibrary\API;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
+use Ibrows\EasySysLibrary\Converter\ConverterInterface;
+use Ibrows\EasySysLibrary\Converter\InvoiceConverter;
 use Ibrows\EasySysLibrary\Converter\OrderConverter;
+use Ibrows\EasySysLibrary\Model\Invoice;
+use Ibrows\EasySysLibrary\Model\OrderPosition;
+use Ibrows\EasySysLibrary\Model\OrderPositionAmountInterface;
+use Saxulum\HttpClient\Request;
 
 class Order extends AbstractAPI
 {
@@ -27,12 +33,28 @@ class Order extends AbstractAPI
     const DELIVERY_TYPE_OWN = 1;
 
     /**
+     * @var ConverterInterface
+     */
+    protected $invoiceCreateConverter;
+
+    /**
      * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection)
     {
         parent::__construct($connection);
         $this->converter = new OrderConverter();
+        $this->invoiceCreateConverter = new InvoiceConverter();
+    }
+
+    /**
+     * @return ConverterInterface[]
+     */
+    protected function getConverters()
+    {
+        $converters = parent::getConverters();
+        $converters[] = $this->getInvoiceCreateConverter();
+        return $converters;
     }
 
     /**
@@ -66,6 +88,73 @@ class Order extends AbstractAPI
     }
 
     /**
+     * @param \Ibrows\EasySysLibrary\Model\Order $order
+     * @return Invoice
+     */
+    public function createInvoiceObject(\Ibrows\EasySysLibrary\Model\Order $order)
+    {
+        return $this->createInvoiceWithPositionsObject($order, $order->getPositions());
+    }
+
+    /**
+     * @param \Ibrows\EasySysLibrary\Model\Order $order
+     * @param OrderPosition[] $positions
+     * @return Invoice
+     */
+    public function createInvoiceWithPositionsObject(\Ibrows\EasySysLibrary\Model\Order $order, array $positions)
+    {
+        $positionData = array();
+
+        foreach ($positions as $position) {
+            $amount = $position instanceof OrderPositionAmountInterface ? $position->getAmount() : null;
+            $positionData[] = $this->getCreateInvoicePosition($position->getId(), $position->getType(), $amount);
+        }
+
+        $postParams = $this->getCreateInvoicePostParams($positionData);
+
+        $dataEasySys = $this->createInvoice($order->getId(), $postParams);
+        $this->invoiceCreateConverter->setDataEasySys($dataEasySys);
+        return $this->invoiceCreateConverter->getObject();
+    }
+
+    /**
+     * @param int $orderPositionId
+     * @param string $orderPositionType
+     * @param int|null $amount
+     * @return array
+     */
+    public function getCreateInvoicePosition($orderPositionId, $orderPositionType, $amount = null)
+    {
+        $data = array(
+            'id'   => $orderPositionId,
+            'type' => $orderPositionType
+        );
+        if ($amount) {
+            $data['amount'] = $amount;
+        }
+        return $data;
+    }
+
+    /**
+     * @param array $positions
+     * @return array
+     */
+    public function getCreateInvoicePostParams(array $positions)
+    {
+        return array('positions' => $positions);
+    }
+
+    /**
+     * @param int $orderId
+     * @param array $postParams
+     * @return array
+     */
+    public function createInvoice($orderId, array $postParams)
+    {
+        return $this->call($this->getCreateInvoiceResource($orderId), array(), $postParams, Request::METHOD_POST);
+    }
+
+    /**
      * @param int $contactId
      * @return \Ibrows\EasySysLibrary\Model\Order
      */
@@ -79,6 +168,31 @@ class Order extends AbstractAPI
         $order->setContactId($contactId);
 
         return $order;
+    }
+
+    /**
+     * @return ConverterInterface
+     */
+    public function getInvoiceCreateConverter()
+    {
+        return $this->invoiceCreateConverter;
+    }
+
+    /**
+     * @param ConverterInterface $invoiceCreateConverter
+     */
+    public function setInvoiceCreateConverter(ConverterInterface $invoiceCreateConverter = null)
+    {
+        $this->invoiceCreateConverter = $invoiceCreateConverter;
+    }
+
+    /**
+     * @param int $orderId
+     * @return string
+     */
+    protected function getCreateInvoiceResource($orderId)
+    {
+        return '/' . $this->getType() . '/' . (int)$orderId . '/invoice';
     }
 
     /**
