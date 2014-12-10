@@ -26,10 +26,20 @@ class Invoice extends AbstractAPI
     }
 
     /**
+     * @param int $id
+     * @return array
+     */
+    public function showPdfArray($id)
+    {
+        $append = '/' . (int)$id . '/pdf';
+        return $this->connection->call($this->getResource() . $append);
+    }
+
+    /**
      * @return string
      */
     protected function getType()
     {
         return 'kb_invoice';
     }
-} 
+}
