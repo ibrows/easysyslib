@@ -22,17 +22,17 @@ class Order extends AbstractType
     /**
      * @var OrderPositionDiscount
      */
-    protected $positionDiscountAPI = null;
+    protected $positionDiscountApi = null;
 
     /**
      * @var OrderPositionArticle
      */
-    protected $positionArticleAPI = null;
+    protected $positionArticleApi = null;
 
     /**
      * @var OrderPositionStandard
      */
-    protected $positionAPI = null;
+    protected $positionApi = null;
 
     public function __construct(Connection $connection)
     {
@@ -43,34 +43,34 @@ class Order extends AbstractType
     /**
      * @return OrderPositionArticle
      */
-    protected function getPositionDiscountAPI()
+    protected function getPositionDiscountApi()
     {
-        if ($this->positionDiscountAPI == null) {
-            $this->positionDiscountAPI = new OrderPositionDiscount($this->connection, $this->type, null);
+        if ($this->positionDiscountApi == null) {
+            $this->positionDiscountApi = new OrderPositionDiscount($this->connection, $this->type, null);
         }
-        return $this->positionDiscountAPI;
+        return $this->positionDiscountApi;
     }
 
     /**
      * @return OrderPositionArticle
      */
-    protected function getPositionArticleAPI()
+    protected function getPositionArticleApi()
     {
-        if ($this->positionArticleAPI == null) {
-            $this->positionArticleAPI = new OrderPositionArticle($this->connection, $this->type, null);
+        if ($this->positionArticleApi == null) {
+            $this->positionArticleApi = new OrderPositionArticle($this->connection, $this->type, null);
         }
-        return $this->positionArticleAPI;
+        return $this->positionArticleApi;
     }
 
     /**
      * @return OrderPositionStandard
      */
-    protected function getPositionAPI()
+    protected function getPositionApi()
     {
-        if ($this->positionAPI == null) {
-            $this->positionAPI = new OrderPositionStandard($this->connection, $this->type, null);
+        if ($this->positionApi == null) {
+            $this->positionApi = new OrderPositionStandard($this->connection, $this->type, null);
         }
-        return $this->positionAPI;
+        return $this->positionApi;
     }
 
     public function save()
@@ -90,10 +90,10 @@ class Order extends AbstractType
      */
     public function createPositionArticle($parent_id, $amount, $unit_price, $tax_id, $article_id, $unit_id = null, $discount_in_percent = null, $text = null)
     {
-        $this->getPositionArticleAPI()->setParentId($parent_id);
+        $this->getPositionArticleApi()->setParentId($parent_id);
         $vars = compact(array_keys(get_defined_vars()));
         unset($vars['parent_id']);
-        return $this->getPositionArticleAPI()->create($vars,null,false);
+        return $this->getPositionArticleApi()->create($vars,null,false);
     }
 
 
@@ -109,10 +109,10 @@ class Order extends AbstractType
      */
     public function createPositionStandard($parent_id, $amount, $tax_id, $unit_price = null, $discount_in_percent = null, $text = null, $unit_id = null)
     {
-        $this->getPositionAPI()->setParentId($parent_id);
+        $this->getPositionApi()->setParentId($parent_id);
         $vars = compact(array_keys(get_defined_vars()));
         unset($vars['parent_id']);
-        return $this->getPositionAPI()->create($vars,null,false);
+        return $this->getPositionApi()->create($vars,null,false);
     }
 
 
@@ -125,10 +125,10 @@ class Order extends AbstractType
      */
     public function createPositionDiscount($parent_id, $value, $is_percentual = null, $text = null)
     {
-        $this->getPositionDiscountAPI()->setParentId($parent_id);
+        $this->getPositionDiscountApi()->setParentId($parent_id);
         $vars = compact(array_keys(get_defined_vars()));
         unset($vars['parent_id']);
-        return $this->getPositionDiscountAPI()->create($vars,null,false);
+        return $this->getPositionDiscountApi()->create($vars,null,false);
     }
 
     /**

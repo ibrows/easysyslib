@@ -9,23 +9,23 @@
  * Time: 13:22
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Base\API;
+namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Article;
-use Ibrows\EasySysLibrary\API\ArticleType;
-use Ibrows\EasySysLibrary\API\Contact;
-use Ibrows\EasySysLibrary\API\Order;
-use Ibrows\EasySysLibrary\API\StockArea;
-use Ibrows\EasySysLibrary\API\StockLocation;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\Article;
+use Ibrows\EasySysLibrary\Api\ArticleType;
+use Ibrows\EasySysLibrary\Api\Contact;
+use Ibrows\EasySysLibrary\Api\Order;
+use Ibrows\EasySysLibrary\Api\StockArea;
+use Ibrows\EasySysLibrary\Api\StockLocation;
 use Ibrows\EasySysLibrary\Model\Currency;
 use Ibrows\EasySysLibrary\Model\Tax;
 
-class APITest extends AbstractAPITest
+class ApiTest extends AbstractApiTest
 {
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      * @param string $model
      * @param object $newObject
      * @param array $mockData
@@ -33,7 +33,7 @@ class APITest extends AbstractAPITest
      * @param array $methods
      */
     public function testApiMethods(
-        AbstractAPI $api,
+        AbstractApi $api,
         $model,
         $newObject,
         array $mockData,
@@ -46,11 +46,11 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      * @param string $model
      */
-    public function testShow(AbstractAPI $api, $model)
+    public function testShow(AbstractApi $api, $model)
     {
         $this->assertMethod($api, 'show');
 
@@ -63,14 +63,14 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      * @param string $model
      * @param object $newObject
      * @param array $mockData
      * @param array $data
      */
-    public function testCreate(AbstractAPI $api, $model, $newObject, array $mockData, array $data)
+    public function testCreate(AbstractApi $api, $model, $newObject, array $mockData, array $data)
     {
         $this->assertMethod($api, 'createFromObject');
         $object = $api->createFromObject($newObject);
@@ -82,14 +82,14 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      * @param string $model
      * @param object $newObject
      * @param array $mockData
      * @param array $data
      */
-    public function testUpdate(AbstractAPI $api, $model, $newObject, array $mockData, array $data)
+    public function testUpdate(AbstractApi $api, $model, $newObject, array $mockData, array $data)
     {
         $mock = $this->getMockConnection();
         $mock->expects($this->exactly(3))
@@ -117,14 +117,14 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      * @param string $model
      * @param object $newObject
      * @param array $mockData
      * @param array $data
      */
-    public function testSearch(AbstractAPI $api, $model, $newObject, array $mockData, array $data)
+    public function testSearch(AbstractApi $api, $model, $newObject, array $mockData, array $data)
     {
         $this->assertMethod($api, 'search');
 
@@ -148,10 +148,10 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      */
-    public function testDelete(AbstractAPI $api)
+    public function testDelete(AbstractApi $api)
     {
         $mock = $this->getMockConnection();
         $mock->expects($this->exactly(1))
@@ -169,7 +169,7 @@ class APITest extends AbstractAPITest
     /**
      * @return array
      */
-    public function provideAPIs()
+    public function provideApis()
     {
         return array(
             $this->provideContactApi(),
@@ -195,7 +195,7 @@ class APITest extends AbstractAPITest
         $model->setValue(8.00);
 
         return array(
-            new \Ibrows\EasySysLibrary\API\Tax($this->getMockConnection()),
+            new \Ibrows\EasySysLibrary\Api\Tax($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Tax',
             $model,
             array('value' => 8.00),
@@ -210,7 +210,7 @@ class APITest extends AbstractAPITest
         $model->setRoundFactor(0.050);
 
         return array(
-            new \Ibrows\EasySysLibrary\API\Currency($this->getMockConnection()),
+            new \Ibrows\EasySysLibrary\Api\Currency($this->getMockConnection()),
             'Ibrows\EasySysLibrary\Model\Currency',
             $model,
             array('name' => 'CHF', 'round_factor' => 0.050),

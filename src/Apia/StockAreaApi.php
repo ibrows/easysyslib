@@ -1,11 +1,11 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\StockAreaConverter;
 
-class StockArea extends AbstractAPI
+class StockAreaApi extends AbstractApi
 {
     /**
      * @param ConnectionInterface $connection

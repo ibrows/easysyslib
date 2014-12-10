@@ -1,5 +1,5 @@
 <?php
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\ContactConverter;
@@ -8,7 +8,7 @@ use Ibrows\EasySysLibrary\Converter\ContactConverter;
  * @author marcsteiner
  *
  */
-class Contact extends AbstractAPI
+class ContactApi extends AbstractApi
 {
     const IDENTIFY_PRECISION_NONE = 0;
     const IDENTIFY_PRECISION_MINIMUM = 1;

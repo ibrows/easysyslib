@@ -9,12 +9,12 @@
  * Time: 20:57
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Tax;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\Tax;
 
-class APITaxTest extends AbstractConcreteAPITest
+class ApiTaxTest extends AbstractConcreteApiTest
 {
     /**
      * @expectedException Ibrows\EasySysLibrary\Connection\Exception\StatusCodeException
@@ -27,7 +27,7 @@ class APITaxTest extends AbstractConcreteAPITest
     }
 
     /**
-     * @return AbstractAPI|Tax
+     * @return AbstractApi|Tax
      */
     protected function getApi()
     {

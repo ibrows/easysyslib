@@ -1,18 +1,18 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\ArticleTypeConverter;
+use Ibrows\EasySysLibrary\Converter\ArticleConverter;
 
-class ArticleType extends AbstractAPI
+class ArticleApi extends AbstractApi
 {
     /**
      * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->converter = new ArticleTypeConverter();
+        $this->converter = new ArticleConverter();
         parent::__construct($connection);
     }
 
@@ -21,6 +21,6 @@ class ArticleType extends AbstractAPI
      */
     protected function getType()
     {
-        return 'article_type';
+        return 'article';
     }
 }

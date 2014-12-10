@@ -9,12 +9,12 @@
  * Time: 20:57
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Currency;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\Currency;
 
-class APICurrencyTest extends AbstractConcreteAPITest
+class ApiCurrencyTest extends AbstractConcreteApiTest
 {
     /**
      * @expectedException Ibrows\EasySysLibrary\Connection\Exception\StatusCodeException
@@ -27,7 +27,7 @@ class APICurrencyTest extends AbstractConcreteAPITest
     }
 
     /**
-     * @return AbstractAPI|Currency
+     * @return AbstractApi|Currency
      */
     protected function getApi()
     {

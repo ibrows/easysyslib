@@ -1,8 +1,8 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 
 /**
@@ -13,7 +13,7 @@ use Ibrows\EasySysLibrary\Converter\AbstractConverter;
  * Date: 02.12.14
  * Time: 14:29
  */
-abstract class AbstractConcreteAPITest extends AbstractAPITest
+abstract class AbstractConcreteApiTest extends AbstractApiTest
 {
     /**
      * @var array
@@ -37,7 +37,7 @@ abstract class AbstractConcreteAPITest extends AbstractAPITest
     }
 
     /**
-     * @return AbstractAPI
+     * @return AbstractApi
      */
     abstract protected function getApi();
 

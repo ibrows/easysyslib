@@ -9,7 +9,7 @@
  * Time: 11:31
  */
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
@@ -20,7 +20,7 @@ use Ibrows\EasySysLibrary\Model\OrderPosition;
 use Ibrows\EasySysLibrary\Model\OrderPositionAmountInterface;
 use Saxulum\HttpClient\Request;
 
-class Order extends AbstractAPI
+class OrderApi extends AbstractApi
 {
     /**
      * Use invoice as delivery

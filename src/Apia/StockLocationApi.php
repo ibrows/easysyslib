@@ -1,18 +1,18 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\ArticleConverter;
+use Ibrows\EasySysLibrary\Converter\StockLocationConverter;
 
-class Article extends AbstractAPI
+class StockLocationApi extends AbstractApi
 {
     /**
      * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->converter = new ArticleConverter();
+        $this->converter = new StockLocationConverter();
         parent::__construct($connection);
     }
 
@@ -21,6 +21,6 @@ class Article extends AbstractAPI
      */
     protected function getType()
     {
-        return 'article';
+        return 'stock';
     }
 }

@@ -491,7 +491,7 @@ class Order
      */
     public function setDeliveryAddressManual($deliveryAddressManual)
     {
-        $this->setDeliveryAddressType(\Ibrows\EasySysLibrary\API\Order::DELIVERY_TYPE_OWN);
+        $this->setDeliveryAddressType(\Ibrows\EasySysLibrary\Api\Order::DELIVERY_TYPE_OWN);
         $this->deliveryAddressManual = $deliveryAddressManual;
     }
 

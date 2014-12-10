@@ -1,27 +1,27 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Base\API;
+namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\StockLocation;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\StockLocation;
 use Ibrows\EasySysLibrary\Model\StockLocation as StockLocationModel;
 
-class APIStockLocationTest extends AbstractConcreteAPITest
+class ApiStockLocationTest extends AbstractConcreteApiTest
 {
     /**
-     * @return AbstractAPI
+     * @return AbstractApi
      */
-    protected function getAPI()
+    protected function getApi()
     {
         return new StockLocation($this->getMockConnection());
     }
 
     /**
-     * Not possible to test in APITest with provider data
+     * Not possible to test in ApiTest with provider data
      */
     public function testConvertCriteria()
     {
-        $api = $this->getAPI();
+        $api = $this->getApi();
 
         $result = $api->convertSimpleCriteria(array());
         $this->assertEquals(array(), $result);

@@ -1,20 +1,20 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Base\API;
+namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Contact;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\Contact;
 
-class APIContactTest extends AbstractConcreteAPITest
+class ApiContactTest extends AbstractConcreteApiTest
 {
     public function testDescription()
     {
-        $this->assertSame('Kontaktperson', $this->getAPI()->getDescription());
+        $this->assertSame('Kontaktperson', $this->getApi()->getDescription());
     }
 
     public function testConvertCriteria()
     {
-        $api = $this->getAPI();
+        $api = $this->getApi();
 
         $result = $api->convertSimpleCriteria(array());
         $this->assertEquals(array(), $result);
@@ -33,9 +33,9 @@ class APIContactTest extends AbstractConcreteAPITest
     }
 
     /**
-     * @return AbstractAPI|Contact
+     * @return AbstractApi|Contact
      */
-    protected function getAPI()
+    protected function getApi()
     {
         return new Contact($this->getMockConnection());
     }

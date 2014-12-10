@@ -9,27 +9,27 @@
  * Time: 12:29
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Base\API;
+namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Order;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\Order;
 
-class APIOrderTest extends AbstractConcreteAPITest
+class ApiOrderTest extends AbstractConcreteApiTest
 {
     /**
-     * @return AbstractAPI
+     * @return AbstractApi
      */
-    protected function getAPI()
+    protected function getApi()
     {
         return new Order($this->getMockConnection());
     }
 
     /**
-     * Not possible to test in APITest with provider data
+     * Not possible to test in ApiTest with provider data
      */
     public function testConvertCriteria()
     {
-        $api = $this->getAPI();
+        $api = $this->getApi();
 
         $result = $api->convertSimpleCriteria(array());
         $this->assertEquals(array(), $result);

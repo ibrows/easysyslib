@@ -15,7 +15,7 @@ if (!isset($_SESSION['access_token']) || !isset($_SESSION['org'])) {
 /**
  * Fetch all Countries (call the ressource "GET /country") and order them by name (ascending)
  */
-$con = new EasysysConnector(EASYSYS_API_URL, $_SESSION['org'], $_SESSION['access_token']);
+$con = new EasysysConnector(EASYSYS_Api_URL, $_SESSION['org'], $_SESSION['access_token']);
 
 try {
     $countries = $con->getCountries(array('order_by' => 'name_asc'));
@@ -29,7 +29,7 @@ try {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>easySYS API Example</title>
+        <title>easySYS Api Example</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -44,7 +44,7 @@ try {
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid" style="max-width: 1100px; margin: 0 auto;">
-                    <a class="brand" href="/">easySYS API Example</a>
+                    <a class="brand" href="/">easySYS Api Example</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li><a href="http://www.easysys.ch/kontakt.html">Contact</a></li>

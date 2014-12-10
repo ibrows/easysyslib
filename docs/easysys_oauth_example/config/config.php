@@ -27,9 +27,9 @@ define('EASYSYS_AUTH_URL', "https://office.easysys.ch/oauth/authorize");
 define('EASYSYS_TOKEN_URL', "https://office.easysys.ch/oauth/access_token");
 
 /**
- * The base url for the easySYS API
+ * The base url for the easySYS Api
  */
-define('EASYSYS_API_URL', "https://office.easysys.ch/api2.php");
+define('EASYSYS_Api_URL', "https://office.easysys.ch/api2.php");
 
 /**
  * The URL of this sample application. 
@@ -55,7 +55,7 @@ checkConfig(array(
     EASYSYS_CLIENT_SECRET,
     EASYSYS_AUTH_URL,
     EASYSYS_TOKEN_URL,
-    EASYSYS_API_URL,
+    EASYSYS_Api_URL,
     APPLICATION_REDIRECTION_URL,
     APPLICATION_SCOPES
 ));

@@ -9,19 +9,19 @@
  * Time: 13:42
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Base\API;
+namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
 
-abstract class AbstractConcreteAPITest extends AbstractAPITest
+abstract class AbstractConcreteApiTest extends AbstractApiTest
 {
     /**
-     * @return AbstractAPI
+     * @return AbstractApi
      */
-    abstract protected function getAPI();
+    abstract protected function getApi();
 
     /**
-     * Not possible to test in APITest with provider data
+     * Not possible to test in ApiTest with provider data
      */
     abstract public function testConvertCriteria();
 

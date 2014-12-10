@@ -9,14 +9,14 @@
  * Time: 13:11
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Article;
-use Ibrows\EasySysLibrary\API\Contact;
-use Ibrows\EasySysLibrary\API\Tax;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\Article;
+use Ibrows\EasySysLibrary\Api\Contact;
+use Ibrows\EasySysLibrary\Api\Tax;
 
-class APITest extends AbstractAPITest
+class ApiTest extends AbstractApiTest
 {
     /**
      * @var array
@@ -24,10 +24,10 @@ class APITest extends AbstractAPITest
     protected static $listData = array();
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      */
-    public function testList(AbstractAPI $api)
+    public function testList(AbstractApi $api)
     {
         $all = $api->search(array(), null, 3);
         $this->assertCount(3, $all);
@@ -37,10 +37,10 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      */
-    public function testShowMapping(AbstractAPI $api)
+    public function testShowMapping(AbstractApi $api)
     {
         $data = $this->getValidData($api);
         $resultReal = $api->show($data['id']);
@@ -59,11 +59,11 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      * @param $aSearchField
      */
-    public function testListArray(AbstractAPI $api, $aSearchField)
+    public function testListArray(AbstractApi $api, $aSearchField)
     {
         $all = $api->searchArrays(array(), null, 3);
         $this->assertCount(3, $all);
@@ -71,11 +71,11 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @dataProvider provideAPIs
-     * @param AbstractAPI $api
+     * @dataProvider provideApis
+     * @param AbstractApi $api
      * @param $aSearchField
      */
-    public function testListObject(AbstractAPI $api, $aSearchField)
+    public function testListObject(AbstractApi $api, $aSearchField)
     {
         $all = $api->searchArrays(array(), null, 3);
         $this->assertCount(3, $all);
@@ -85,7 +85,7 @@ class APITest extends AbstractAPITest
     /**
      * @return array
      */
-    public function provideAPIs()
+    public function provideApis()
     {
         return array(
             $this->provideContactApi(),
@@ -95,11 +95,11 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @param AbstractAPI $api
+     * @param AbstractApi $api
      * @throws \Exception
      * @return array
      */
-    protected function getValidData(AbstractAPI $api)
+    protected function getValidData(AbstractApi $api)
     {
         $name = $this->getApiName($api);
         if (!isset(static::$listData[$name][0])) {
@@ -145,10 +145,10 @@ class APITest extends AbstractAPITest
     }
 
     /**
-     * @param AbstractAPI $api
+     * @param AbstractApi $api
      * @return string
      */
-    protected function getApiName(AbstractAPI $api)
+    protected function getApiName(AbstractApi $api)
     {
         return get_class($api);
     }

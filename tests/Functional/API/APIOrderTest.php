@@ -1,16 +1,16 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
-use Ibrows\EasySysLibrary\API\APIInterface;
-use Ibrows\EasySysLibrary\API\Order;
+use Ibrows\EasySysLibrary\Api\ApiInterface;
+use Ibrows\EasySysLibrary\Api\Order;
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\OrderConverter;
 use Ibrows\EasySysLibrary\Model\OrderPositionDefault;
 use Ibrows\EasySysLibrary\Model\OrderPositionSubPosition;
 use Ibrows\EasySysLibrary\Model\OrderPositionText;
 
-class APIOrderTest extends AbstractConcreteAPITest
+class ApiOrderTest extends AbstractConcreteApiTest
 {
     public function testCreateInvoice()
     {
@@ -52,7 +52,7 @@ class APIOrderTest extends AbstractConcreteAPITest
     }
 
     /**
-     * @return APIInterface|Order
+     * @return ApiInterface|Order
      */
     protected function getApi()
     {

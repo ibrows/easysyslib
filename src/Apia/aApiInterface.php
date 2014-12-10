@@ -6,12 +6,12 @@
  * Time: 11:38
  */
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Psr\Log\LoggerInterface;
 
-interface APIInterface
+interface ApiInterface
 {
     /**
      * @param LoggerInterface $logger

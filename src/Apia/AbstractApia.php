@@ -1,5 +1,6 @@
 <?php
-namespace Ibrows\EasySysLibrary\API;
+
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Connection\Exception\ConnectionException;
@@ -9,11 +10,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Saxulum\HttpClient\Request;
 
-/**
- * @author marcsteiner
- *
- */
-abstract class AbstractAPI implements APIInterface
+abstract class AbstractApi implements ApiInterface
 {
     /**
      * @var LoggerInterface

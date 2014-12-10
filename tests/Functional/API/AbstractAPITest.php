@@ -9,12 +9,12 @@
  * Time: 22:31
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Tests\Functional\ConnectionTest;
 
-abstract class AbstractAPITest extends \PHPUnit_Framework_TestCase
+abstract class AbstractApiTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return ConnectionInterface|null

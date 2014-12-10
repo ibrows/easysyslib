@@ -5,7 +5,7 @@ require_once dirname(__FILE__) . "/Curl.class.php";
 class EasysysConnector {
 
     /**
-     * The easySYS API needs a valid Accept-Header, JSON in this case.
+     * The easySYS Api needs a valid Accept-Header, JSON in this case.
      */
     const HTTP_HEADER_ACCEPT = "application/json";
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
-use Ibrows\EasySysLibrary\API\APIInterface;
-use Ibrows\EasySysLibrary\API\Contact;
+use Ibrows\EasySysLibrary\Api\ApiInterface;
+use Ibrows\EasySysLibrary\Api\Contact;
 use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\ContactConverter;
 
-class APIContactTest extends AbstractConcreteAPITest
+class ApiContactTest extends AbstractConcreteApiTest
 {
     public function delete($id)
     {
@@ -37,7 +37,7 @@ class APIContactTest extends AbstractConcreteAPITest
     }
 
     /**
-     * @return APIInterface|Contact
+     * @return ApiInterface|Contact
      */
     protected function getApi()
     {

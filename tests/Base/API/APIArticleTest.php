@@ -1,27 +1,27 @@
 <?php
 
-namespace Ibrows\EasySysLibrary\Tests\Base\API;
+namespace Ibrows\EasySysLibrary\Tests\Base\Api;
 
-use Ibrows\EasySysLibrary\API\AbstractAPI;
-use Ibrows\EasySysLibrary\API\Article;
+use Ibrows\EasySysLibrary\Api\AbstractApi;
+use Ibrows\EasySysLibrary\Api\Article;
 use Ibrows\EasySysLibrary\Model\Article as ArticleModel;
 
-class APIArticleTest extends AbstractConcreteAPITest
+class ApiArticleTest extends AbstractConcreteApiTest
 {
     /**
-     * @return AbstractAPI
+     * @return AbstractApi
      */
-    protected function getAPI()
+    protected function getApi()
     {
         return new Article($this->getMockConnection());
     }
 
     /**
-     * Not possible to test in APITest with provider data
+     * Not possible to test in ApiTest with provider data
      */
     public function testConvertCriteria()
     {
-        $api = $this->getAPI();
+        $api = $this->getApi();
 
         $result = $api->convertSimpleCriteria(array());
         $this->assertEquals(array(), $result);

@@ -9,12 +9,12 @@
  * Time: 11:31
  */
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\TaxConverter;
 
-class Tax extends AbstractAPI
+class TaxApi extends AbstractApi
 {
     /**
      * @param ConnectionInterface $connection

@@ -9,12 +9,12 @@
  * Time: 11:40
  */
 
-namespace Ibrows\EasySysLibrary\Tests\Functional\API;
+namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 
-use Ibrows\EasySysLibrary\API\APIInterface;
-use Ibrows\EasySysLibrary\API\Invoice;
+use Ibrows\EasySysLibrary\Api\ApiInterface;
+use Ibrows\EasySysLibrary\Api\Invoice;
 
-class APIInvoiceTest extends AbstractAPITest
+class ApiInvoiceTest extends AbstractApiTest
 {
     public function testInvoiced()
     {
@@ -22,7 +22,7 @@ class APIInvoiceTest extends AbstractAPITest
     }
 
     /**
-     * @return APIInterface
+     * @return ApiInterface
      */
     protected function getApi()
     {

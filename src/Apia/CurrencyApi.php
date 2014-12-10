@@ -9,12 +9,12 @@
  * Time: 11:31
  */
 
-namespace Ibrows\EasySysLibrary\API;
+namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
-use Ibrows\EasySysLibrary\Converter\InvoiceConverter;
+use Ibrows\EasySysLibrary\Converter\CurrencyConverter;
 
-class Invoice extends AbstractAPI
+class CurrencyApi extends AbstractApi
 {
     /**
      * @param ConnectionInterface $connection
@@ -22,17 +22,7 @@ class Invoice extends AbstractAPI
     public function __construct(ConnectionInterface $connection)
     {
         parent::__construct($connection);
-        $this->converter = new InvoiceConverter();
-    }
-
-    /**
-     * @param int $id
-     * @return array
-     */
-    public function showPdfArray($id)
-    {
-        $append = '/' . (int)$id . '/pdf';
-        return $this->connection->call($this->getResource() . $append);
+        $this->converter = new CurrencyConverter();
     }
 
     /**
@@ -40,6 +30,6 @@ class Invoice extends AbstractAPI
      */
     protected function getType()
     {
-        return 'kb_invoice';
+        return 'currency';
     }
-}
+} 
