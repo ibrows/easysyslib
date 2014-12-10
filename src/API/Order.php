@@ -48,46 +48,6 @@ class Order extends AbstractAPI
     }
 
     /**
-     * @return ConverterInterface[]
-     */
-    protected function getConverters()
-    {
-        $converters = parent::getConverters();
-        $converters[] = $this->getInvoiceCreateConverter();
-        return $converters;
-    }
-
-    /**
-     * @param array $data native data sent to api
-     * @param string $type
-     * @param bool $includeUserId
-     * @return array
-     */
-    public function create(array $data, $type = null, $includeUserId = true)
-    {
-        return parent::create($this->cleanDataForEasysys($data), $type, $includeUserId);
-    }
-
-    /**
-     * @param int $id native data sent to api
-     * @param array $data
-     * @param string $type
-     * @return array
-     */
-    public function update($id, array $data, $type = null)
-    {
-        return parent::update($id, $this->cleanDataForEasysys($data), $type);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getType()
-    {
-        return 'kb_order';
-    }
-
-    /**
      * @param \Ibrows\EasySysLibrary\Model\Order $order
      * @return Invoice
      */
@@ -187,6 +147,56 @@ class Order extends AbstractAPI
     }
 
     /**
+     * @param int $id
+     * @return array
+     */
+    public function showPdfArray($id)
+    {
+        $append = '/' . (int)$id . '/pdf';
+        return $this->connection->call($this->getResource() . $append);
+    }
+
+    /**
+     * @return ConverterInterface[]
+     */
+    protected function getConverters()
+    {
+        $converters = parent::getConverters();
+        $converters[] = $this->getInvoiceCreateConverter();
+        return $converters;
+    }
+
+    /**
+     * @param array $data native data sent to api
+     * @param string $type
+     * @param bool $includeUserId
+     * @return array
+     */
+    public function create(array $data, $type = null, $includeUserId = true)
+    {
+        return parent::create($this->cleanDataForEasysys($data), $type, $includeUserId);
+    }
+
+    /**
+     * @param int $id native data sent to api
+     * @param array $data
+     * @param string $type
+     * @return array
+     */
+    public function update($id, array $data, $type = null)
+    {
+        return parent::update($id, $this->cleanDataForEasysys($data), $type);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getType()
+    {
+        return 'kb_order';
+    }
+
+    /**
      * @param int $orderId
      * @return string
      */
@@ -221,16 +231,5 @@ class Order extends AbstractAPI
         unset($data['is_recurring']);
         unset($data['updated_at']);
         return $data;
-    }
-
-    /**
-     * @param $id
-     * @return array
-     */
-    public function showPdfArray($id)
-    {
-        $append = '/' . $id . '/pdf';
-
-        return $this->connection->call($this->getResource() . $append);
     }
 }
