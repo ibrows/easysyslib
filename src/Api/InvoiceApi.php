@@ -5,6 +5,7 @@ namespace Ibrows\EasySysLibrary\Api;
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePaymentConverter;
+use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 use Saxulum\HttpClient\Request;
 
 class InvoiceApi extends AbstractApi
@@ -23,6 +24,18 @@ class InvoiceApi extends AbstractApi
 
         $this->converter = new InvoiceConverter();
         $this->invoicePaymentConverter = new InvoicePaymentConverter();
+    }
+
+    /**
+     * @return ConverterInterface[]
+     */
+    protected function getConverters()
+    {
+        $converters = array();
+        $converters[] = $this->converter;
+        $converters[] = $this->invoicePaymentConverter;
+
+        return $converters;
     }
 
     /**
