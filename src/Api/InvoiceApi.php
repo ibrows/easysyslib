@@ -13,6 +13,7 @@ namespace Ibrows\EasySysLibrary\Api;
 
 use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
+use Saxulum\HttpClient\Request;
 
 class InvoiceApi extends AbstractApi
 {
@@ -31,8 +32,31 @@ class InvoiceApi extends AbstractApi
      */
     public function showPdfArray($id)
     {
-        $append = '/' . (int)$id . '/pdf';
+        $append = DIRECTORY_SEPARATOR . (int)$id . DIRECTORY_SEPARATOR . 'pdf';
+
         return $this->connection->call($this->getResource() . $append);
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function issue($id)
+    {
+        $append = DIRECTORY_SEPARATOR . (int)$id . DIRECTORY_SEPARATOR . 'issue';
+
+        return $this->connection->call($this->getResource() . $append, array(), array(), Request::METHOD_POST);
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function markAsSent($id)
+    {
+        $append = DIRECTORY_SEPARATOR . (int)$id . DIRECTORY_SEPARATOR . 'mark_as_sent';
+
+        return $this->connection->call($this->getResource() . $append, array(), array(), Request::METHOD_POST);
     }
 
     /**
