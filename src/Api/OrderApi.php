@@ -15,6 +15,7 @@ use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderConverter;
+use Ibrows\EasySysLibrary\Converter\Order\OrderPositionDiscountConverter;
 use Ibrows\EasySysLibrary\Model\Invoice\Invoice;
 use Ibrows\EasySysLibrary\Model\Order\Order;
 use Ibrows\EasySysLibrary\Model\Order\OrderPosition;
@@ -39,6 +40,11 @@ class OrderApi extends AbstractApi
     protected $invoiceCreateConverter;
 
     /**
+     * @var ConverterInterface
+     */
+    protected $orderPositionDiscountConverter;
+
+    /**
      * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection)
@@ -46,6 +52,41 @@ class OrderApi extends AbstractApi
         parent::__construct($connection);
         $this->converter = new OrderConverter();
         $this->invoiceCreateConverter = new InvoiceConverter();
+        $this->orderPositionDiscountConverter = new OrderPositionDiscountConverter();
+    }
+
+    /**
+     * @param $orderId
+     * @param $value
+     * @param null $percentual
+     * @param null $text
+     * @return object
+     */
+    public function createPositionDiscount($orderId, $value, $percentual = null, $text = null)
+    {
+        $postParams = $this->createPositionDiscountPostParams($value, $percentual, $text);
+        $dataEasySys = $this->connection->call($this->getCreatePositionDiscountResource($orderId), array(), $postParams, Request::METHOD_POST);
+        $this->getOrderPositionDiscountConverter()->setDataEasySys($dataEasySys);
+        $discount = $this->getOrderPositionDiscountConverter()->getObject();
+
+        return $discount;
+    }
+
+    /**
+     * @param $value
+     * @param null $percentual
+     * @param null $text
+     * @return array
+     */
+    public function createPositionDiscountPostParams($value, $percentual = null, $text = null)
+    {
+        $params = array(
+            'value'         => $value,
+            'is_percentual' => $percentual,
+            'text'          => $text
+        );
+
+        return $params;
     }
 
     /**
@@ -140,6 +181,14 @@ class OrderApi extends AbstractApi
     }
 
     /**
+     * @return ConverterInterface
+     */
+    public function getOrderPositionDiscountConverter()
+    {
+        return $this->orderPositionDiscountConverter;
+    }
+
+    /**
      * @param ConverterInterface $invoiceCreateConverter
      */
     public function setInvoiceCreateConverter(ConverterInterface $invoiceCreateConverter = null)
@@ -164,6 +213,7 @@ class OrderApi extends AbstractApi
     {
         $converters = parent::getConverters();
         $converters[] = $this->getInvoiceCreateConverter();
+        $converters[] = $this->getOrderPositionDiscountConverter();
         return $converters;
     }
 
@@ -204,6 +254,15 @@ class OrderApi extends AbstractApi
     protected function getCreateInvoiceResource($orderId)
     {
         return '/' . $this->getType() . '/' . (int)$orderId . '/invoice';
+    }
+
+    /**
+     * @param $orderId
+     * @return string
+     */
+    protected function getCreatePositionDiscountResource($orderId)
+    {
+        return '/' . $this->getType() . '/' . (int)$orderId . '/kb_position_discount';
     }
 
     /**

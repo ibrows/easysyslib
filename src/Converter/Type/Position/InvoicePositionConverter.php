@@ -15,6 +15,7 @@ use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePositionDefaultConverter;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePositionItemConverter;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePositionSubPositionConverter;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePositionTextConverter;
+use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePositionDiscountConverter;
 
 class InvoicePositionConverter extends PositionConverter
 {
@@ -28,6 +29,7 @@ class InvoicePositionConverter extends PositionConverter
             'KbPositionCustom'      => new InvoicePositionDefaultConverter(),
             'KbPositionText'        => new InvoicePositionTextConverter(),
             'KbPositionSubposition' => new InvoicePositionSubPositionConverter(),
+            'KbPositionDiscount'    => new InvoicePositionDiscountConverter(),
         );
     }
 }

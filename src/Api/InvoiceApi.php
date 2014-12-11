@@ -6,6 +6,7 @@ use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePaymentConverter;
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
+use Ibrows\EasySysLibrary\Converter\Invoice\InvoicePositionDiscountConverter;
 use Saxulum\HttpClient\Request;
 
 class InvoiceApi extends AbstractApi
@@ -16,6 +17,11 @@ class InvoiceApi extends AbstractApi
     protected $invoicePaymentConverter;
 
     /**
+     * @var InvoicePaymentConverter
+     */
+    protected $invoicePositionDiscountConverter;
+
+    /**
      * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection)
@@ -24,6 +30,7 @@ class InvoiceApi extends AbstractApi
 
         $this->converter = new InvoiceConverter();
         $this->invoicePaymentConverter = new InvoicePaymentConverter();
+        $this->invoicePositionDiscountConverter = new InvoicePositionDiscountConverter();
     }
 
     /**
@@ -34,6 +41,7 @@ class InvoiceApi extends AbstractApi
         $converters = array();
         $converters[] = $this->converter;
         $converters[] = $this->invoicePaymentConverter;
+        $converters[] = $this->invoicePositionDiscountConverter;
 
         return $converters;
     }
@@ -90,6 +98,40 @@ class InvoiceApi extends AbstractApi
     }
 
     /**
+     * @param $invoiceId
+     * @param $value
+     * @param null $percentual
+     * @param null $text
+     * @return object
+     */
+    public function createPositionDiscount($invoiceId, $value, $percentual = null, $text = null)
+    {
+        $postParams = $this->createPositionDiscountPostParams($value, $percentual, $text);
+        $dataEasySys = $this->connection->call($this->getCreatePositionDiscountResource($invoiceId), array(), $postParams, Request::METHOD_POST);
+        $this->invoicePositionDiscountConverter->setDataEasySys($dataEasySys);
+        $discount = $this->invoicePositionDiscountConverter->getObject();
+
+        return $discount;
+    }
+
+    /**
+     * @param $value
+     * @param null $percentual
+     * @param null $text
+     * @return array
+     */
+    public function createPositionDiscountPostParams($value, $percentual = null, $text = null)
+    {
+        $params = array(
+            'value'         => $value,
+            'is_percentual' => $percentual,
+            'text'          => $text
+        );
+
+        return $params;
+    }
+
+    /**
      * @param $value
      * @param null $bankAccountId
      * @param null $date
@@ -115,6 +157,15 @@ class InvoiceApi extends AbstractApi
     protected function getCreatePaymentResource($invoiceId)
     {
         return '/' . $this->getType() . '/' . (int)$invoiceId . '/payment';
+    }
+
+    /**
+     * @param $invoiceId
+     * @return string
+     */
+    protected function getCreatePositionDiscountResource($invoiceId)
+    {
+        return '/' . $this->getType() . '/' . (int)$invoiceId . '/kb_position_discount';
     }
 
     /**

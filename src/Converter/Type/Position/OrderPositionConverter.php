@@ -12,6 +12,7 @@
 namespace Ibrows\EasySysLibrary\Converter\Type\Position;
 
 use Ibrows\EasySysLibrary\Converter\Order\OrderPositionDefaultConverter;
+use Ibrows\EasySysLibrary\Converter\Order\OrderPositionDiscountConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderPositionItemConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderPositionSubPositionConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderPositionTextConverter;
@@ -28,6 +29,7 @@ class OrderPositionConverter extends PositionConverter
             'KbPositionCustom'      => new OrderPositionDefaultConverter(),
             'KbPositionText'        => new OrderPositionTextConverter(),
             'KbPositionSubposition' => new OrderPositionSubPositionConverter(),
+            'KbPositionDiscount'    => new OrderPositionDiscountConverter(),
         );
     }
 }
