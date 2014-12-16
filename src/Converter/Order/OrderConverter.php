@@ -36,6 +36,7 @@ class OrderConverter extends AbstractConverter
                 'is_recurring'            => 'recurring', // bool
                 'nb_decimals_amount'      => 'nbDecimalsAmount', // int
                 'nb_decimals_price'       => 'nbDecimalsPrice', // int
+                'network_link'            => 'networkLink' // string
             )
         );
     }

@@ -26,7 +26,6 @@ trait ItemPosition
             'article_id'          => 'articleId',
             'tax_id'              => 'taxId',
             'tax_value'           => 'taxValue',
-            'account_id'          => 'accountId',
             'discount_in_percent' => 'discountInPercent',
             'position_total'      => 'positionTotal',
         );

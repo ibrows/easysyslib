@@ -290,6 +290,7 @@ class OrderApi extends AbstractApi
         unset($data['kb_item_status_id']);
         unset($data['is_recurring']);
         unset($data['updated_at']);
+        unset($data['network_link']);
         return $data;
     }
 }

@@ -43,11 +43,6 @@ trait DefaultPosition
     protected $positionTotal;
 
     /**
-     * @var int
-     */
-    protected $accountId;
-
-    /**
      * @var float
      */
     protected $discountInPercent;
@@ -67,22 +62,6 @@ trait DefaultPosition
         $this->amount = $amount;
         $this->taxId = $taxId;
         $this->unitPrice = $unitPrice;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAccountId()
-    {
-        return $this->accountId;
-    }
-
-    /**
-     * @param int $accountId
-     */
-    public function setAccountId($accountId)
-    {
-        $this->accountId = $accountId;
     }
 
     /**

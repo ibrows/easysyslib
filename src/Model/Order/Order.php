@@ -26,6 +26,11 @@ class Order
     /**
      * @var string
      */
+    protected $networkLink;
+
+    /**
+     * @var string
+     */
     protected $contactAddressManual;
 
     /**
@@ -206,5 +211,21 @@ class Order
     public function setShowPositionTaxes($showPositionTaxes)
     {
         $this->showPositionTaxes = $showPositionTaxes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNetworkLink()
+    {
+        return $this->networkLink;
+    }
+
+    /**
+     * @param string $networkLink
+     */
+    public function setNetworkLink($networkLink)
+    {
+        $this->networkLink = $networkLink;
     }
 }

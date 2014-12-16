@@ -49,11 +49,6 @@ trait ItemPosition
     protected $unitPrice;
 
     /**
-     * @var int
-     */
-    protected $accountId;
-
-    /**
      * @var float
      */
     protected $discountInPercent;
@@ -75,22 +70,6 @@ trait ItemPosition
         $this->articleId = $articleId;
         $this->taxId = $taxId;
         $this->unitPrice = $unitPrice;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAccountId()
-    {
-        return $this->accountId;
-    }
-
-    /**
-     * @param int $accountId
-     */
-    public function setAccountId($accountId)
-    {
-        $this->accountId = $accountId;
     }
 
     /**
