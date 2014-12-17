@@ -15,6 +15,7 @@ use Ibrows\EasySysLibrary\Connection\ConnectionInterface;
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderConverter;
+use Ibrows\EasySysLibrary\Converter\Delivery\DeliveryConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderPositionDiscountConverter;
 use Ibrows\EasySysLibrary\Model\Invoice\Invoice;
 use Ibrows\EasySysLibrary\Model\Order\Order;
@@ -42,6 +43,11 @@ class OrderApi extends AbstractApi
     /**
      * @var ConverterInterface
      */
+    protected $deliveryCreateConverter;
+
+    /**
+     * @var ConverterInterface
+     */
     protected $orderPositionDiscountConverter;
 
     /**
@@ -52,6 +58,7 @@ class OrderApi extends AbstractApi
         parent::__construct($connection);
         $this->converter = new OrderConverter();
         $this->invoiceCreateConverter = new InvoiceConverter();
+        $this->deliveryCreateConverter = new DeliveryConverter();
         $this->orderPositionDiscountConverter = new OrderPositionDiscountConverter();
     }
 
@@ -100,6 +107,15 @@ class OrderApi extends AbstractApi
 
     /**
      * @param Order $order
+     * @return Delivery
+     */
+    public function createDeliveryObject(Order $order)
+    {
+        return $this->createDeliveryWithPositionsObject($order, $order->getPositions());
+    }
+
+    /**
+     * @param Order $order
      * @param OrderPosition[] $positions
      * @return Invoice
      */
@@ -117,6 +133,27 @@ class OrderApi extends AbstractApi
         $dataEasySys = $this->createInvoice($order->getId(), $postParams);
         $this->invoiceCreateConverter->setDataEasySys($dataEasySys);
         return $this->invoiceCreateConverter->getObject();
+    }
+
+    /**
+     * @param Order $order
+     * @param OrderPosition[] $positions
+     * @return Invoice
+     */
+    public function createDeliveryWithPositionsObject(Order $order, array $positions)
+    {
+        $positionData = array();
+
+        foreach ($positions as $position) {
+            $amount = $position instanceof AmountInterface ? $position->getAmount() : null;
+            $positionData[] = $this->getCreateDeliveryPosition($position->getId(), $position->getType(), $amount);
+        }
+
+        $postParams = $this->getCreateDeliveryPostParams($positionData);
+
+        $dataEasySys = $this->createDelivery($order->getId(), $postParams);
+        $this->deliveryCreateConverter->setDataEasySys($dataEasySys);
+        return $this->deliveryCreateConverter->getObject();
     }
 
     /**
@@ -138,10 +175,39 @@ class OrderApi extends AbstractApi
     }
 
     /**
+     * @param $orderPositionId
+     * @param null $amount
+     * @return array
+     */
+    public function getCreateDeliveryPosition($orderPositionId, $orderPositionType, $amount = null)
+    {
+        $data = array(
+            'id'   => $orderPositionId,
+            'type' => $orderPositionType
+
+        );
+
+        if ($amount) {
+            $data['amount'] = $amount;
+        }
+
+        return $data;
+    }
+
+    /**
      * @param array $positions
      * @return array
      */
     public function getCreateInvoicePostParams(array $positions)
+    {
+        return array('positions' => $positions);
+    }
+
+    /**
+     * @param array $positions
+     * @return array
+     */
+    public function getCreateDeliveryPostParams(array $positions)
     {
         return array('positions' => $positions);
     }
@@ -154,6 +220,16 @@ class OrderApi extends AbstractApi
     public function createInvoice($orderId, array $postParams)
     {
         return $this->call($this->getCreateInvoiceResource($orderId), array(), $postParams, Request::METHOD_POST);
+    }
+
+    /**
+     * @param int $orderId
+     * @param array $postParams
+     * @return array
+     */
+    public function createDelivery($orderId, array $postParams)
+    {
+        return $this->call($this->getCreateDeliveryResource($orderId), array(), $postParams, Request::METHOD_POST);
     }
 
     /**
@@ -254,6 +330,15 @@ class OrderApi extends AbstractApi
     protected function getCreateInvoiceResource($orderId)
     {
         return '/' . $this->getType() . '/' . (int)$orderId . '/invoice';
+    }
+
+    /**
+     * @param int $orderId
+     * @return string
+     */
+    protected function getCreateDeliveryResource($orderId)
+    {
+        return '/' . $this->getType() . '/' . (int)$orderId . '/delivery';
     }
 
     /**
