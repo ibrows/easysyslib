@@ -5,6 +5,8 @@ namespace Ibrows\EasySysLibrary\Tests\Functional\Api;
 use Ibrows\EasySysLibrary\Api\ApiInterface;
 use Ibrows\EasySysLibrary\Api\OrderApi;
 use Ibrows\EasySysLibrary\Model\AmountInterface;
+use Ibrows\EasySysLibrary\Model\Delivery\Delivery;
+use Ibrows\EasySysLibrary\Model\Delivery\DeliveryPosition;
 use Ibrows\EasySysLibrary\Model\Invoice\Invoice;
 use Ibrows\EasySysLibrary\Model\Invoice\InvoicePosition;
 use Ibrows\EasySysLibrary\Model\Order\Order;
@@ -40,6 +42,36 @@ class ApiOrderTest extends AbstractConcreteApiTest
                 /** @var AmountInterface $invoicePosition */
                 $this->assertTrue($invoicePosition instanceof AmountInterface);
                 $this->assertSame($orderPosition->getAmount(), $invoicePosition->getAmount());
+            }
+        }
+    }
+
+    public function testCreateDelivery()
+    {
+        $api = $this->getApi();
+        $order = $this->testCreatePositions();
+
+        $delivery = $api->createDeliveryObject($order);
+        $this->assertInstanceOf(get_class(new Delivery(1, 1)), $delivery);
+        $this->assertCount(count($order->getPositions()), $delivery->getPositions());
+
+        /** @var OrderPosition[] $orderPositions */
+        $orderPositions = $order->getPositions();
+
+        /** @var DeliveryPosition[] $deliveryPositions */
+        $deliveryPositions = $delivery->getPositions();
+
+        foreach($orderPositions as $key => $orderPosition){
+            $deliveryPosition = $deliveryPositions[$key];
+            $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Order\OrderPosition', $orderPosition);
+            $this->assertInstanceOf('Ibrows\EasySysLibrary\Model\Delivery\DeliveryPosition', $deliveryPosition);
+
+            $this->assertSame($orderPosition->getText(), $deliveryPosition->getText());
+
+            if($orderPosition instanceof AmountInterface){
+                /** @var AmountInterface $deliveryPosition */
+                $this->assertTrue($deliveryPosition instanceof AmountInterface);
+                $this->assertEquals($orderPosition->getAmount(), $deliveryPosition->getAmount());
             }
         }
     }

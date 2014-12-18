@@ -2,8 +2,9 @@
 
 namespace Ibrows\EasySysLibrary\Converter\Type\Position;
 
-use Ibrows\EasySysLibrary\Converter\Order\OrderPositionItemConverter;
-use Ibrows\EasySysLibrary\Converter\Order\OrderPositionTextConverter;
+use Ibrows\EasySysLibrary\Converter\Delivery\DeliveryPositionDefaultConverter;
+use Ibrows\EasySysLibrary\Converter\Delivery\DeliveryPositionItemConverter;
+use Ibrows\EasySysLibrary\Converter\Delivery\DeliveryPositionTextConverter;
 
 class DeliveryPositionConverter extends PositionConverter
 {
@@ -13,8 +14,9 @@ class DeliveryPositionConverter extends PositionConverter
     protected function setupTypes()
     {
         return array(
-            'KbPositionArticle'     => new OrderPositionItemConverter(),
-            'KbPositionText'        => new OrderPositionTextConverter()
+            'KbPositionArticle'     => new DeliveryPositionItemConverter(),
+            'KbPositionText'        => new DeliveryPositionTextConverter(),
+            'KbPositionCustom'      => new DeliveryPositionDefaultConverter(),
         );
     }
 }

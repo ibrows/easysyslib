@@ -17,6 +17,7 @@ use Ibrows\EasySysLibrary\Converter\Invoice\InvoiceConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderConverter;
 use Ibrows\EasySysLibrary\Converter\Delivery\DeliveryConverter;
 use Ibrows\EasySysLibrary\Converter\Order\OrderPositionDiscountConverter;
+use Ibrows\EasySysLibrary\Model\Delivery\Delivery;
 use Ibrows\EasySysLibrary\Model\Invoice\Invoice;
 use Ibrows\EasySysLibrary\Model\Order\Order;
 use Ibrows\EasySysLibrary\Model\Order\OrderPosition;

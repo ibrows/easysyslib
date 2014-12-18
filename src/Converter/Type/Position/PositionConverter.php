@@ -107,9 +107,6 @@ abstract class PositionConverter extends ProxyConverter
     {
         $types = $this->getTypes();
         if (!array_key_exists($type, $types)) {
-            var_dump($type);
-            var_dump(array_keys($types));
-            exit;
             throw new \Exception("Type " . $type . " is not a valid Position");
         }
         return $types[$type];
