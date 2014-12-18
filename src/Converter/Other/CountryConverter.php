@@ -21,6 +21,6 @@ class CountryConverter extends AbstractConverter
         'id'                      => 'id', // int
         'name'                    => 'name', // string
         'name_short'              => 'nameShort', // string
-        'iso3166_alpha2'          => 'iso3166Alpha2', // string
+        'iso_3166_alpha2'         => 'iso3166Alpha2', // string
     );
 }
