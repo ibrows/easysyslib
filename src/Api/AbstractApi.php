@@ -147,22 +147,30 @@ abstract class AbstractApi implements ApiInterface
     /**
      * @param int $id
      * @throws ConnectionException
-     * @return object
+     * @return object|null
      */
     public function showObject($id)
     {
-        return $this->getConverter()->convertEasySysToObject($this->show($id));
+        $data = $this->show($id);
+        if($data === null){
+            return null;
+        }
+        return $this->getConverter()->convertEasySysToObject($data);
 
     }
 
     /**
      * @param $id
      * @throws ConnectionException
-     * @return array
+     * @return array|null
      */
     public function showArray($id)
     {
-        return $this->getConverter()->convertEasySysToArray($this->show($id));
+        $data = $this->show($id);
+        if($data === null){
+            return null;
+        }
+        return $this->getConverter()->convertEasySysToArray($data);
     }
 
     /**
