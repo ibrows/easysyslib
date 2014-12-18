@@ -20,17 +20,6 @@ class DeliveryApi extends AbstractApi
     }
 
     /**
-     * @return ConverterInterface[]
-     */
-    protected function getConverters()
-    {
-        $converters = array();
-        $converters[] = $this->converter;
-
-        return $converters;
-    }
-
-    /**
      * @param $id
      * @return array
      */
