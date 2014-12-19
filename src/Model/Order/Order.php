@@ -13,6 +13,7 @@ namespace Ibrows\EasySysLibrary\Model\Order;
 
 use Ibrows\EasySysLibrary\Api\OrderApi;
 use Ibrows\EasySysLibrary\Model\Traits\Document;
+use Ibrows\EasySysLibrary\Model\PositionInterface;
 
 class Order
 {
@@ -227,5 +228,20 @@ class Order
     public function setNetworkLink($networkLink)
     {
         $this->networkLink = $networkLink;
+    }
+
+    /**
+     * @return PositionInterface[]
+     */
+    public function getDeliveryPositions()
+    {
+        $positions = array();
+        foreach ($this->positions as $position) {
+            if (!$position instanceof OrderPositionDiscount) {
+                $positions[] = $position;
+            }
+        }
+
+        return $positions;
     }
 }

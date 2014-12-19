@@ -112,7 +112,7 @@ class OrderApi extends AbstractApi
      */
     public function createDeliveryObject(Order $order)
     {
-        return $this->createDeliveryWithPositionsObject($order, $order->getPositions());
+        return $this->createDeliveryWithPositionsObject($order, $order->getDeliveryPositions());
     }
 
     /**
