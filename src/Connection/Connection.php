@@ -240,14 +240,6 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @param int $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
      * @param string $resource
      * @param array $urlParams
      * @param array $postParams
@@ -259,13 +251,30 @@ class Connection implements ConnectionInterface
      */
     protected function getRequest($resource, array $urlParams = array(), array $postParams = array(), $method = Request::METHOD_GET, $limit = 0, $offset = 0, $orderBy = null)
     {
-        $urlParams['limit'] = $limit;
-        $urlParams['offset'] = $offset;
-        $urlParams['orderBy'] = $orderBy;
+        if ($limit) {
+            $urlParams['limit'] = $limit;
+        }
+
+        if ($offset) {
+            $urlParams['offset'] = $offset;
+        }
+
+        if ($orderBy) {
+            $urlParams['orderBy'] = $orderBy;
+        }
+
         $url = $this->getRequestUrl($resource, $urlParams);
         $content = $this->getRequestContent($postParams);
         $headers = $this->getRequestHeaders($method, $url, $content);
         return new Request('1.1', $method, $url, $headers, $content);
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
     }
 
     /**
@@ -275,14 +284,6 @@ class Connection implements ConnectionInterface
     protected function getRequestContent(array $postParams = array())
     {
         return $postParams ? json_encode($postParams) : '';
-    }
-
-    /**
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger = null)
-    {
-        $this->logger = $logger ?: new NullLogger();
     }
 
     /**
@@ -312,11 +313,11 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @return int
+     * @param LoggerInterface $logger
      */
-    public function getUserId()
+    public function setLogger(LoggerInterface $logger = null)
     {
-        return $this->userId;
+        $this->logger = $logger ?: new NullLogger();
     }
 
     /**
@@ -337,5 +338,13 @@ class Connection implements ConnectionInterface
     {
         $url = $this->getBaseUrl() . '/' . ltrim($resource, '/');
         return $urlParams ? $url . '?' . http_build_query($urlParams, null, '&') : $url;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 }
