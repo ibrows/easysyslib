@@ -43,6 +43,11 @@ class Invoice
     protected $networkLink;
 
     /**
+     * @var bool
+     */
+    protected $showPositionTaxes;
+
+    /**
      * @return string
      */
     public function getNetworkLink()
@@ -120,5 +125,21 @@ class Invoice
     public function setValidTo(\DateTime $validTo = null)
     {
         $this->validTo = $validTo;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isShowPositionTaxes()
+    {
+        return $this->showPositionTaxes;
+    }
+
+    /**
+     * @param boolean $showPositionTaxes
+     */
+    public function setShowPositionTaxes($showPositionTaxes)
+    {
+        $this->showPositionTaxes = $showPositionTaxes;
     }
 }

@@ -30,6 +30,7 @@ class InvoiceConverter extends AbstractConverter
                 'total_remaining_payments' => 'totalRemainingPayments', // float
                 'is_valid_to'              => 'validTo', // date
                 'network_link'             => 'networkLink', // string
+                'show_position_taxes'      => 'showPositionTaxes' // bool
             )
         );
     }
