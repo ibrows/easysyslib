@@ -170,6 +170,11 @@ class Contact
     protected $additionalData;
 
     /**
+     * @var string
+     */
+    protected $salutationForm;
+
+    /**
      * @param int $contactTypeId
      * @param string $name
      * @param int $ownerId
@@ -761,5 +766,21 @@ class Contact
     public function getCompanyAddition()
     {
         return $this->getFirstName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalutationForm()
+    {
+        return $this->salutationForm;
+    }
+
+    /**
+     * @param string $salutationForm
+     */
+    public function setSalutationForm($salutationForm)
+    {
+        $this->salutationForm = $salutationForm;
     }
 }

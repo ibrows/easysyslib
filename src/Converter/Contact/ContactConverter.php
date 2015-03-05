@@ -49,6 +49,7 @@ class ContactConverter extends AbstractConverter
         'owner_id'           => 'ownerId', // integer
         'profile_image'      => 'profileImage', // string
         'updated_at'         => 'updatedAt', // DateTime
+        'salutation_form'    => 'salutationForm' // string
     );
 
     /**
