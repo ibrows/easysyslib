@@ -34,6 +34,7 @@ class ContactConverter extends AbstractConverter
         'city'               => 'city', // string
         'country_id'         => 'countryId', // integer
         'mail'               => 'mail', // string
+        'mail_second'        => 'mailSecond', //string
         'phone_fixed'        => 'phoneFixed', // string
         'phone_fixed_second' => 'phoneFixedSecond', // string
         'phone_mobile'       => 'phoneMobile', // string
