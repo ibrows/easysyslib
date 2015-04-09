@@ -17,6 +17,13 @@ use Ibrows\EasySysLibrary\Converter\Tax\TaxConverter;
 class TaxApi extends AbstractApi
 {
     /**
+     * @see https://docs.easysys.ch/ressources/kb_invoice/#create-invoice (mwst_type)
+     */
+    const TAX_TYPE_INCLUDING = 0;
+    const TAX_TYPE_EXCLUDING = 1;
+    const TAX_TYPE_EXEMPT = 2;
+
+    /**
      * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection)
