@@ -87,18 +87,6 @@ abstract class AbstractApi implements ApiInterface
     }
 
     /**
-     * @param boolean $throwExceptionOnAdditionalData
-     * @throws \Exception
-     */
-    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
-    {
-        /** @var ConverterInterface $converter */
-        foreach (array_filter($this->getConverters()) as $converter) {
-            $converter->setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData);
-        }
-    }
-
-    /**
      * @return ConverterInterface
      */
     public function getConverter()
@@ -399,14 +387,6 @@ abstract class AbstractApi implements ApiInterface
     public function save()
     {
         $this->create(func_get_args());
-    }
-
-    /**
-     * @return ConverterInterface[]
-     */
-    protected function getConverters()
-    {
-        return array($this->converter);
     }
 
     /**

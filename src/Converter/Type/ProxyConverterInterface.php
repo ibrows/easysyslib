@@ -18,12 +18,6 @@ interface ProxyConverterInterface extends TypeInterface
      * @return ConverterInterface
      */
     public function getConverter();
-
-    /**
-     * @return ConverterInterface[]
-     */
-    public function getConverters();
-
     /**
      * @param ConverterInterface $converter
      */

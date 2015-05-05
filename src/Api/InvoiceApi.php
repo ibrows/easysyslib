@@ -34,19 +34,6 @@ class InvoiceApi extends AbstractApi
     }
 
     /**
-     * @return ConverterInterface[]
-     */
-    protected function getConverters()
-    {
-        $converters = array();
-        $converters[] = $this->converter;
-        $converters[] = $this->invoicePaymentConverter;
-        $converters[] = $this->invoicePositionDiscountConverter;
-
-        return $converters;
-    }
-
-    /**
      * @param int $id
      * @return array
      */

@@ -7,7 +7,6 @@
  */
 namespace Ibrows\EasySysLibrary\Converter;
 
-use Ibrows\EasySysLibrary\Converter\Type\ProxyConverterInterface;
 use Ibrows\EasySysLibrary\Converter\Type\TypeInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -18,6 +17,11 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  */
 abstract class AbstractConverter implements ConverterInterface
 {
+    /**
+     * @var bool
+     */
+    protected static $throwExceptionOnAdditionalData = true;
+
     /**
      * @var string
      */
@@ -62,11 +66,6 @@ abstract class AbstractConverter implements ConverterInterface
      * @var array
      */
     protected $convertTypes = array();
-
-    /**
-     * @var bool
-     */
-    protected $throwExceptionOnAdditionalData = true;
 
     public function __construct()
     {
@@ -255,24 +254,17 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @return boolean
      */
-    public function isThrowExceptionOnAdditionalData()
+    public static function isThrowExceptionOnAdditionalData()
     {
-        return $this->throwExceptionOnAdditionalData;
+        return self::$throwExceptionOnAdditionalData;
     }
 
     /**
      * @param boolean $throwExceptionOnAdditionalData
      */
-    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
+    public static function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
     {
-        $this->throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
-        foreach ($this->getConvertTypes() as $name => $type) {
-            if ($type instanceof ProxyConverterInterface) {
-                foreach($type->getConverters() as $converter){
-                    $converter->setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData);
-                }
-            }
-        }
+        self::$throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
     }
 
     /**
@@ -394,10 +386,11 @@ abstract class AbstractConverter implements ConverterInterface
         $additionalData = array();
         $accessor = $this->getPropertyAccessor();
         $mapping = $this->getMapping();
+        $isThrowExceptionOnAdditionalData = static::isThrowExceptionOnAdditionalData();
 
         foreach ($this->dataEasySys as $key => $value) {
             if (!array_key_exists($key, $mapping)) {
-                if ($this->isThrowExceptionOnAdditionalData()) {
+                if ($isThrowExceptionOnAdditionalData) {
                     throw new \RuntimeException("Mapping for key '" . $key . "' not found - add to mappings of " . get_class($this));
                 }
                 $additionalData[$key] = $value;
@@ -418,7 +411,7 @@ abstract class AbstractConverter implements ConverterInterface
                 $propertyPath = is_array($objectOrArray) ? '[additionalData]' : 'additionalData';
                 $accessor->setValue($objectOrArray, $propertyPath, $additionalData);
             } catch (\Exception $e) {
-                if ($this->isThrowExceptionOnAdditionalData()) {
+                if ($isThrowExceptionOnAdditionalData) {
                     throw $e;
                 }
             }

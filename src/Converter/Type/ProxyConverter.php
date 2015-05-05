@@ -125,14 +125,6 @@ class ProxyConverter implements ProxyConverterInterface
     }
 
     /**
-     * @return ConverterInterface[]
-     */
-    public function getConverters()
-    {
-        return array_filter(array($this->getConverter()));
-    }
-
-    /**
      * @return boolean
      */
     public function isMulti()

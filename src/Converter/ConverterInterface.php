@@ -5,6 +5,7 @@
  * Date: 06.11.14
  * Time: 15:52
  */
+
 namespace Ibrows\EasySysLibrary\Converter;
 
 /**
@@ -13,6 +14,16 @@ namespace Ibrows\EasySysLibrary\Converter;
  */
 interface ConverterInterface
 {
+    /**
+     * @return bool
+     */
+    public static function isThrowExceptionOnAdditionalData();
+
+    /**
+     * @param bool $throwExceptionOnAdditionalData
+     */
+    public static function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true);
+
     /**
      * @param array $data
      */
@@ -72,14 +83,4 @@ interface ConverterInterface
      * @return string|null
      */
     public function keyConvert($keyEasySys);
-
-    /**
-     * @param bool $throwExceptionOnAdditionalData
-     */
-    public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true);
-
-    /**
-     * @return bool
-     */
-    public function isThrowExceptionOnAdditionalData();
 }

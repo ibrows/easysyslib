@@ -284,17 +284,6 @@ class OrderApi extends AbstractApi
     }
 
     /**
-     * @return ConverterInterface[]
-     */
-    protected function getConverters()
-    {
-        $converters = parent::getConverters();
-        $converters[] = $this->getInvoiceCreateConverter();
-        $converters[] = $this->getOrderPositionDiscountConverter();
-        return $converters;
-    }
-
-    /**
      * @param array $data native data sent to api
      * @param string $type
      * @param bool $includeUserId
