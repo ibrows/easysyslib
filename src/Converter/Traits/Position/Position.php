@@ -25,7 +25,8 @@ trait Position
             'internal_pos' => 'internalPosition', // int
             'pos'          => 'position', // int
             'is_optional'  => 'optional', // bool
-            'text'         => 'text' // string
+            'text'         => 'text', // string
+            'account_id'   => 'accountId' // int
         );
     }
 }

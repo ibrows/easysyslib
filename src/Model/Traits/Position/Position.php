@@ -44,6 +44,11 @@ trait Position
     protected $text;
 
     /**
+     * @var int
+     */
+    protected $accountId;
+
+    /**
      * @return int
      */
     public function getId()
@@ -154,4 +159,20 @@ trait Position
      * @return string
      */
     abstract public function getType();
+
+    /**
+     * @return int
+     */
+    public function getAccountId()
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * @param int $accountId
+     */
+    public function setAccountId($accountId)
+    {
+        $this->accountId = $accountId;
+    }
 } 
