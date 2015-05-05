@@ -13,7 +13,7 @@ namespace Ibrows\EasySysLibrary\Converter\Type;
 
 use Ibrows\EasySysLibrary\Converter\ConverterInterface;
 
-class ProxyConverter implements TypeInterface
+class ProxyConverter implements ProxyConverterInterface
 {
     /**
      * @var ConverterInterface
@@ -122,6 +122,14 @@ class ProxyConverter implements TypeInterface
     public function setConverter(ConverterInterface $converter = null)
     {
         $this->converter = $converter;
+    }
+
+    /**
+     * @return ConverterInterface[]
+     */
+    public function getConverters()
+    {
+        return array_filter(array($this->getConverter()));
     }
 
     /**

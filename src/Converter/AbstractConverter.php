@@ -7,6 +7,7 @@
  */
 namespace Ibrows\EasySysLibrary\Converter;
 
+use Ibrows\EasySysLibrary\Converter\Type\ProxyConverterInterface;
 use Ibrows\EasySysLibrary\Converter\Type\TypeInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -265,6 +266,13 @@ abstract class AbstractConverter implements ConverterInterface
     public function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
     {
         $this->throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
+        foreach ($this->getConvertTypes() as $name => $type) {
+            if ($type instanceof ProxyConverterInterface) {
+                foreach($type->getConverters() as $converter){
+                    $converter->setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData);
+                }
+            }
+        }
     }
 
     /**

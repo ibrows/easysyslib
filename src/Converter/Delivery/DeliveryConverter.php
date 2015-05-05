@@ -6,7 +6,6 @@ use Ibrows\EasySysLibrary\Converter\AbstractConverter;
 use Ibrows\EasySysLibrary\Converter\Traits\Document;
 use Ibrows\EasySysLibrary\Converter\Type\Position\DeliveryPositionConverter;
 use Ibrows\EasySysLibrary\Converter\Type\ProxyConverter;
-use Ibrows\EasySysLibrary\Converter\Delivery\DeliveryTaxConverter;
 
 class DeliveryConverter extends AbstractConverter
 {
@@ -25,8 +24,8 @@ class DeliveryConverter extends AbstractConverter
         return array_merge(
             $this->getDocumentMapping(),
             array(
-                'delivery_address_type'   => 'deliveryAddressType', // int
-                'delivery_address'        => 'deliveryAddress'
+                'delivery_address_type' => 'deliveryAddressType', // int
+                'delivery_address'      => 'deliveryAddress'
             )
         );
     }

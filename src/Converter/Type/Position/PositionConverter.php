@@ -62,6 +62,14 @@ abstract class PositionConverter extends ProxyConverter
     }
 
     /**
+     * @return ConverterInterface[]
+     */
+    public function getConverters()
+    {
+        return array_filter(array_values($this->getTypes()));
+    }
+
+    /**
      * @return array
      */
     public function getTypes()
