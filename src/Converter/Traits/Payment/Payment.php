@@ -18,6 +18,7 @@ trait Payment
             'payment_service_id'           => 'paymentService', // bool
             'is_client_account_redemption' => 'isClientAccountRedemption', // string
             'is_cash_discount'             => 'isCashDiscount', // string
+            'kb_invoice_id'                => 'kbInvoiceId' // int
         );
     }
 }

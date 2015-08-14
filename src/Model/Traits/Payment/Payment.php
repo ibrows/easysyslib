@@ -45,6 +45,11 @@ trait Payment
     protected $isCashDiscount;
 
     /**
+     * @var int
+     */
+    protected $kbInvoiceId;
+
+    /**
      * @return int
      */
     public function getId()
@@ -170,5 +175,21 @@ trait Payment
     public function setIsCashDiscount($isCashDiscount)
     {
         $this->isCashDiscount = $isCashDiscount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getKbInvoiceId()
+    {
+        return $this->kbInvoiceId;
+    }
+
+    /**
+     * @param int $kbInvoiceId
+     */
+    public function setKbInvoiceId($kbInvoiceId)
+    {
+        $this->kbInvoiceId = $kbInvoiceId;
     }
 }
