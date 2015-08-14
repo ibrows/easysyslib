@@ -256,7 +256,7 @@ abstract class AbstractConverter implements ConverterInterface
      */
     public static function isThrowExceptionOnAdditionalData()
     {
-        return self::$throwExceptionOnAdditionalData;
+        return static::$throwExceptionOnAdditionalData;
     }
 
     /**
@@ -264,7 +264,7 @@ abstract class AbstractConverter implements ConverterInterface
      */
     public static function setThrowExceptionOnAdditionalData($throwExceptionOnAdditionalData = true)
     {
-        self::$throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
+        static::$throwExceptionOnAdditionalData = $throwExceptionOnAdditionalData;
     }
 
     /**
